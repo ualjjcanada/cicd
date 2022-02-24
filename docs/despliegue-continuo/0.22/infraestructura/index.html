@@ -212,8 +212,23 @@ provider "google" {
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creación_de_la_clave_para_la_cuenta_de_servicio"><a class="anchor" href="#_creación_de_la_clave_para_la_cuenta_de_servicio"></a>Creación de la clave para la Cuenta de servicio</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Para que terraform pueda conectar al <em>provider</em> Google Cloud desde tu máquina local, debes proporcionar clave para la Cuenta de servicio. Descarga el archivo <code>.json</code> de aquí: <a href="https://console.cloud.google.com/apis/credentials/serviceaccountkey" class="bare">https://console.cloud.google.com/apis/credentials/serviceaccountkey</a></p>
+<p>Para que terraform pueda conectar al <em>provider</em> Google Cloud desde tu máquina local, debes proporcionar clave para la Cuenta de servicio.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Seleccionar el proyecto Google Cloud.</p>
+</li>
+<li>
+<p>En el menú de navegación seleccionar <code>IAM y administración | Cuentas de servicio</code>.</p>
+</li>
+</ul>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
@@ -234,7 +249,7 @@ provider "google" {
 </table>
 </div>
 <div class="paragraph">
-<p>Da un nombre a la cuenta de servicio, y pulsa <em>Crear y Continuar</em></p>
+<p>Da un nombre a la cuenta de servicio (p.e. <code>terraform</code>), y pulsa <em>Crear y Continuar</em></p>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
@@ -243,7 +258,7 @@ provider "google" {
 <div class="title">Fig. 3. Propiedades del archivo de credenciales Google Cloud</div>
 </div>
 <div class="paragraph">
-<p>Selecciona el role <em>Administrador de Compute Engine</em>, y pulsa <em>Continuar</em></p>
+<p>Selecciona el rol <em>Administrador de Compute Engine</em> (también es suficiente con <code>Proyecto &#8594; Editor</code>), y pulsa <em>Continuar</em></p>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
@@ -272,11 +287,17 @@ provider "google" {
 </div>
 <div class="title">Fig. 6. Nueva clave de cuenta de servicio</div>
 </div>
+<div class="paragraph">
+<p>Dejar <code>JSON</code> en el tipo de clave.</p>
+</div>
 <div class="imageblock text-center thumb">
 <div class="content">
 <img src="_images/crear-clave-cuenta-servicio6.png" alt="crear clave cuenta servicio6">
 </div>
 <div class="title">Fig. 7. Nueva clave de cuenta de servicio JSON</div>
+</div>
+<div class="paragraph">
+<p>Seleccionar <code>Crear</code>. A continuación se descargará la clave privada.</p>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
