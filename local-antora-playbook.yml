@@ -1,0 +1,32 @@
+# Demo Instructions here: https://docs.antora.org/antora/latest/playbook/set-up-playbook/
+# Run antora: npx antora local-antora-playbook.yml
+site:
+  title: CNSA
+  url: http://127.0.0.1:5000
+  start_page: despliegue-continuo::index.adoc
+content:
+  sources:
+  - url: git@github.com:ualjjcanada/despliegue-continuo.git
+    branches: v.0.22
+    start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable ## Default
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+  ## supplemental_files: ./node_modules/@antora/lunr-extension/supplemental_ui
+asciidoc:
+  attributes:
+    encoding: utf-8
+    lang: es
+    icons: font
+    figure-caption: Fig.
+    example-caption!:
+#    source-highlighter: rouge   ## not supported
+#    rouge-linenums-mode: inline  ## not supported
+antora:
+  extensions:
+  - require: '@antora/lunr-extension'
+    languages: [es, en]
+output:
+  dir: ./docs

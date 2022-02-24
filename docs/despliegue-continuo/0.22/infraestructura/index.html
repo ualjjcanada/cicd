@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Creación de la infraestructura en Google Cloud :: CNSA</title>
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="http://127.0.0.1:5000">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="despliegue-continuo" data-version="0.22">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Despliegue continuo con Jenkins</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introducción</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../prerrequisitos/index.html">Prerrequisitos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Creación de la infraestructura en Google Cloud</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Despliegue continuo con Jenkins</span>
+    <span class="version">0.22-beta.1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.22-beta.1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Creación de la infraestructura en Google Cloud</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/infraestructura/pages/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Creación de la infraestructura en Google Cloud</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="title">Objetivos</div>
+<div class="content">
+<div class="paragraph">
+<p>Utilizando una plantilla de terraform crea 2 instancias de máquina virtuales en tu proyecto en Google Cloud:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instancia para instalar Jenkins mediante un contenedor Docker.</p>
+</li>
+<li>
+<p>Instancia de despliegue (VM Deploy) con Docker y Docker Composer instalados.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/terraform-vm-schema.png" alt="terraform vm schema">
+</div>
+<div class="title">Fig. 1. Máquinas virtuales creadas con Terraform</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_estructura_del_proyecto_terraform"><a class="anchor" href="#_estructura_del_proyecto_terraform"></a>Estructura del proyecto terraform</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para crear las instancias, utiliza la plantilla de terraform disponible en el repositorio <a href="https://github.com/ualcnsa/terraformGoogleCloudSample" class="bare">https://github.com/ualcnsa/terraformGoogleCloudSample</a>.
+En primer lugar realiza un <em>fork</em> del repositorio, para hacer las modificaciones al mismo que sean necesarias. Después, sobre tu <em>fork</em>, modifica las variables correspondientes para usar tu proyecto en la plantilla, tal y como se describe a continuación.</p>
+</div>
+<div class="paragraph">
+<p>El repositorio consta de tres archivos con extension .tf, y una carpeta con un template para la creación de instancias.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">terraformGoogleCloudSample
+├── instance
+│   └── <strong>main.tf</strong> <i class="conum" data-value="4"></i><b>(4)</b>
+├── .gitignore
+├── README.md
+├── <strong>mynetwork.tf</strong> <i class="conum" data-value="2"></i><b>(2)</b>
+├── <strong>output.tf</strong> <i class="conum" data-value="3"></i><b>(3)</b>
+└── <strong>provider.tf</strong> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Descripción del proveedor sobre el que ejecutar la plantilla, en nuestro caso Google Cloud.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Plantilla principal. Crea la red, las reglas de firewall, las 2 instancias llamando al <em>módulo</em> <code>main.tf</code> de la carpeta <code>instance</code>, y por último realiza la inicialización de cada instancia.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Plantilla con los valores que se muestran de salida al finalizar la ejecución</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Módulo genérico para crear una instancia. Es llamado desde <code>network.tf</code> pasándole las variables que necesita para crear la instancia.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>El archivo <code><strong>provider.tf</strong></code> deberás modificarlo:</p>
+</div>
+<div class="listingblock">
+<div class="title">provider.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-tf hljs" data-lang="tf"># Descargar json con credenciales de aquí:
+# https://console.cloud.google.com/apis/credentials/serviceaccountkey
+# Tras ello definir la variable de entorno apuntando a el json
+# export GOOGLE_CLOUD_KEYFILE_JSON=path/file.json
+
+variable "gcp_project" {
+  # Configurar el nombre del proyecto en GCP
+  default = "cnsa-2022" <i class="conum" data-value="1"></i><b>(1)</b>
+}
+
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "4.11.0"
+    }
+  }
+}
+
+provider "google" {
+  project = var.gcp_project
+  region  = "us-central1"
+  zone    = "us-central1-c"
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sustituye este valor por el nombre de tu proyecto (<em>cnsa2022-abc123</em>)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Para que terraform pueda conectar al <em>provider</em> Google Cloud desde tu máquina local, debes proporcionar un archivo con credenciales. Descarga el archivo <code>.json</code> de aquí: <a href="https://console.cloud.google.com/apis/credentials/serviceaccountkey" class="bare">https://console.cloud.google.com/apis/credentials/serviceaccountkey</a></p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio.png" alt="crear clave cuenta servicio">
+</div>
+<div class="title">Fig. 2. Creación del archivo de credenciales Google Cloud</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Selecciona el proyecto</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Selecciona <em>Crear Cuenta de Servicio</em></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Da un nombre a la cuenta de servicio, y pulsa <em>Crear y Continuar</em></p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio2.png" alt="crear clave cuenta servicio2">
+</div>
+<div class="title">Fig. 3. Propiedades del archivo de credenciales Google Cloud</div>
+</div>
+<div class="paragraph">
+<p>Selecciona el role <em>Administrador de Compute Engine</em>, y pulsa <em>Continuar</em></p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio3.png" alt="crear clave cuenta servicio3">
+</div>
+<div class="title">Fig. 4. Rol de administrador de la cuenta de servicio</div>
+</div>
+<div class="paragraph">
+<p>Deja en blanco los siguiente campos, y pulsa <em>Listo</em>.</p>
+</div>
+<div class="paragraph">
+<p>A continuación, accede a la cuenta de servicio recien creada:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio4.png" alt="crear clave cuenta servicio4">
+</div>
+<div class="title">Fig. 5. Detalles de la nueva cuenta de servicio</div>
+</div>
+<div class="paragraph">
+<p>Ve a la pestaña <em>Claves</em>, <em>Agregar Claves</em>, <em>Crear nueva Clave</em>.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio5.png" alt="crear clave cuenta servicio5">
+</div>
+<div class="title">Fig. 6. Nueva clave de cuenta de servicio</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio6.png" alt="crear clave cuenta servicio6">
+</div>
+<div class="title">Fig. 7. Nueva clave de cuenta de servicio JSON</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/crear-clave-cuenta-servicio7.png" alt="crear clave cuenta servicio7">
+</div>
+<div class="title">Fig. 8. Nueva clave descargada</div>
+</div>
+<div class="paragraph">
+<p>Guarda el archivo .json en la carpeta <code>credentials</code> del proyecto terraform. A continuación, en tu terminal define la variable de entorno apuntando a el archivo recién descargado, sustituyendo <code>path/file.json</code> por la ruta relativa y el nombre del archivo de credenciales:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export GOOGLE_CLOUD_KEYFILE_JSON=<strong>path/file.json</strong></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Recuerda: <strong>NUNCA subas tu archivo de credenciales json</strong> a un repositorio público como GitHub. Para evitarlo, añade el nombre el archivo de credenciales al <strong><code>.gitignore</code></strong>. Se recomienda guardar el archivo <code>.json</code> en una carpeta llamada <code>credentials</code>, porque ya estaría ignorado, puedes verlo en el <strong><code>.gitignore</code></strong> del repositorio que has forkeado.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>En el archivo de credenciales va tu <strong>clave privada</strong> que sustituye a tu usuario y contraseña para crear recursos en GCP. Hay <strong>robots</strong> que continuamente analizan repositorios públicos de  GitHub buscando PRIVATE KEYS y API TOKENS. Si un <em>hacker</em> accede a ese archivo, lo usará para crear servicios hasta agotar tu crédito por completo, fundamentalmente para <strong>minar bitcoins</strong>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ejecución_de_terraform"><a class="anchor" href="#_ejecución_de_terraform"></a>Ejecución de terraform</h2>
+<div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Videotutorial</div>
+<div class="paragraph">
+<p>Accede al <a href="https://drive.google.com/file/d/1_ku2LnVbMmWgns-s8_23ATAQ3nrQEJo2/view?usp=sharing" target="_blank" rel="noopener">videotutorial</a> explicativo de esta sección (mp4, 20 minutos, 171M).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terraform_init"><a class="anchor" href="#_terraform_init"></a><code>terraform init</code></h3>
+<div class="paragraph">
+<p>Una vez configurado el <em>provider</em> comprueba que la conexión es correcta: en tu terminal, ejecuta el comando <code>terraform init</code> para inicializar el proyecto como un proyecto terraform. Si todo es correcto aparecerá un mensaje de éxito.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/terraform-init-ok.png" alt="terraform init ok">
+</div>
+<div class="title">Fig. 9. <code>terraform init</code> correcto</div>
+</div>
+<div class="paragraph">
+<p>Si por el contrario recibes algún mensaje de error, revisa el motivo del error:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Terraform puede que no esté accesible. Debería estar en el <code>PATH</code></p>
+</li>
+<li>
+<p>Revisa si la variable de entorno si se ha guardado correctamente, ejecuta <code>echo $GOOGLE_CLOUD_KEYFILE_JSON</code> y comprueba que es la ruta y nombre de archivo correctos.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terraform_plan"><a class="anchor" href="#_terraform_plan"></a><code>terraform plan</code></h3>
+<div class="paragraph">
+<p>Ejecuta el comando <code>terraform plan</code> para ver el resultado de elementos que se crearán o eliminarán al ejecutar la plantilla. Debe aparecer que se crearán 7 elementos.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/terraform-plan-ok.png" alt="terraform plan ok">
+</div>
+<div class="title">Fig. 10. <code>terraform plan</code> correcto</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terraform_apply"><a class="anchor" href="#_terraform_apply"></a><code>terraform apply</code></h3>
+<div class="paragraph">
+<p>Ejecuta el comando <code>terraform apply --auto-approve</code> para ejecutar la plantilla. Comenzará a crear los 7 elementos definidos en la plantilla. Tardará unos <strong>5 minutos</strong> o incluso más, así que ten paciencia. Sobre todo tardará en ejecutar los bloques de inicialización de las instancias, en las que se actualizan los paquetes, se instala Docker y otros paquetes. En todo momento verás en pantalla el <code>log</code> de las operaciones que se están realizando.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Si la primera vez que aplicas el plan aparece un mensaje de error`<span class="red">Error:</span> &#8230;&#8203; Error 403: Compute Engine API has not been used in project&#8230;&#8203;` es debido a que aun no se ha  activado la API de Compute Engine  en el proyecto. Haz clic en el enlace del error y activa la API. Espera un par de minutos y vuelve a lanzar terraform.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/habilitar-ComputeEngineAPI.png" alt="habilitar ComputeEngineAPI">
+</div>
+<div class="title">Fig. 11. Habilitar la API de Compute Engine</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tras la ejecución, comprueba que las instancias se han creado correctamente en tu proyecto Google Cloud.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Apaga las instancias</strong> cuando dejes de usarlas, para evitar que consuman crédito.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terraform_destroy"><a class="anchor" href="#_terraform_destroy"></a><code>terraform destroy</code></h3>
+<div class="paragraph">
+<p>Cuando desees eliminar todos los recursos que hemos creado con esta plantilla, simplemente ejecuta <code>terraform destroy</code>. Por ahora debes simplemente apagar las instancias cuando no las uses, porque las necesitaremos en el resto de la asignatura.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cloud_dns"><a class="anchor" href="#_cloud_dns"></a>Cloud DNS</h2>
+<div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Este apartado, Cloud DNS, es optativo</strong>. Se evalúa con el 5% de la actividad pero no es obligatorio que lo realices.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Google Cloud ha asignado una IP pública estática a cada una de tus instancias (la IP no cambiará al apagar la instancia y volver a encenderla). A continuación, vamos a asignar nombres de DNS a esas IPs con Cloud DNS y uno de los servicios de DNS disponibles en el Student Pack de GitHub.</p>
+</div>
+<div class="sect2">
+<h3 id="_alta_de_nombre_de_dominio"><a class="anchor" href="#_alta_de_nombre_de_dominio"></a>Alta de nombre de dominio</h3>
+<div class="paragraph">
+<p>GitHub Student pack ofrece varios servicios de nombres dominios gratuitos durante 1 año. Puedes usar <em>name.com</em>, <em>namecheap</em>, o <em>.tech domains</em>. En uno de ellos vamos a dar de alta un nombre de dominio para nuestras instancias en Google Cloud. Voy a describir cómo hacerlo con <strong>.tech</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Accede a <a href="https://get.tech/github-student-developer-pack">get.tech</a> y prueba un nombre de dominio que te guste y que esté disponible.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/tech-domain-disponible.png" alt="tech domain disponible">
+</div>
+<div class="title">Fig. 12. Comprobar si el dominio está disponible en get.tech</div>
+</div>
+<div class="paragraph">
+<p>A continuación, inicia sesión con tu cuenta de github, y verás que tienes el descuento por un año. Procede a la compra gratuita. Además, tendrás que registrarte para poder acceder posteriormente a la configuración. Debes completar los datos de registro ya que te identifican como propietario del nombre de dominio. Si lo deseas, usa como dirección <em>Universidad de Almería, Ctra. Sacramento s/n, 04120, Almería, Spain</em>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuración_de_nombres_de_dominio"><a class="anchor" href="#_configuración_de_nombres_de_dominio"></a>Configuración de nombres de dominio</h3>
+<div class="paragraph">
+<p>Para configurar el nombre de dominio que acabas de adquirir a las IPs reservadas, debes usar Cloud DNS en Google Cloud. Cloud DNS permite asignar los nombres de dominio a las direcciones IP públicas de las instancias. Recuerda comprobar que las IPs son estáticas.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>En el menú de la consola de Google Cloud, entra en <strong>Servicios de red</strong>, <strong>Cloud DNS</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/cloud-dns.png" alt="cloud dns" width="360">
+</div>
+<div class="title">Fig. 13. Cloud DNS</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Haz clic en <strong>Crear Zona</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/cloud-dns-crear-zona.png" alt="cloud dns crear zona">
+</div>
+<div class="title">Fig. 14. Cloud DNS, crear zona</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>A continuación, haz clic en <strong>Añadir Conjunto de registros</strong>. Para cada instancia, crea un conjunto de registros.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/cloud-dns-crear-conjunto-de-registros.png" alt="cloud dns crear conjunto de registros">
+</div>
+<div class="title">Fig. 15. Cloud DNS. Crear conjunto de registros, instancia Jenkins</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/cloud-dns-crear-conjunto-de-registros2.png" alt="cloud dns crear conjunto de registros2">
+</div>
+<div class="title">Fig. 16. Cloud DNS. Crear conjunto de registros, instancia de despliegue de apps</div>
+</div>
+<div class="paragraph">
+<p>Tras la creación, debes tener un resultado similar a este:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/cloud-dns-detalles-zona.png" alt="cloud dns detalles zona">
+</div>
+<div class="title">Fig. 17. Cloud DNS. Detalles de la Zona</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>El último paso será modificar los servidores de DNS de la configuración en la web .tech, para poner los valores de los servidores de Google Cloud. Para ello, inicia sesión en get.tech. Entra en tu pedido.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/get-tech-manage-orders.png" alt="get tech manage orders">
+</div>
+<div class="title">Fig. 18. get.tech. Acceso al pedido</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="5">
+<li>
+<p>Modifica los nombres de los servidores con los valores de tu zona en Cloud DNS</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/get-tech-manage-servers.png" alt="get tech manage servers">
+</div>
+<div class="title">Fig. 19. get.tech. Nombres de los servidores</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="6">
+<li>
+<p>Guarda los cambios. Hasta <strong>pasadas 24 horas</strong> no estarán disponibles.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>
