@@ -212,7 +212,7 @@ provider "google" {
 </table>
 </div>
 <div class="paragraph">
-<p>Para que terraform pueda conectar al <em>provider</em> Google Cloud desde tu máquina local, debes proporcionar un archivo con credenciales. Descarga el archivo <code>.json</code> de aquí: <a href="https://console.cloud.google.com/apis/credentials/serviceaccountkey" class="bare">https://console.cloud.google.com/apis/credentials/serviceaccountkey</a></p>
+<p>Para que terraform pueda conectar al <em>provider</em> Google Cloud desde tu máquina local, debes proporcionar clave para la Cuenta de servicio. Descarga el archivo <code>.json</code> de aquí: <a href="https://console.cloud.google.com/apis/credentials/serviceaccountkey" class="bare">https://console.cloud.google.com/apis/credentials/serviceaccountkey</a></p>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
@@ -423,20 +423,6 @@ provider "google" {
 <div class="sect1">
 <h2 id="_cloud_dns"><a class="anchor" href="#_cloud_dns"></a>Cloud DNS</h2>
 <div class="sectionbody">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p><strong>Este apartado, Cloud DNS, es optativo</strong>. Se evalúa con el 5% de la actividad pero no es obligatorio que lo realices.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>Google Cloud ha asignado una IP pública estática a cada una de tus instancias (la IP no cambiará al apagar la instancia y volver a encenderla). A continuación, vamos a asignar nombres de DNS a esas IPs con Cloud DNS y uno de los servicios de DNS disponibles en el Student Pack de GitHub.</p>
 </div>
@@ -446,7 +432,7 @@ provider "google" {
 <p>GitHub Student pack ofrece varios servicios de nombres dominios gratuitos durante 1 año. Puedes usar <em>name.com</em>, <em>namecheap</em>, o <em>.tech domains</em>. En uno de ellos vamos a dar de alta un nombre de dominio para nuestras instancias en Google Cloud. Voy a describir cómo hacerlo con <strong>.tech</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Accede a <a href="https://get.tech/github-student-developer-pack">get.tech</a> y prueba un nombre de dominio que te guste y que esté disponible.</p>
+<p>Accede a <a href="https://get.tech/github-student-developer-pack">get.tech</a> y prueba un nombre de dominio que te guste y que esté disponible. Cuando encuentres el adecuado, añadeló al carrito con la opción <em>Buy for 1 year</em> seleccionada.</p>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
