@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://127.0.0.1:5000/despliegue-continuo/0.22/index.html</loc>
-<lastmod>2022-02-24T15:33:59.683Z</lastmod>
+<loc>https://ualjjcanada.github.io/cicd/despliegue-continuo/despliegue-continuo/0.22/index.html</loc>
+<lastmod>2022-02-24T15:36:32.640Z</lastmod>
 </url>
 <url>
-<loc>http://127.0.0.1:5000/despliegue-continuo/0.22/infraestructura/index.html</loc>
-<lastmod>2022-02-24T15:33:59.683Z</lastmod>
+<loc>https://ualjjcanada.github.io/cicd/despliegue-continuo/despliegue-continuo/0.22/infraestructura/index.html</loc>
+<lastmod>2022-02-24T15:36:32.640Z</lastmod>
 </url>
 <url>
-<loc>http://127.0.0.1:5000/despliegue-continuo/0.22/prerrequisitos/index.html</loc>
-<lastmod>2022-02-24T15:33:59.683Z</lastmod>
+<loc>https://ualjjcanada.github.io/cicd/despliegue-continuo/despliegue-continuo/0.22/prerrequisitos/index.html</loc>
+<lastmod>2022-02-24T15:36:32.640Z</lastmod>
 </url>
 </urlset>

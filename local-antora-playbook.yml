@@ -2,7 +2,7 @@
 # Run antora: npx antora local-antora-playbook.yml
 site:
   title: CNSA
-  url: http://127.0.0.1:5000
+  url: https://ualjjcanada.github.io/cicd/despliegue-continuo
   start_page: despliegue-continuo::index.adoc
 content:
   sources:
