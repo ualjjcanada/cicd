@@ -17,7 +17,7 @@ node -v
 npm -v
 ```
 
-- Install Antora locally: en la  carpeta con el playbook de Antora
+- Install Antora locally: en la carpeta con el playbook de Antora
 ```
 node -e "fs.writeFileSync('package.json', '{}')"
 npm i -D -E @antora/cli@3.0.1 @antora/site-generator@3.0.1
@@ -28,19 +28,22 @@ npx antora -v
 ```
 - Install extensions
   - Install search powered: `npm i @antora/lunr-extension`
-  - Install http server: 
+  - Install the http-server package *globally* using npm: `npm i -g http-server`  
 
 - Run Antora: 
 ```
 npx antora local-antora-playbook.yml --fetch
 ```
 
-
+- Run http server to preview
+```
+http-server docs -c-1 -p 5000
+```
 
 ## Extensions
 - An Antora extension that adds a self-hosted search powered by Lunr to an Antora site: https://gitlab.com/antora/antora-lunr-extension
 - Install search powered: `npm i @antora/lunr-extension`
-- http server: 
+- http server: https://docs.antora.org/antora/latest/preview-site/
 
 ## Extra
 - Add icons to admonition labels: https://blog.yuzutech.fr/antora-admonitions-icons/

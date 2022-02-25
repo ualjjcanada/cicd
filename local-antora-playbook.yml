@@ -28,5 +28,5 @@ antora:
   extensions:
   - require: '@antora/lunr-extension'
     languages: [es, en]
-output:
-  dir: ./docs
+# output:
+#   dir: ./docs
