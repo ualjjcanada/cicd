@@ -14,7 +14,7 @@ ui:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable ## Default
     snapshot: true
   supplemental_files: ./supplemental-ui
-  ## supplemental_files: ./node_modules/@antora/lunr-extension/supplemental_ui
+  ## supplemental_files: ./node_modules/@antora/lunr-extension/supplemental_ui  ## run once to generate _/js/search-ui.js. Later substitute by your supplemental-ui
 asciidoc:
   attributes:
     encoding: utf-8
@@ -28,5 +28,5 @@ antora:
   extensions:
   - require: '@antora/lunr-extension'
     languages: [es, en]
-# output:
-#   dir: ./docs
+output:
+  dir: ./docs
