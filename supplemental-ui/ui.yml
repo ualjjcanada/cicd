@@ -1,1 +1,2 @@
 static_files: [.nojekyll,favicon.ico]
+hyphens: none

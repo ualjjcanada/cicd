@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Primeros ejemplos :: CNSA</title>
+    <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22/jenkinsdocker/first-projects.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="despliegue-continuo" data-version="0.22">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Despliegue continuo con Jenkins</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introducción</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../prerrequisitos/index.html">Prerrequisitos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../infraestructura/index.html">Creación de la infraestructura en Google Cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Primeros pasos con Jenkins</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="install-jenkins.html">Instalación y configuración de Jenkins</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="first-projects.html">Primeros ejemplos</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Despliegue continuo con Jenkins</span>
+    <span class="version">0.22</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.22</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Primeros pasos con Jenkins</a></li>
+    <li><a href="first-projects.html">Primeros ejemplos</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/jenkinsdocker/pages/first-projects.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Primeros ejemplos</h1>
+<div class="sect1">
+<h2 id="_creación_del_primer_proyecto_freestyle"><a class="anchor" href="#_creación_del_primer_proyecto_freestyle"></a>Creación del primer proyecto freestyle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creamos el primer proyecto de Jenkins. Comprueba que Jenkins puede llamar a docker. Para ello crea un nuevo proyecto tipo freestyle.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-new-hello-docker.png" alt="jenkins new hello docker">
+</div>
+<div class="title">Fig. 1. Nuevo proyecto, freestyle</div>
+</div>
+<div class="paragraph">
+<p>En la sección <strong>Build</strong>, añade un bloque <strong>Execute shell</strong>. Pega estos comandos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">whoami
+git --version
+java -version
+docker -v</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Guarda los cambios. Haz clic sobre <strong>Build now</strong>. Haz clic sobre la bolita verde para ver el la <em>salida por consola</em>.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-new-hello-docker-console-output.png" alt="jenkins new hello docker console output">
+</div>
+<div class="title">Fig. 2. Build now. Resultado del build</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-new-hello-docker-console-success.png" alt="jenkins new hello docker console success">
+</div>
+<div class="title">Fig. 3. Salida por consola</div>
+</div>
+<div class="paragraph">
+<p>Por consola se visualiza el resultado de ejecutar los comandos dentro del contenedor. Como puedes ver, <code>git</code> y <code>java</code> están instalados, venían ya en la imagen de jenkins:lts de la que hemos partido en la definición del Dockerfile. Además, <code>docker</code> también está disponible, se ha instalado correctamente mediante la definición incluida en el Dockerfile.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creación_del_primer_pipeline"><a class="anchor" href="#_creación_del_primer_pipeline"></a>Creación del primer pipeline</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_pipeline_sobre_el_nodo_master"><a class="anchor" href="#_pipeline_sobre_el_nodo_master"></a>Pipeline sobre el nodo master</h3>
+<div class="paragraph">
+<p>Creamos el primer proyecto de Jenkins tipo pipeline. Vamos a darle el nombre <code>hello-maven-pipeline-on-master-node</code>. Este pipeline se ejecutará sobre el nodo (<code>agent</code>) master, es decir, sobre el mismo contenedor que está ejecutando Jenkins.</p>
+</div>
+<div class="paragraph">
+<p>Copia la siguiente definición de pipeline en el bloque <strong>Pipeline</strong>, <strong>Pipeline script</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pipeline {
+    agent any
+    tools {
+        maven 'Default Maven' <i class="conum" data-value="1"></i><b>(1)</b>
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh '''
+                    java -version
+                    mvn -v
+                  ''' <i class="conum" data-value="2"></i><b>(2)</b>
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Utiliza la instalación de Maven que hemos hecho en la sección anterior, y le dimos el nombre <code>Default Maven</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>En la shell ejecutará los comandos para mostrar las versiones de Java y Maven.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Haz clic sobre <strong>Build now</strong>, y visualiza la consola. Como parte de la salida, se debe visualizar algo así (puede que los números de versiones varíen):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[Pipeline] sh
++ java -version
+openjdk version "11.0.14" 2022-01-18
+OpenJDK Runtime Environment Temurin-11.0.14+9 (build 11.0.14+9)
+OpenJDK 64-Bit Server VM Temurin-11.0.14+9 (build 11.0.14+9, mixed mode)
++ mvn -v
+Apache Maven 3.8.4 (9b656c72d54e5bacbed989b64718c159fe39b537)
+Maven home: /var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Default_Maven
+Java version: 11.0.14, vendor: Eclipse Adoptium, runtime: /opt/java/openjdk
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "5.11.0-1029-gcp", arch: "amd64", family: "unix"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pipeline_con_un_contenedor_como_agente"><a class="anchor" href="#_pipeline_con_un_contenedor_como_agente"></a>Pipeline con un contenedor como agente</h3>
+<div class="paragraph">
+<p>Otra alternativa es que el pipeline se ejecute, en lugar de en el nodo master, en un nodo tipo "agente" que se creará <em>ex profeso</em> a partir de un contenedor Docker disponible de DockerHub.</p>
+</div>
+<div class="paragraph">
+<p>A continuación creamos el segundo proyecto de Jenkins tipo pipeline. Vamos a darle el nombre <code>hello-maven-pipeline-on-container-node</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pipeline {
+    agent {
+        docker {
+            image 'maven:3.6-openjdk-8' <i class="conum" data-value="1"></i><b>(1)</b>
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh '''
+                    java -version
+                    mvn -v
+                  '''
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Entre las <a href="https://hub.docker.com/_/maven">imágenes de Maven</a> disponibles están <code>3.6-openjdk-11</code>, <code>3.6-openjdk-15</code>, etc</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Te dará error. En la máquina Jenkins, sobre el S.O. host, hay que abrir permisos en el socket de Docker para que desde dentro del contenedor Jenkins permita crear otros contenedores <em>hermanos</em>. Para ello modifica los permisos así:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">sudo chmod 666 /var/run/docker.sock</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tras ello deben construirse correctamente. Sin embargo, abrir permisos a ese archivo supone ciertos problemas de seguridad: <em>Avoid workarounds like this which could be a big potential security threat. The result of your chmod practically gives all local users read and write permissions to the docker-socket which allows anyone to interfere with your docker images.</em> (<a href="https://serverfault.com/questions/821062/how-to-run-sudo-chmod-666-var-run-docker-sock-on-ubuntu-before-the-services">fuente</a>).</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Para que tras reiniciar la máquina se mantengan los permisos del socket de Docker:</p>
+</div>
+<div class="paragraph">
+<p>Crea el archivo <code>/etc/rc.local</code>, y añade el siguiente contenido:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">#!/bin/sh -e
+chmod 666 /var/run/docker.sock</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Por último, dale los permisos adecuados al archivo <code>/etc/rc.local</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">sudo chmod 755 /etc/rc.local</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tras ello reinicia la máquina. Al volver a entrar, comprueba que el socket de Docker tiene los permisos adecuados:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">$ ls -la /var/run/docker.sock
+srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Otros ejemplos similares con contenedores NodeJS están disponibles en la <a href="https://www.jenkins.io/doc/book/pipeline/docker/">documentación de Jenkins</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_usando_varios_contenedores_como_agente"><a class="anchor" href="#_usando_varios_contenedores_como_agente"></a>Usando varios contenedores como agente</h3>
+<div class="paragraph">
+<p>Es habitual tener varias tecnologías en un mismo proyecto. Por ejemplo, un repositorio puede tener tanto un back-end basado en Java como un front-end basado en JavaScript. Combinar Docker y Pipeline permite usar diferentes agentes en diferentes fases (<em>stages</em>) del pipeline:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pipeline {
+    agent none
+    stages {
+        stage('Back-end') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
+            steps {
+                sh 'mvn --version'
+            }
+        }
+        stage('Front-end') {
+            agent {
+                docker { image 'node:16.13.1-alpine' }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conexión_con_la_máquina_de_despliegue"><a class="anchor" href="#_conexión_con_la_máquina_de_despliegue"></a>Conexión con la máquina de despliegue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para automatizar el despliegue sobre la instancia que tenemos creada para ello, deberás permitir que Jenkins ejecute  comandos sobre la máquina de despliegue a través de SSH. Para ello, la instancia Jenkins debe poder conectarse a la instancia de despliegue mediante una conexión SSH basada en autenticación por pareja de claves pública/privada, que ha demostrado ser más seguro sobre la autenticación estándar de nombre de usuario/contraseña.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/deploy-schema-full.png" alt="deploy schema full">
+</div>
+<div class="title">Fig. 4. Esquema de despliegue con Jenkins</div>
+</div>
+<div class="paragraph">
+<p>Para ello, los pasos que se detallan a continuación permiten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>generar una nueva pareja de claves que usaremos para el despliegue,</p>
+</li>
+<li>
+<p>copiar la clave pública generada en la instancia de despliegue,</p>
+</li>
+<li>
+<p>y por último probar que la conexión se realiza correctamente.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ejecuta los siguientes pasos:</p>
+</div>
+<div class="sect2">
+<h3 id="_generar_la_nueva_pareja_de_claves_de_despliegue"><a class="anchor" href="#_generar_la_nueva_pareja_de_claves_de_despliegue"></a>Generar la nueva pareja de claves de despliegue</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Conecta por SSH a la máquina Jenkins: <code>ssh ubuntu@<em>instancia-jenkins</em></code></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/ssh-from-developer-to-jenkins.png" alt="ssh from developer to jenkins">
+</div>
+<div class="title">Fig. 5. Conexión SSH a la instancia Jenkins</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Crea la carpeta donde se va a guardar la nueva pareja de claves: <code>mkdir /home/ubuntu/jenkins_home/.ssh</code></p>
+</li>
+<li>
+<p>Crea una pareja de claves ssh de despliegue: <code>ssh-keygen -t rsa -b 4096</code></p>
+</li>
+<li>
+<p>Cuando pida el <strong>nombre</strong>, escribe el nuevo nombre <strong>id_rsa_deploy</strong> junto con la ubicación donde Jenkins va a buscar las claves de forma predeterminada, que es: <code>/home/ubuntu/jenkins_home/.ssh/<strong>id_rsa_deploy</strong></code></p>
+</li>
+<li>
+<p>Por último, deja la contraseña en blanco (pulsa ENTER): <code>Enter passphrase (empty for no passphrase):</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Esto crea la clave privada en <code>/home/ubuntu/jenkins_home/.ssh/<strong>id_dsa_deploy</strong></code> y una clave pública asociada en <code>/home/ubuntu/jenkins_home/.ssh/<strong>id_dsa_deploy.pub</strong></code>. Esta nueva pareja de claves la usaremos exclusivamente para el despliegue de nuestros proyectos. Al haberlos guardado en la carpeta <code>/home/ubuntu/jenkins_home/</code> los archivos están accesibles dentro del contenedor, porque recuerda que esa carpeta la habíamos mapeado con la carpeta <code>/var/jenkins_home</code> del contenedor.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-ls-deploy-keys.png" alt="jenkins ls deploy keys">
+</div>
+<div class="title">Fig. 6. Pareja de claves <em>id_rsa_deploy</em></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_copiar_la_clave_pública_a_la_instancia_de_despliegue"><a class="anchor" href="#_copiar_la_clave_pública_a_la_instancia_de_despliegue"></a>Copiar la clave pública a la instancia de despliegue</h3>
+<div class="olist arabic">
+<ol class="arabic" start="6">
+<li>
+<p>Muestra el contenido de la clave pública: <code>cat /home/ubuntu/jenkins_home/.ssh/id_rsa_deploy.pub</code></p>
+</li>
+<li>
+<p>Copia el contenido: con el ratón, selecciona el contenido de la clave, desde “ssh-rsa” hasta el final, y pulsa ENTER (o CTRC+C)</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-cat-public-key.png" alt="jenkins cat public key">
+</div>
+<div class="title">Fig. 7. Copia el contenido de <em>id_rsa_deploy.pub</em></div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Debido a que algunos terminales añaden saltos delinea al copiar texto desde el terminal, como ocurre con cloud shell de GCP, es <em>recomendable</em> copiar el contenido de la clave pública en cualquier editor de texto "plano" (Notepad++, Sublime, VS Code, etc) y eliminar los saltos de línea, si los hubiera.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="8">
+<li>
+<p>Ahora pégalo en tu PC, lo necesitaremos más adelante.</p>
+</li>
+<li>
+<p>Desconecta de la máquina Jenkins: <code>exit</code></p>
+</li>
+<li>
+<p>Conecta por ssh a la instancia de despliegue</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/ssh-from-developer-to-deploy.png" alt="ssh from developer to deploy">
+</div>
+<div class="title">Fig. 8. Conexión SSH a la instancia Jenkins</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="11">
+<li>
+<p>Edita el archivo <code>authorized_keys</code>:  <code>nano home/ubuntu/.ssh/authorized_keys</code></p>
+</li>
+<li>
+<p>Ese archivo ya tenía una clave pública, la correspondiente a tu pareja de claves personal que inyectamos en la creación de la instancia con Terraform (por eso has podido conectar por ssh a esa máquina). Pega el contenido de la clave pública de despliegue. Ahora debe tener 2 claves públicas.</p>
+</li>
+<li>
+<p>Ya puedes desconectar de la instancia de despliegue.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prueba_de_la_conexión_desde_jenkins_a_despliegue"><a class="anchor" href="#_prueba_de_la_conexión_desde_jenkins_a_despliegue"></a>Prueba de la conexión desde jenkins a despliegue</h3>
+<div class="paragraph">
+<p>Vamos a probar que funciona:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-ssh-to-deploy.png" alt="jenkins ssh to deploy">
+</div>
+<div class="title">Fig. 9. Conexión SSH desde la instancia Jenkins a la de despliegue</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="14">
+<li>
+<p>Conecta de nuevo a la instancia jenkins y prueba la conexión ssh a la instancia de despliegue. Recuerda que puesto que Jenkins se está ejecutando como un contenedor, debes probar la conexión ssh desde dentro del contenedor:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker exec -it jenkins-docker ssh ubuntu@<em>instancia_deploy</em> -i /var/jenkins_home/.ssh/id_rsa_deploy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>En el comando anterior:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>docker exec -it</code> indica ejecutar un comando desde dentro del contenedor</p>
+</li>
+<li>
+<p><code>jenkins-docker</code> es el nombre del contenedor</p>
+</li>
+<li>
+<p><code>ssh ubuntu@<em>instancia_deploy</em> -i /var/jenkins_home/.ssh/id_rsa_deploy</code> es el comando a ejecutar en el contenedor. En este caso, <code>ssh</code> con el parámetro <code>-i &#8230;&#8203;</code> para indica la clave privada que debe usar para conectar.</p>
+</li>
+<li>
+<p>Recuerda que <code>/var/jenkins_home</code> es la carpeta HOME del usuario <em>jenkins</em> dentro del contenedor, y <em>jenkins</em> es el usuario del contenedor que ejecuta Jenkins.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="15">
+<li>
+<p>La primera vez que realizas una conexión ssh desde un usuario en una máquina origen a una destino, te pregunta si deseas almacenar la clave de host de destino en la lista de hosts conocidos (<code>known_hosts</code>) de tu máquina origen. Contesta: <code>yes</code></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/ssh-host-autentication.png" alt="ssh host autentication">
+</div>
+<div class="title">Fig. 10. Validar la clave del host: <strong>yes</strong></div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="16">
+<li>
+<p>Si todo ha ido bien, la conexión se ha debido realizar. Sal con <code>exit</code>. Si no ha sido así, verifica que la ruta al archivo de la clave privada es correcta, y que el nombre de la máquina de despliegue es correcto.</p>
+</li>
+<li>
+<p>Comprueba que la clave de host de la máquina de destino (despliegue) se ha guardado en la máquina origen (jenkins) en el archivo <code>~/.ssh/known_hosts</code> del usuario que ha ejecutado el comando ssh, en nuestro caso, del usuario jenkins de contenedor: <code>docker exec -it jenkins-docker cat /var/jenkins_home/.ssh/known_hosts</code></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/ssh-known_hosts.png" alt="ssh known hosts">
+</div>
+<div class="title">Fig. 11. Contenido del archivo <strong>known_hosts</strong> en el contenedor</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="18">
+<li>
+<p>Puedes comprobar también el contenido de <em>known_hosts</em> en el archivo <code>/home/ubuntu/jenkins_home/.ssh/known_hosts</code>, ya que recuerda que hay un volumen mapeado entre la carpeta local <code>/home/ubuntu/jenkins_home</code> y la carpeta del contenedor <code>/var/jenkins_home</code>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/ssh-known_hosts-local.png" alt="ssh known hosts local">
+</div>
+<div class="title">Fig. 12. Contenido del archivo <strong>known_hosts</strong> en la carpeta local</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="19">
+<li>
+<p>Ahora que la conexión por SSH entre la máquina Jenkins y la máquina de despliegue es correcta, vamos a hacer que Jenkins automatice la ejecución de comandos sobre la máquina de despliegue: entra en Jenkins y añade el siguiente comando al proyecto <em>hello_docker</em> existente, sustituyendo <em>MAQUINA_DEPLOY</em> por el nombre DNS de la máquina de despliegue.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ssh -i ~/.ssh/id_rsa_deploy ubuntu@MAQUINA_DEPLOY "pwd &amp;&amp; ls -la"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Como aclaración de este comando:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>el parámetro <code>-i</code> indica la clave privada que queremos usar en la conexión ssh</p>
+</li>
+<li>
+<p><code>"pwd &amp;&amp; ls -la"</code> son comandos básicos que ejecuta sobre la máquina remota. Hemos indicado estos comandos simplemente para probar que la conexión se realiza correctamente.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenksin-hello-docker-ssh-to-deploy.png" alt="jenksin hello docker ssh to deploy">
+</div>
+<div class="title">Fig. 13. Modificación del proyecto para que ejecute un comando sobre la instancia de despliegue</div>
+</div>
+<div class="paragraph">
+<p>Tras ejecutar el proyecto en Jenkins, el resultado debe ser correcto.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenksin-hello-docker-ssh-to-deploy-output.png" alt="jenksin hello docker ssh to deploy output">
+</div>
+<div class="title">Fig. 14. Salida por consola. El comando se ha ejecutado correctamente.</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

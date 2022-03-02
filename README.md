@@ -43,6 +43,18 @@ http-server docs -c-1 -p 5000
 ## Extensions
 - An Antora extension that adds a self-hosted search powered by Lunr to an Antora site: https://gitlab.com/antora/antora-lunr-extension
 - Install search powered: `npm i @antora/lunr-extension`
+
+Para que funcione la busqueda con esta extensión, hay que configurar el playbook con el valor: 
+```
+supplemental_files: ./node_modules/@antora/lunr-extension/supplemental_ui
+```
+Esto genera el arcihvo _/js/search-ui.js
+Tras ello, se cambia a tu configuración propia para la UI
+```
+supplemental_files: ./supplemental-ui
+```
+Y así  ya se queda creado  el archivo search-ui.js  necesario para que funcione la búsqueda
+
 - http server: https://docs.antora.org/antora/latest/preview-site/
 
 ## Extra
