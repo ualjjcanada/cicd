@@ -224,6 +224,26 @@ Default locale: en, platform encoding: UTF-8
 OS name: "linux", version: "5.11.0-1029-gcp", arch: "amd64", family: "unix"</code></pre>
 </div>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Lanzar las construcciones de proyectos en el nodo máster puede acarrear problemas de seguridad. De hecho, Jenkins avisa de que esta configuración es inadecuada, y recomienda configurar agentes independientes donde lanzar las ejecuciones de los proyectos.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/issue-build-on-master.png" alt="issue build on master">
+</div>
+<div class="title">Fig. 4. Aviso de evitar ejecuciones en el nodo máster de Jenkins</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_pipeline_con_un_contenedor_como_agente"><a class="anchor" href="#_pipeline_con_un_contenedor_como_agente"></a>Pipeline con un contenedor como agente</h3>
@@ -361,7 +381,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/deploy-schema-full.png" alt="deploy schema full">
 </div>
-<div class="title">Fig. 4. Esquema de despliegue con Jenkins</div>
+<div class="title">Fig. 5. Esquema de despliegue con Jenkins</div>
 </div>
 <div class="paragraph">
 <p>Para ello, los pasos que se detallan a continuación permiten:</p>
@@ -395,7 +415,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/ssh-from-developer-to-jenkins.png" alt="ssh from developer to jenkins">
 </div>
-<div class="title">Fig. 5. Conexión SSH a la instancia Jenkins</div>
+<div class="title">Fig. 6. Conexión SSH a la instancia Jenkins</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="2">
@@ -420,7 +440,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/jenkins-ls-deploy-keys.png" alt="jenkins ls deploy keys">
 </div>
-<div class="title">Fig. 6. Pareja de claves <em>id_rsa_deploy</em></div>
+<div class="title">Fig. 7. Pareja de claves <em>id_rsa_deploy</em></div>
 </div>
 </div>
 <div class="sect2">
@@ -439,7 +459,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/jenkins-cat-public-key.png" alt="jenkins cat public key">
 </div>
-<div class="title">Fig. 7. Copia el contenido de <em>id_rsa_deploy.pub</em></div>
+<div class="title">Fig. 8. Copia el contenido de <em>id_rsa_deploy.pub</em></div>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -472,7 +492,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/ssh-from-developer-to-deploy.png" alt="ssh from developer to deploy">
 </div>
-<div class="title">Fig. 8. Conexión SSH a la instancia Jenkins</div>
+<div class="title">Fig. 9. Conexión SSH a la instancia Jenkins</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="11">
@@ -497,7 +517,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/jenkins-ssh-to-deploy.png" alt="jenkins ssh to deploy">
 </div>
-<div class="title">Fig. 9. Conexión SSH desde la instancia Jenkins a la de despliegue</div>
+<div class="title">Fig. 10. Conexión SSH desde la instancia Jenkins a la de despliegue</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="14">
@@ -541,7 +561,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/ssh-host-autentication.png" alt="ssh host autentication">
 </div>
-<div class="title">Fig. 10. Validar la clave del host: <strong>yes</strong></div>
+<div class="title">Fig. 11. Validar la clave del host: <strong>yes</strong></div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="16">
@@ -557,7 +577,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/ssh-known_hosts.png" alt="ssh known hosts">
 </div>
-<div class="title">Fig. 11. Contenido del archivo <strong>known_hosts</strong> en el contenedor</div>
+<div class="title">Fig. 12. Contenido del archivo <strong>known_hosts</strong> en el contenedor</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="18">
@@ -570,7 +590,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/ssh-known_hosts-local.png" alt="ssh known hosts local">
 </div>
-<div class="title">Fig. 12. Contenido del archivo <strong>known_hosts</strong> en la carpeta local</div>
+<div class="title">Fig. 13. Contenido del archivo <strong>known_hosts</strong> en la carpeta local</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="19">
@@ -601,7 +621,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/jenksin-hello-docker-ssh-to-deploy.png" alt="jenksin hello docker ssh to deploy">
 </div>
-<div class="title">Fig. 13. Modificación del proyecto para que ejecute un comando sobre la instancia de despliegue</div>
+<div class="title">Fig. 14. Modificación del proyecto para que ejecute un comando sobre la instancia de despliegue</div>
 </div>
 <div class="paragraph">
 <p>Tras ejecutar el proyecto en Jenkins, el resultado debe ser correcto.</p>
@@ -610,7 +630,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 <div class="content">
 <img src="_images/jenksin-hello-docker-ssh-to-deploy-output.png" alt="jenksin hello docker ssh to deploy output">
 </div>
-<div class="title">Fig. 14. Salida por consola. El comando se ha ejecutado correctamente.</div>
+<div class="title">Fig. 15. Salida por consola. El comando se ha ejecutado correctamente.</div>
 </div>
 </div>
 </div>
