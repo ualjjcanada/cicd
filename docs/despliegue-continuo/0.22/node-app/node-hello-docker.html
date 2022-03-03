@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Hola_Mundo en Node.js con Docker :: CNSA</title>
+    <title>Hola mundo en Node.js con Docker :: CNSA</title>
     <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22/node-app/node-hello-docker.html">
     <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -104,7 +104,7 @@
     <a class="nav-link" href="node-hello.html"><em>Hola mundo</em> en Node.js</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="node-hello-docker.html"><em>Hola_Mundo</em> en Node.js con Docker</a>
+    <a class="nav-link" href="node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a>
   </li>
 </ul>
   </li>
@@ -140,7 +140,7 @@
   <ul>
     <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
     <li><a href="index.html">Aplicación en Node.js</a></li>
-    <li><a href="node-hello-docker.html"><em>Hola_Mundo</em> en Node.js con Docker</a></li>
+    <li><a href="node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/node-app/pages/node-hello-docker.adoc">Edit this Page</a></div>
@@ -150,14 +150,14 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page"><em>Hola_Mundo</em> en Node.js con Docker</h1>
+<h1 class="page"><em>Hola mundo</em> en Node.js con Docker</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para realizar el despliegue de la app Hola Mundo en NodeJs como un contenedor, primero tenemos que <a href="https://nodejs.org/fr/docs/guides/nodejs-docker-webapp/">dockerizar</a> la aplicación. Una vez construido el contenedor, habrá que publicar la imagen de contenedor en un registro como Google Container Registry, y por último ejecutar el contenedor en la instancia de despliegue.</p>
+<p>Para realizar el despliegue de la app <em>Hola mundo</em> en Node.js como un contenedor, primero tenemos que <a href="https://nodejs.org/fr/docs/guides/nodejs-docker-webapp/">dockerizar</a> la aplicación. Una vez construido el contenedor, habrá que publicar la imagen de contenedor en un registro como Google Container Registry, y por último ejecutar el contenedor en la instancia de despliegue.</p>
 </div>
 <div class="paragraph">
-<p>A continuación se describe cómo crear un contenedor Docker de la aplicación NodeJs. Los pasos se realizan en local, y al final configuraremos el pipeline de Jenkins para que se realicen automáticamente.</p>
+<p>A continuación se describe cómo crear un contenedor Docker de la aplicación Node.js. Los pasos se realizan en local, y al final configuraremos el pipeline de Jenkins para que se realicen automáticamente.</p>
 </div>
 </div>
 </div>
@@ -165,7 +165,7 @@
 <h2 id="_creación_del_dockerfile"><a class="anchor" href="#_creación_del_dockerfile"></a>Creación del <code>Dockerfile</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para crear el contendedor de Docker que empaquete la aplicación NodeJs, vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto:</p>
+<p>Para crear el contendedor de Docker que empaquete la aplicación Node.js, vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto:</p>
 </div>
 <div class="listingblock">
 <div class="title">Dockerfile</div>
@@ -665,7 +665,7 @@ docker run -p 8080:3000 -t --name nodeapp gcr.io/$GOOGLE_CLOUD_PROJECT/nodeapp:1
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="https://nodejs.org/es/docs/guides/nodejs-docker-webapp/">Dockerizing a Node.js web app</a> @ NodeJs Docs</p>
+<p><a href="https://nodejs.org/es/docs/guides/nodejs-docker-webapp/">Dockerizing a Node.js web app</a> @ Node.js Docs</p>
 </li>
 <li>
 <p><a href="https://medium.com/@sssanjaya/a-simple-docker-setup-for-simple-hello-world-nodejs-application-bcf79bb608a0">A simple docker setup for hello world nodejs application</a> @ Medium</p>
