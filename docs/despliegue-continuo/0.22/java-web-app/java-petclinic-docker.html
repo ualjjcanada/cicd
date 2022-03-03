@@ -165,13 +165,37 @@
 <h2 id="_creación_del_dockerfile"><a class="anchor" href="#_creación_del_dockerfile"></a>Creación del <code>Dockerfile</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para <a href="https://spring.io/guides/gs/spring-boot-docker/">crear el contendedor de Docker</a> que empaquete la aplicación PetClinic, vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto:</p>
+<p>Para construir aplicaciones Maven con Docker y luego <a href="https://spring.io/guides/gs/spring-boot-docker/">crear el contendedor de Docker</a> que empaquete la aplicación PetClinic, la opción recomendada es usar Multi-Stage Builds en tu Dockerfile, de manera que:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Una primera fase construye el <code>.jar</code> a partir de una imagen de Maven, como por ejemplo <code>maven:3.8.4-openjdk-11-slim</code></p>
+</li>
+<li>
+<p>Y luego ese <code>.jar</code> lo copias en el contenedor basado en la imagen OpenJDK-11, que es el que nos interesa.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto:</p>
 </div>
 <div class="listingblock">
 <div class="title">Dockerfile</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker"># Start with a base image containing Java runtime
-FROM openjdk:11-jdk-alpine
+<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker">FROM maven:3.8.4-openjdk-11-slim AS build <i class="conum" data-value="1"></i><b>(1)</b>
+WORKDIR /app
+# First copy only the pom file. This is the file with less change
+COPY ./pom.xml .
+# Download the package and make dependencies cached in docker image
+RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml clean dependency:go-offline
+# Copy the actual code
+COPY ./ .
+# Then build the code
+RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml clean package
+
+# Start with a base image containing Java runtime
+FROM openjdk:11-jdk-alpine <i class="conum" data-value="2"></i><b>(2)</b>
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 # The application's jar file
@@ -182,36 +206,24 @@ COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>El Dockerfile es muy sencillo, contiene los pasos básicos para ejecutar una aplicación String Boot en un contenedor: partiendo de una imagen de <code>openjdk</code>, copia el archivo <code>target/*.jar</code> en el contenedor con el nombre <code>app.jar</code> y lo ejecuta mediante el comando <code>ENTRYPOINT</code> para que no haya ninguna shell sobre el proceso <code>java</code>.</p>
-</div>
-<div class="paragraph">
-<p>Puedes construir la imagen del contenedor:</p>
-</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Primera fase o <em>stage</em> de <em>build</em>, construye la aplición llamando a los goals <code>clean package</code> de Maven. Contiene los pasos básicos para construir una aplicación Java basada en Maven. Dicha construcción la divide en dos partes, primero copia el <code>pom.xml</code> y descarga las dependencias con <code>dependency:go-offline</code>, y luego copia todos los fuentes y construye el proyecto con <code>package</code>. De esta forma se optimiza la reconstrucción del contenedor ya que la descarga de dependencias es una etapa que dura varios minutos.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Segunda fase, crea una imagen con el entorno de ejecución de Java 11 y el empaquetado <code>.jar</code> de la aplicación PetClinic. Contiene los pasos básicos para ejecutar una aplicación String Boot en un contenedor: partiendo de una imagen de <code>openjdk</code>, copia el archivo <code>target/*.jar</code> en el contenedor con el nombre <code>app.jar</code> y lo ejecuta mediante el comando <code>ENTRYPOINT</code> para que no haya ninguna shell sobre el proceso <code>java</code>.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Construye el proyecto PetClinic con maven en tu equipo local:</p>
+<p>Construye el contenedor con <code>docker build</code>, ten paciencia, tardará varios minutos:</p>
 </li>
 </ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">./mvnw clean package</code></pre>
-</div>
-</div>
-<div class="imageblock text-center thumb">
-<div class="content">
-<img src="_images/mvn-package-petclinic.png" alt="mvn package petclinic">
-</div>
-<div class="title">Fig. 1. Resultado de la construcción local con Maven</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Construye el contenedor con <code>docker build</code>:</p>
-</li>
-</ol>
+</div></td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -222,7 +234,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 <div class="content">
 <img src="_images/docker-build-petclinic.png" alt="docker build petclinic">
 </div>
-<div class="title">Fig. 2. Docker build</div>
+<div class="title">Fig. 1. Docker build</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -233,6 +245,27 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 <td class="content">
 <div class="paragraph">
 <p>Para trabajar con contenedores Docker en tu equipo local, debes tener Docker instalado. Recuerda iniciar Docker Desktop en Windows, o iniciar el servicio Docker en Linux o Mac. Comprueba que está funcionado ejecutando el comando <code>docker ps</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Si estás trabajando en Windows, la <a href="https://forums.docker.com/t/formatting-violations-found-in-the-java-files-when-docker-run/119576">construcción da un error</a> por problemas de codificación de los saltos de línea diferentes entre Windows y Linux. Para resolverlo, sustituye en la primera fase del Dockerfile la linea de construcción que llama a <code>package</code> por estas dos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker"># Then build the code - On Windows
+RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml clean spring-javaformat:apply --no-transfer-progress
+RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml package --no-transfer-progress</code></pre>
+</div>
 </div>
 </td>
 </tr>
@@ -302,7 +335,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 <div class="content">
 <img src="_images/cloud-containers-registry-key-create.png" alt="cloud containers registry key create">
 </div>
-<div class="title">Fig. 3. Creación Service Account Key for pull/push on Container Registry</div>
+<div class="title">Fig. 2. Creación Service Account Key for pull/push on Container Registry</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="2">
@@ -360,7 +393,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 <div class="content">
 <img src="_images/cloud-containers-registry-login.png" alt="cloud containers registry login">
 </div>
-<div class="title">Fig. 4. Autenticación de Docker contra Container Registry</div>
+<div class="title">Fig. 3. Autenticación de Docker contra Container Registry</div>
 </div>
 </div>
 </div>
@@ -392,7 +425,7 @@ docker build -t gcr.io/$GOOGLE_CLOUD_PROJECT/petclinic:1.0 .</code></pre>
 <div class="content">
 <img src="_images/container-registry-habilitar-api.png" alt="container registry habilitar api">
 </div>
-<div class="title">Fig. 5. Habilitar la API Container Registry</div>
+<div class="title">Fig. 4. Habilitar la API Container Registry</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="3">
@@ -417,7 +450,7 @@ docker build -t gcr.io/$GOOGLE_CLOUD_PROJECT/petclinic:1.0 .</code></pre>
 <div class="content">
 <img src="_images/container-registry-pushed-petclinic.png" alt="container registry pushed petclinic">
 </div>
-<div class="title">Fig. 6. Lista de imágenes en Container Registry</div>
+<div class="title">Fig. 5. Lista de imágenes en Container Registry</div>
 </div>
 <div class="paragraph">
 <p>La imagen del contenedor PetClinic ya está disponible en el registro privado de nuestro proyecto GCP. Utilizando nuestras credenciales podremos hacer <code>docker pull</code> de dicha imagen para descargarla en cualquier máquina con docker, y ejecutarlo con <code>docker run</code>.</p>
@@ -436,7 +469,7 @@ docker run -p 8080:8080 -t --name petclinic  gcr.io/$GOOGLE_CLOUD_PROJECT/petcli
 <div class="content">
 <img src="_images/docker-run-petclinic-webapp-error-authentication.png" alt="docker run petclinic webapp error authentication">
 </div>
-<div class="title">Fig. 7. Error de autenticación en Container Registry</div>
+<div class="title">Fig. 6. Error de autenticación en Container Registry</div>
 </div>
 <div class="paragraph">
 <p>Para arreglarlo, habrá que copiar en la máquina de despliegue el archivo de credenciales <code>.json</code> con premisos sobre Container Registry. A continuación se muestran los comandos necesarios para ello. Una vez disponible este archivo en la instancia de despliegue ejecutar el comando <code>docker login</code> y tras ello ya si podremos hacer <code>docker pull</code> y <code>docker run</code>.</p>
@@ -631,7 +664,7 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
 <div class="content">
 <img src="_images/jenkins-credentials-container-registry.png" alt="jenkins credentials container registry">
 </div>
-<div class="title">Fig. 8. Credenciales en Jenkins para Container Registry</div>
+<div class="title">Fig. 7. Credenciales en Jenkins para Container Registry</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="2">
@@ -661,7 +694,7 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
 <div class="content">
 <img src="_images/jenkins-published-container-registry.png" alt="jenkins published container registry">
 </div>
-<div class="title">Fig. 9. Imagen publicada en Container Registry, etiquetada con el número de build</div>
+<div class="title">Fig. 8. Imagen publicada en Container Registry, etiquetada con el número de build</div>
 </div>
 </div>
 <div class="sect2">
@@ -809,7 +842,7 @@ docker rmi $(docker images -q)</code></pre>
 <div class="content">
 <img src="_images/jenkins-petclinic-full-pipeline-proceed.png" alt="jenkins petclinic full pipeline proceed">
 </div>
-<div class="title">Fig. 10. Input message (paso comentado en el ejemplo)</div>
+<div class="title">Fig. 9. Input message (paso comentado en el ejemplo)</div>
 </div>
 <div class="paragraph">
 <p>El pipeline completo, con todas sus fases, debe quedar así:</p>
@@ -818,7 +851,7 @@ docker rmi $(docker images -q)</code></pre>
 <div class="content">
 <img src="_images/jenkins-petclinic-full-pipeline.png" alt="jenkins petclinic full pipeline">
 </div>
-<div class="title">Fig. 11. Pipeline completo</div>
+<div class="title">Fig. 10. Pipeline completo</div>
 </div>
 <div class="paragraph">
 <p><strong>ENHORABUENA!!!</strong> Has conseguido definir un pipeline completo de integración y despliegue continuos, y con contenedores. Este proceso se puede aplicar, con pequeñas adaptaciones, a cualquier otro proyecto Java basados en Maven.</p>

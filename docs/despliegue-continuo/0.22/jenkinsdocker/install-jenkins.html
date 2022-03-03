@@ -162,7 +162,7 @@
 <h2 id="_construcción_del_contenedor_jenkins"><a class="anchor" href="#_construcción_del_contenedor_jenkins"></a>Construcción del contenedor Jenkins</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>La imagen pública del contenedor de Jenkins está disponible en <a href="https://hub.docker.com/r/jenkins/jenkins">DockerHub</a>, con el nombre <code>jenkins/jenkins:lts</code>. Esta imagen genérica necesita instalarle algunos plugins y herramientas. En concreto, hay que instalarle el propio Docker para permitir que Jenkins ejecute tareas de docker, como por ejemplo <code>docker build</code> para construir imágenes de contenedores. Esto es lo que se conoce como <a href="https://devopscube.com/run-docker-in-docker/">Docker-in-Docker (dind)</a>.</p>
+<p>La imagen pública del contenedor de Jenkins está disponible en <a href="https://hub.docker.com/r/jenkins/jenkins">DockerHub</a>, con el nombre <code>jenkins/jenkins:lts</code>. Esta imagen genérica necesita instalarle algunos plugins y herramientas. En concreto, hay que instalarle el propio Docker para permitir que Jenkins ejecute tareas de docker, como por ejemplo <code>docker build</code> para construir imágenes de contenedores. Esto es lo que se conoce como <a href="https://devopscube.com/run-docker-in-docker/">Docker-in-Docker (dind)</a>, y hay que <a href="https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/">gestionarlo correctamente cuando se trata de entornos de CI</a>.</p>
 </div>
 <div class="paragraph">
 <p>Por tanto, vamos a crear una imagen personalizada del contenedor de Jenkins basándonos en la imagen pública e instalándo Docker dentro del contenedor.
