@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: CNSA</title>
+    <title>Hola mundo en Node.js :: CNSA</title>
     <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22/node-app/node-hello.html">
     <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -78,6 +78,38 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../java-web-app/index.html">Aplicación Web Java</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic.html">PetClinic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic-docker.html">PetClinic con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Aplicación en Node.js</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="node-hello.html"><em>Hola mundo</em> en Node.js</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="node-hello-docker.html"><em>Hola_Mundo</em> en Node.js con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -105,6 +137,11 @@
 <button class="nav-toggle"></button>
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Aplicación en Node.js</a></li>
+    <li><a href="node-hello.html"><em>Hola mundo</em> en Node.js</a></li>
+  </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/node-app/pages/node-hello.adoc">Edit this Page</a></div>
   </div>
@@ -113,7 +150,713 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page"><em>Hola mundo</em> en Node.js</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación se muestra un ejemplo de <strong>integración y despliegue continuos en Jenkins de un proyecto NodeJs</strong>. Los pasos a realizar son similares al ejemplo anterior con Java, el decir, el pipeline tendrá las mismas fases; eso si, adaptaremos las ordenes o comandos a ejecutar a la tecnología NodeJs.</p>
+</div>
+<div class="paragraph">
+<p>Al igual con el ejemplo anterior en Java, en primer lugar trabajaremos con la aplicación NodeJS sin <em>dockerizar</em>, y después <em>dockerizaremos</em> la aplicación. La mayoría de los pasos siempre los ejecutaremos primero en local, y tras comprobar que funcionan correctamente, los automatizaremos en Jenkins.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>La implementación de la integración y despliegue continuos permitirá que, para cada cambio de código en el repositorio, Jenkins será notificado y descargará los cambios, instalará las dependencias y ejecutará los tests. Si los tests pasan correctamente, Jenkins desplegará la aplicación en el servidor de despliegue. Y si fallan, se notificará al desarrollador.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Nos vamos a basar en  el proyecto <em>HelloWorld</em> en NodeJs, disponible en <a href="https://github.com/ualcnsa/nodeapp" class="bare">https://github.com/ualcnsa/nodeapp</a>. Si deseas poder hacer cambios sobre el mismo, crea un <em>fork</em> y trabaja con tu <em>fork</em> a partir de ahora.</p>
+</div>
+<div class="paragraph">
+<p>Veamos los archivos que componen la aplicación:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>El archivo <code>package.json</code> contienen información básica de la aplicación y las dependencias:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>express</strong>: Node framework</p>
+</li>
+<li>
+<p><strong>mocha</strong>: framework de testing para NodeJs (existen numerosos framework de testing en NodeJs, como Jasmin, Jest, Tape, etc.)</p>
+</li>
+<li>
+<p><strong>supertest</strong>: proporciona abstracción a alto nivel para testing HTTP</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">package.json</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+   "name": "node-app",
+   "description": "hello jenkins test app",
+   "version": "0.0.1",
+   "private": true,
+   "directories": {
+      "test": "test"
+    },
+    "scripts": {
+      "test": "mocha"
+    },
+   "dependencies": {
+      "express": "^4.17.1"
+   },
+   "devDependencies": {
+      "mocha": "^7.1.1",
+      "supertest": "^4.0.2"
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para instalar las dependencias ejecuta <code>npm install</code>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>El archivo raíz del proyecto <code>index.js</code> es un sencillo <em>hola mundo</em>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">index.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">//importing node framework
+var express = require('express');
 
+var app = express();//Respond with "hello world" for requests that hit our root "/"
+
+app.get('/', function (req, res) {
+ res.send('hello world');
+});//listen to port 3000 by default
+app.listen(process.env.PORT || 3000);
+
+module.exports = app;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para ejecutar la aplicación, ejecuta: <code>node index.js</code></p>
+</div>
+<div class="paragraph">
+<p>Puedes ver la aplicación en el navegador accediendo a <a href="http://localhost:3000">http://localhost:3000</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Primer test</strong></p>
+</div>
+<div class="paragraph">
+<p>Nuestro primer test va a navegar a la raiz de la aplicación (<code>/</code>) y verificar que la página responde con el texto esperado <code>hello world</code>.</p>
+</div>
+<div class="paragraph">
+<p>Se guardará en la carpeta <code>/test/</code> con el nombre <code>test.js</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">test/test.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">var request = require('supertest');
+var app = require('../index.js');describe('GET /', function() {
+ it('respond with hello world', function(done) { //navigate to root and check the the response is "hello world"
+ request(app).get('/').expect('hello world', done);
+ });
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para ejecutar el test: <code>npm test</code></p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/node-mocha-passed.png" alt="node mocha passed">
+</div>
+<div class="title">Fig. 1. npm test</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creación_del_pipeline_en_jenkins"><a class="anchor" href="#_creación_del_pipeline_en_jenkins"></a>Creación del pipeline en Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Definimos un nuevo proyecto tipo Pipeline. Añadimos la descripción del pipeline:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
+  agent any
+
+  tools {
+    // In Global tools configuration, install Node configured as "nodejs"
+    nodejs "nodejs"
+  }
+
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/ualcnsa/nodeapp'
+      }
+    }
+
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Test') {
+      steps {
+         sh 'npm test'
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El resultado sera:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-node-pipeline1.png" alt="jenkins node pipeline1">
+</div>
+<div class="title">Fig. 2. Nodeapp pipeline</div>
+</div>
+<div class="paragraph">
+<p>La evolución de las métricas del proyecto es uno de los indicadores que habitualmente muestra Jenkins como <em>feedback</em> para los desarrolladores. Vamos a <strong>publicar los resultados de los test</strong> en un gráfico.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editamos <code>package.json</code> y añadimos el script <code>test-jenkins</code> para generar los resultados de los test en formato xml que usará Jenkins para generar el gráfico, y la dependencia necesaria para ello:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">package.json: jenkins-test y dependencia mocha-junit-reporter</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   ...
+   "scripts": {
+      "test": "mocha --exit",
+      "test-jenkins": "mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./coverage/test.results.xml --exit" <i class="conum" data-value="1"></i><b>(1)</b>
+   },
+   ...
+   "devDependencies": {
+      "mocha": "^7.1.1",
+      "supertest": "^4.0.2",
+      "mocha-junit-reporter":"1.23.3"  <i class="conum" data-value="2"></i><b>(2)</b>
+   }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Añadimos el script <code>test-jenkins</code> que define cómo ejecutar los tests y generar los resultados de los test en formato xml, en el archivo <code>./coverage/test.results.xml</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Dependencia a <code>mocha-junit-reporter</code> que permite generar los resultados de los test en xml.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Podemos probar en local, llamamos a la ejecución de los test y generación del xml: <code>npm run test-jenkins</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Añade al <code>.gitignore</code> la carpeta <code>/coverage</code>, ya que su contenido se generará al lanzar los tests y no se debe guardar en el repositorio.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Actualizamos el pipeline, la fase <code>Test</code>:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('Test') {
+      steps {
+         sh 'npm run test-jenkins'
+      }
+      post {
+        success {
+          junit '**/test*.xml'
+        }
+      }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Guardamos los cambios. Tras un par de ejecuciones del build, se visualiza el gráfico Test Result Trend:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-nodeapp-pipeline-test-result-trend.png" alt="jenkins nodeapp pipeline test result trend">
+</div>
+<div class="title">Fig. 3. Publicado el gráfico de tendencia de los test</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title"><strong>Webhook</strong>: ejecución automática del build en Jenkins tras un push en GitHub</div>
+<div class="paragraph">
+<p>Configura en GitHub un nuevo <em>Webhook</em> para que tras cada cambio de código en el repositorio, Jenkins sea notificado y lance la construcción del pipeline:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>En GitHub, seleccionamos el repositorio sobre el que queremos activar la construcción en Jenkins y hacemos clic en: <em>Settings &gt; WebHooks &gt; Add webhook</em></p>
+</li>
+<li>
+<p>En Payload URL:</p>
+<div class="literalblock">
+<div class="content">
+<pre>http://{YOUR_JENKINS_URL}/github-webhook/</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-webhook-github.png" alt="jenkins webhook github">
+</div>
+<div class="title">Fig. 4. Nuevo Webhook</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Finalmente, en la configuración del proyecto en Jenkins, en la sección Build Trigers, marca la opción <em>GitHub hook tirigger from GITScm polling</em></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-webhook-build-triger.png" alt="jenkins webhook build triger">
+</div>
+<div class="title">Fig. 5. Activar el Webhook en build trigers</div>
+</div>
+<div class="paragraph">
+<p>A partir de ahora, cuando el repositorio en GitHub reciba un push notificará a Jenkins para que lance la construcción automáticamente.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_informe_de_cobertura"><a class="anchor" href="#_informe_de_cobertura"></a>Informe de cobertura</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Como ya sabemos, la cobertura de código nos va a ofrecer un valor directamente relacionado con la calidad de los juegos de prueba. Para obtener la cobertura y publicarla en Jenkins, debemos hacer:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Añadir a <code>package.json</code> un script para cobertura y la dependencia a <a href="https://istanbul.js.org/">IstanbulJS</a>, que permite obtener la cobertura con Mocha.</p>
+</li>
+<li>
+<p>Modificar la fase <em>Test</em> de Jenkins para que llame al script de cobertura y publique, en el bloque <code>post</code>, el informe de cobertura generado.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>1.Modifica <code>package.json</code>, añadiendo el nuevo script y la dependencia:</p>
+</div>
+<div class="listingblock">
+<div class="title">package.json: cobertura y dependencia a IstanbulJS</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   "scripts": {
+      ...
+      "coverage-jenkins": "nyc --reporter=html --reporter=text  mocha  --reporter mocha-junit-reporter --reporter-options mochaFile=./coverage/test.results.xml --timeout=3000 --exit"
+   },
+   ...
+      "devDependencies": {
+      ...
+      "nyc": "^15.0.1"
+   }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Podemos probar en local, llamamos a la ejecución del script: <code>npm run coverage-jenkins</code>.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/node-mocha-coverage-jenkins-ok.png" alt="node mocha coverage jenkins ok">
+</div>
+<div class="title">Fig. 6. Ejecución de cobertura</div>
+</div>
+<div class="paragraph">
+<p>Como resultado, en la carpeta <code>coverage</code> del proyecto se ha generado el informe de cobertura.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/node-mocha-coverage-results.png" alt="node mocha coverage results" width="160">
+</div>
+<div class="title">Fig. 7. Informe de cobertura</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/node-mocha-coverage-index.png" alt="node mocha coverage index">
+</div>
+<div class="title">Fig. 8. Informe de cobertura en html</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Añade al <code>.gitignore</code> la carpeta <code>/.nyc_output</code>, ya que su contenido se generará al lanzar la cobertura.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Modifica el pipeline de Jenkins, la fase <code>Test</code>:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('Test') {
+      steps {
+         sh 'npm run coverage-jenkins' <i class="conum" data-value="1"></i><b>(1)</b>
+      }
+      post {
+        success {
+          junit '**/test*.xml'
+          publishHTML target: [ <i class="conum" data-value="2"></i><b>(2)</b>
+            allowMissing          : false,
+            alwaysLinkToLastBuild : false,
+            keepAll               : true,
+            reportDir             : './coverage/',
+            reportFiles           : 'index.html',
+            reportName            : 'Coverage Report'
+          ]
+        }
+      }
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Llama al nuevo script que calcula la cobertura</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Publica el informe de cobertura</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>El resultado en Jenkins, debe aparece un enlace nuevo en el menú de la izquierda:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-node-coverage-report-link.png" alt="jenkins node coverage report link">
+</div>
+<div class="title">Fig. 9. Enlace al informe de cobertura en html</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Para poder visualizar correctamente el <em>Coverage Report</em>, hay que cambiar la <a href="https://wiki.jenkins.io/display/JENKINS/Configuring+Content+Security+Policy#ConfiguringContentSecurityPolicy-TheDefaultRuleSet">configuración de seguridad</a> de Jenkins predeterminada, que es muy restrictiva para prevenir de archivos HTML/JS maliciosos que podrían instalarse como parte de un Plugin. Para modificar la configuración, abre la consola de scritps (<em>Manage Jenkins / Script Console</em>), y ejecuta estas líneas:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox; default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; ")
+System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
+</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/maven-script-console-site.png" alt="maven script console site">
+</div>
+<div class="title">Fig. 10. Script Console: permisos para visualizar el informe de cobertura</div>
+</div>
+<div class="paragraph">
+<p>Tras ello ya podrás visualizar correctamente el informe de cobertura. Pero ten en cuenta que cada vez que reinicies Jenkins esta configuración  se pierde y vuelve a la configuración predeterminada.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_análisis_estático_de_código"><a class="anchor" href="#_análisis_estático_de_código"></a>Análisis estático de código</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El código JavaScript es dinámicamente tipado, por lo que en lugar de usar el compilador para realizar el análisis estático de código, como ocurre en lenguajes como Java, las formas más comunes de <a href="https://medium.com/codecademy-engineering/static-analysis-in-javascript-a-technical-introduction-859de5d444a6">análisis estático en JavaScript</a> son <em>formatters</em> y <em>linters</em>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Formatters</em> o formateadores, escanean y reformatean rápidamente los archivos de código. Uno de los más populares es <a href="https://prettier.io/">Prettier</a>, que como cualquier buen formateador, corregirá automaticamente las inconsistencias que encuentre.</p>
+</li>
+<li>
+<p><em>Linters</em> pueden trabajar en aspectos de formato pero también otros problemas más complejos. Se basan en una serie de reglas para escanear el código, o descripciones de comportamientos a vigilar, y muestran todas las violaciones que encuentran. El más popular para JavaScript es <a href="https://eslint.org/">ESLint</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Vamos a probar <strong>ESLint</strong>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instala con npm:</p>
+<div class="literalblock">
+<div class="content">
+<pre>npm install eslint --save-dev</pre>
+</div>
+</div>
+</li>
+<li>
+<p>A continuación, inicializa un archivo de configuración:</p>
+<div class="literalblock">
+<div class="content">
+<pre>npx eslint --init</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Y responde a las preguntas:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/eslint-init.png" alt="eslint init">
+</div>
+<div class="title">Fig. 11. ESLint init</div>
+</div>
+<div class="paragraph">
+<p>Se habrá creado un archivo <code>.eslintrc.json</code>, que incluirá esta línea:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">{
+    "extends": "eslint:recommended" <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Habilita las <a href="https://eslint.org/docs/rules/">reglas predeterminadas</a></td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Añade a <code>package.json</code> un script para <code>lint</code> y la dependencia a ESLint</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">package.json: lint y dependencia a ESLint</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   "scripts": {
+      ...
+      "lint": "eslint *.js test/*.js -f checkstyle -o coverage/eslint-result.xml"
+   },
+   ...
+   "devDependencies": {
+      ...
+      "eslint": "^7.0.0"
+   }
+   ...</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>Lánzalo en local:</p>
+<div class="literalblock">
+<div class="content">
+<pre>npm run lint -s</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>El parámetro <code>-s</code> se utiliza para que no muestre mensajes de error. Habrá generado el archivo <code>coverage/eslint-result.xml</code> en formato similar al informe de <em>CheckStyle</em> para poder importarlo correctamente en Jenkins.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="5">
+<li>
+<p>En Jenkins, añade una nueva fase <code>Analysis</code> en el pipeline, en la que llames a <code>lint</code> y publiques el informe generado por <strong>ESLint</strong> con el formato <em>CheckStyle</em>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">   stage('Analysis'){
+      steps{
+          sh 'npm run lint -s'
+      }
+      post {
+         always{
+            // record lint issues found, also, fail the build if there are ANY NEW issues found
+            recordIssues enabledForFailure: true,
+                blameDisabled: true,
+                tools: [esLint(pattern: '**/eslint-result.xml')],
+                qualityGates: [[threshold: 1, type: 'NEW']]
+        }
+      }
+    }</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="6">
+<li>
+<p>El enlace al informe de ESLint no aparece en la página principal del proyecto, en el menú de enlaces, sino que tienes que hacer clic en el número del último build, y en la nueva página ya aparece el enlace:</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/eslint-jenkins-link.png" alt="eslint jenkins link">
+</div>
+<div class="title">Fig. 12. Enlace al informe <em>ESLint</em></div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="7">
+<li>
+<p>No te preocupes si la fase de análisis que acabas de añadir falla (está en rojo). Es así porque cuando ESLint detecta un error, finaliza con error (<code>EXIT 1</code>). Si te fijas en el informe, los 2 errores detectados han sido en el archivo <code>test.js</code> (y pueden ser falsos positivos). Para evitarlo, elimina <code>test/*.js</code> del script <code>lint</code> en <code>package.json</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Tras ello, la nueva ejecución del pipeline se ejecutará correctamente.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/eslint-jenkins-pass-grapth.png" alt="eslint jenkins pass grapth">
+</div>
+<div class="title">Fig. 13. Fase <em>ESLint</em> <em>passed</em></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_despliegue_en_la_vm"><a class="anchor" href="#_despliegue_en_la_vm"></a>Despliegue en la VM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para desplegar la aplicación <em>hello world</em> en la instancia de despliegue vamos a clonar el repositorio y a continuación ejecutaremos en ella la orden de Node para ponerla en marcha.</p>
+</div>
+<div class="paragraph">
+<p>Recuerda que ya he hemos realizado una configuración previa sobre la instancia de despliegue, que constituyen los  <strong>prerrequisitos</strong> para esta sección:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Con anterioridad ya instalamos NodeJS en la instancia de despliegue.</p>
+</li>
+<li>
+<p>También habíamos copiado la clave pública de despliegue para que Jenkins, que tiene la clave privada asociada, pueda hacer <code>ssh</code> y ejecutar comandos sobre ella.</p>
+</li>
+<li>
+<p>Como requisito adicional, para ayudarnos a lanzar <code>npm start</code> desde Jenkins, como un proceso demonio en background, usaremos <a href="https://www.npmjs.com/package/forever"><strong>forever</strong></a>. Debes instalar <code>forever</code> en la  instancia de despliegue:</p>
+<div class="literalblock">
+<div class="content">
+<pre>sudo npm install forever -g</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Una vez revisados los prerrequisitos, añade la fase de despliegue al pipeline en Jenkins:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Copia este nueva fase en tu pipeline, sustituyendo DEPLOY_MACHINE por el nombre DNS de tu instancia, y usa el nombre del repositorio git adecuado:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  stage('Deploy'){
+    steps {
+      sh '''
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "if [ ! -d 'nodeapp' ] ; then
+          git clone https://github.com/ualcnsa/nodeapp.git
+        else
+          cd nodeapp
+          git pull origin master
+        fi" <i class="conum" data-value="1"></i><b>(1)</b>
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "if pgrep node; then forever stopall; fi" <i class="conum" data-value="2"></i><b>(2)</b>
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "cd nodeapp &amp;&amp; npm install" <i class="conum" data-value="3"></i><b>(3)</b>
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "cd nodeapp &amp;&amp; PORT=8080 forever start index.js" <i class="conum" data-value="4"></i><b>(4)</b>
+      '''
+    }
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Clona el repositorio si no existe en la máquina de despliegue, si existe hace un <code>pull</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Detiene la ejecución de <code>forever</code> si existe de un despliegue anterior, usando <code>forever stop</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Instala las dependencias</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Ejecuta la aplicación con <code>forever start</code> en el puerto <code>8080</code>, que ejecuta el proceso en background como demonio.</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Referencias</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://codelabs.developers.google.com/codelabs/cloud-create-a-nodejs-vm/">Running Node.js on a Virtual Machine codelab</a></p>
+</li>
+<li>
+<p><a href="https://medium.com/@mosheezderman/how-to-set-up-ci-cd-pipeline-for-a-node-js-app-with-jenkins-c51581cc783c">How to set up CI/CD Pipeline for a node.js app with Jenkins</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
 </article>
   </div>
 </main>
