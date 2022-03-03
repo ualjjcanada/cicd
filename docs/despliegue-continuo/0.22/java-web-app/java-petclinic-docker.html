@@ -162,26 +162,26 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creación_del_dockerfile"><a class="anchor" href="#_creación_del_dockerfile"></a>Creación del <code>Dockerfile</code></h2>
+<h2 id="_creación_del_dockerfile_multi_stage"><a class="anchor" href="#_creación_del_dockerfile_multi_stage"></a>Creación del <code>Dockerfile</code> multi-stage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para construir aplicaciones Maven con Docker y luego <a href="https://spring.io/guides/gs/spring-boot-docker/">crear el contendedor de Docker</a> que empaquete la aplicación PetClinic, la opción recomendada es usar Multi-Stage Builds en tu Dockerfile, de manera que:</p>
+<p>Para construir aplicaciones Maven con Docker y luego <a href="https://spring.io/guides/gs/spring-boot-docker/">crear el contendedor de Docker</a> que empaquete la aplicación, la opción recomendada es usar <a href="https://docs.docker.com/get-started/09_image_best/#multi-stage-builds"><strong>Multi-Stage Builds</strong></a> en tu Dockerfile, de manera que:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Una primera fase construye el <code>.jar</code> a partir de una imagen de Maven, como por ejemplo <code>maven:3.8.4-openjdk-11-slim</code></p>
+<p>Una primera fase o <em>stage</em> construye el <code>.jar</code> a partir de una imagen de Maven, como por ejemplo <code>maven:3.8.4-openjdk-11-slim</code></p>
 </li>
 <li>
-<p>Y luego ese <code>.jar</code> lo copias en el contenedor basado en la imagen OpenJDK-11, que es el que nos interesa.</p>
+<p>Y luego en una seguna fase, ese <code>.jar</code> lo copia en el contenedor basado en la imagen OpenJDK-11, que es el entorno de ejecución Java necesario.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto:</p>
+<p>Vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto PetClinic:</p>
 </div>
 <div class="listingblock">
-<div class="title">Dockerfile</div>
+<div class="title">Dockerfile multi-stage</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker">FROM maven:3.8.4-openjdk-11-slim AS build <i class="conum" data-value="1"></i><b>(1)</b>
 WORKDIR /app
@@ -214,16 +214,12 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Segunda fase, crea una imagen con el entorno de ejecución de Java 11 y el empaquetado <code>.jar</code> de la aplicación PetClinic. Contiene los pasos básicos para ejecutar una aplicación String Boot en un contenedor: partiendo de una imagen de <code>openjdk</code>, copia el archivo <code>target/*.jar</code> en el contenedor con el nombre <code>app.jar</code> y lo ejecuta mediante el comando <code>ENTRYPOINT</code> para que no haya ninguna shell sobre el proceso <code>java</code>.
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Construye el contenedor con <code>docker build</code>, ten paciencia, tardará varios minutos:</p>
-</li>
-</ol>
-</div></td>
+<td>Segunda fase, crea una imagen con el entorno de ejecución de Java 11 y el empaquetado <code>.jar</code> de la aplicación PetClinic. Contiene los pasos básicos para ejecutar una aplicación String Boot en un contenedor: partiendo de una imagen de <code>openjdk</code>, copia el archivo <code>target/*.jar</code> en el contenedor con el nombre <code>app.jar</code> y lo ejecuta mediante el comando <code>ENTRYPOINT</code> para que no haya ninguna shell sobre el proceso <code>java</code>.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Construye el contenedor con <code>docker build</code>, y ten paciencia, tardará varios minutos!!!</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -272,7 +268,7 @@ RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml package --no
 </table>
 </div>
 <div class="paragraph">
-<p>Prueba la ejecución del contenedor en local:</p>
+<p>Tras la construcción de la imagen, prueba la ejecución del contenedor en local:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -297,39 +293,38 @@ RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml package --no
 <p>Para poder hacer <code>push</code> debemos tener permisos de escritura, y por tanto debemos autenticarnos en el servicio Container Registry.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://cloud.google.com/container-registry/docs/advanced-authentication">Authentication</a> <em>allows you to connect to Container Registry with your credentials. To push or pull images, you must configure the permissions that are required to access the registry.</em></p>
+<p><a href="https://cloud.google.com/container-registry/docs/advanced-authentication">Authentication</a> permite conectar al Registro de Contenedores con tus credenciales, y  hacer push y pull de imágenes. Para ello debes configurar los los permisos necesarios para accdeder al registro, utilizando un  <a href="https://cloud.google.com/container-registry/docs/advanced-authentication#json-key">JSON key file</a> como método de autenticación:</p>
 </div>
-<div class="paragraph">
-<p><em>Using <a href="https://cloud.google.com/container-registry/docs/advanced-authentication#json-key">JSON key file</a> as authentication method:</em></p>
-</div>
-<div class="paragraph">
-<p><em>To create a new service account and a service account key for use with Container Registry repositories only:</em></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p><em>Create the service account for interacting with repositories:</em></p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p><em>In Google Cloud Console, open the <a href="https://console.cloud.google.com/apis/credentials/serviceaccountkey">Create service account key page</a>.</em></p>
+<p>En la Consola Google Cloud, seleccionar el proyecto Google Cloud.</p>
 </li>
 <li>
-<p><em>From the Service account list, select New service account</em></p>
+<p>En el menú de navegación seleccionar <code>IAM y administración | <a href="https://console.cloud.google.com/apis/credentials/serviceaccountkey">Cuentas de servicio</a></code>.</p>
 </li>
 <li>
-<p><em>In the Service account name field, enter a name</em></p>
+<p>Seleccionar <code>Crear cuenta de servicio</code>.</p>
 </li>
 <li>
-<p><em>From the Role list, select the appropriate Container Registry role for the service account: Cloud Storage / Storage Administrator</em></p>
+<p>Darle un nombre (p.e. <code>container-registry</code>)</p>
 </li>
 <li>
-<p><em>Click Create. A JSON file that contains your key downloads to your computer.</em></p>
+<p>Seleccionar "Crear y continuar".</p>
 </li>
-</ol>
-</div>
+<li>
+<p>En el paso <code>Conceder a esta cuenta de servicio acceso al proyecto</code> del asistente, seleccionar el rol <code>Cloud Storage &#8594; Admisnitrador de almacenamiento</code>. Continuar y Listo.</p>
 </li>
-</ol>
+<li>
+<p>Editar la Cuenta de servicio. En la sección <code>Claves</code> seleccionar <code>Agregar clave | Crear nueva clave</code>.</p>
+</li>
+<li>
+<p>Dejar <code>JSON</code> en el tipo de clave.</p>
+</li>
+<li>
+<p>Seleccionar <code>Crear</code>. A continuación se descargará la clave privada.</p>
+</li>
+</ul>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
@@ -417,7 +412,7 @@ docker build -t gcr.io/$GOOGLE_CLOUD_PROJECT/petclinic:1.0 .</code></pre>
 <div class="olist arabic">
 <ol class="arabic" start="2">
 <li>
-<p>A continuación vamos a publicar con <code>docker push</code>: habilita la API de Container Registry en tu proyecto GCP</p>
+<p>A continuación vamos a publicar con <code>docker push</code>: habilita la API de Container Registry en tu proyecto GCP, accediendo en el menú a Contaner Registry &gt; Images:</p>
 </li>
 </ol>
 </div>
@@ -477,11 +472,13 @@ docker run -p 8080:8080 -t --name petclinic  gcr.io/$GOOGLE_CLOUD_PROJECT/petcli
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Compiamos el archivo de credenciales
-scp ./secret/file.json ubuntu@DNS_MAQUINA_DEPLOY:~/file.json
+scp ./secret/file.json ubuntu@DNS_MAQUINA_DEPLOY:~/keyfile.json
 # Conectamos a la máquina de despliegue
 ssh ubuntu@DNS_MAQUINA_DEPLOY
 # Autenticamos docker contra Container Registry
 cat keyfile.json | docker login -u _json_key --password-stdin https://gcr.io
+# Variable de entorno con el nombre del proyecto
+GOOGLE_CLOUD_PROJECT=cnsa-2022-user123
 # ejecutamos el contenedor desde gcr.io
 docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petclinic:1.0</code></pre>
 </div>
@@ -515,6 +512,22 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -p 80:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petclinic:1.0</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Pero ten en cuenta que si el contenedor ya se ha creado y no ha podido iniciarse porque el puerto 8080 estaba ocupado, si intentas volver a crearlo con <code>docker run</code> te dirá que el contenedor ya existe. Revisa si está ya creado y en ese caso inicialó.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ubuntu@web-deploy-vm-tf:~$ docker ps -a
+CONTAINER ID   IMAGE                            COMMAND                CREATED              STATUS    PORTS     NAMES
+6e174d959f3b   gcr.io/cnsa-2022/petclinic:1.0   "java -jar /app.jar"   About a minute ago   Created             petclinic
+
+ubuntu@web-deploy-vm-tf:~$ docker start petclinic
+petclinic</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ya puedes comprobar en tu navegador que la aplicación PetClinic se está ejecutando en el puerto 8080 de la máquina de despliegue.</p>
 </div>
 </div>
 </div>
@@ -587,7 +600,7 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
         script {
           dockerImage = docker.build(
             "${env.CONTAINER_REGISTRY}/${env.GOOGLE_CLOUD_PROJECT}/petclinic:${env.BUILD_ID}",
-            "-f Dockerfile ."
+            "--rm -f Dockerfile ."
           )
         }
       }
@@ -595,6 +608,20 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
   }
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Si consultas la salida por consola de la ejecución del pipeline, verás que se algunas tareas se repiten dos veces, como por ejemplo la ejecución de los tests. ¿Por qué crees que es debido? ¿Podría eliminarse alguna fase del pipeline?</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Para probar que la imagen del contenedor se ha creado bien, añade esta fase que hace un despliegue en un entorno de "Staging" o "Testing", que en este tutorial va a ser "local" en la propia máquina de Jenkins, es decir, ejecuta un contenedor basado en la imagen que acabamos de crear:</p>
@@ -748,10 +775,13 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('Deploy to Production') {
       steps{
+        // Check to manual approving deploy to production.
+        // It implemenents Continuous Delivery instead of Continuous Deployment
+        input message: "Proceed Deploy to Production?" <i class="conum" data-value="1"></i><b>(1)</b>
         sh '''
-          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "if docker ps -q --filter name=petclinic | grep . ; then docker stop petclinic ; fi" <i class="conum" data-value="1"></i><b>(1)</b>
-          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "if docker ps -a -q --filter name=petclinic | grep . ; then docker rm -fv petclinic ; fi" <i class="conum" data-value="2"></i><b>(2)</b>
-          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "docker run -d -p 80:8080 -t --name petclinic ${CONTAINER_REGISTRY}/${GOOGLE_CLOUD_PROJECT}/petclinic:latest" <i class="conum" data-value="3"></i><b>(3)</b>
+          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "if docker ps -q --filter name=petclinic | grep . ; then docker stop petclinic ; fi" <i class="conum" data-value="2"></i><b>(2)</b>
+          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "if docker ps -a -q --filter name=petclinic | grep . ; then docker rm -fv petclinic ; fi" <i class="conum" data-value="3"></i><b>(3)</b>
+          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "docker run -d -p 80:8080 -t --name petclinic ${CONTAINER_REGISTRY}/${GOOGLE_CLOUD_PROJECT}/petclinic:latest" <i class="conum" data-value="4"></i><b>(4)</b>
         '''
       }
     }</code></pre>
@@ -761,14 +791,18 @@ docker run -d -p 8080:8080 -t --name petclinic gcr.io/$GOOGLE_CLOUD_PROJECT/petc
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Ejecuta en la instancia de despliegue el comando <code>docker stop</code> que detiene el contenedor <code>petclinic</code> en caso de que ya se estuviera ejecutando de un despliegue anterior. Esto se comprueba con <code>docker ps &#8230;&#8203;</code>.</td>
+<td>Pide confirmación al usuario, que tendrán que pulsar un botón de <em>Proceed</em> para continuar la ejecución del pipeline. Permite asegurar que el despliegue a producción requiere intervención de una persona, implementando entrega continua (continuous delivery) en lugar de despliegue continuo (continuous deployment).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Ejecuta en la instancia de despliegue el comando <code>docker rm</code> que elimina el contenedor <code>petclinic</code> en caso de que exista de un despliegue anterior. Esto se comprueba con <code>docker ps -a &#8230;&#8203;</code>. Estos dos pasos, primero parar el contenedor y luego eliminar el contenedor, son necesarios antes de volver a lanzar un nuevo contenedor con el mismo nombre. Se ejecuta en dos pasos para evitar errores en caso de que el contenedor exista pero no esté en ejecución, lo que podría dar lugar a un error en el despliegue.</td>
+<td>Ejecuta en la instancia de despliegue el comando <code>docker stop</code> que detiene el contenedor <code>petclinic</code> en caso de que ya se estuviera ejecutando de un despliegue anterior. Esto se comprueba con <code>docker ps &#8230;&#8203;</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Ejecuta en la instancia de despliegue el comando <code>docker rm</code> que elimina el contenedor <code>petclinic</code> en caso de que exista de un despliegue anterior. Esto se comprueba con <code>docker ps -a &#8230;&#8203;</code>. Estos dos pasos, primero parar el contenedor y luego eliminar el contenedor, son necesarios antes de volver a lanzar un nuevo contenedor con el mismo nombre. Se ejecuta en dos pasos para evitar errores en caso de que el contenedor exista pero no esté en ejecución, lo que podría dar lugar a un error en el despliegue.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>Ejecuta en la instancia de despliegue el comando para ejecutar el contenedor basado en la última versión de la imagen, lanzándolo con <code>-d</code> que indica modo <em>detached</em> que ejecuta el contenedor en background, para que el pipeline finalice y el contenedor permanezca en ejecución.</td>
 </tr>
 </table>
@@ -790,6 +824,9 @@ docker rm $(docker ps -a -q)
 # Remove all images
 docker rmi $(docker images -q)</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Usalos si te aparece algun mensaje de error del tipo <code>no space left on device</code>, ya que la máquina Jenkins están construyendo muchas imágenes y se queda sin espacio de disco.</p>
 </div>
 </td>
 </tr>
@@ -853,11 +890,22 @@ docker rmi $(docker images -q)</code></pre>
 </div>
 <div class="title">Fig. 10. Pipeline completo</div>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p><strong>ENHORABUENA!!!</strong> Has conseguido definir un pipeline completo de integración y despliegue continuos, y con contenedores. Este proceso se puede aplicar, con pequeñas adaptaciones, a cualquier otro proyecto Java basados en Maven.</p>
 </div>
 <div class="paragraph">
 <p>Si usas otras tecnologías, como NodeJs, hay que adaptar cada una de las fases a su equivalente en en la tecnología concreta. Vamos a ver como hacerlo con NodeJs en la siguiente sección.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sidebarblock">
 <div class="content">
