@@ -55,7 +55,9 @@ supplemental_files: ./supplemental-ui
 ```
 Y así  ya se queda creado  el archivo search-ui.js  necesario para que funcione la búsqueda
 
-- http server: https://docs.antora.org/antora/latest/preview-site/
+- Run a local server (optional), http server: https://docs.antora.org/antora/latest/preview-site/
+
+Install the http-server package globally using npm: `npm i -g http-server`
 
 ## Extra
 - Add icons to admonition labels: https://blog.yuzutech.fr/antora-admonitions-icons/
