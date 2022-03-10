@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prerrequisitos :: CNSA</title>
+    <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22.2/prerrequisitos/index.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="despliegue-continuo" data-version="0.22.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Despliegue continuo con Jenkins</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introducción</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Prerrequisitos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../infraestructura/index.html">Creación de la infraestructura en Google Cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../jenkinsdocker/index.html">Primeros pasos con Jenkins</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jenkinsdocker/install-jenkins.html">Instalación y configuración de Jenkins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jenkinsdocker/first-projects.html">Primeros ejemplos</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../java-web-app/index.html">Aplicación Web Java</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic.html">PetClinic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic-docker.html">PetClinic con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../node-app/index.html">Aplicación en Node.js</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../node-app/node-hello.html"><em>Hola mundo</em> en Node.js</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../node-app/node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Despliegue continuo con Jenkins</span>
+    <span class="version">0.22.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Prerrequisitos</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/prerrequisitos/pages/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Prerrequisitos</h1>
+<div class="sect1">
+<h2 id="_entorno_de_desarrollo"><a class="anchor" href="#_entorno_de_desarrollo"></a>1. Entorno de desarrollo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Existen distintas opciones respecto al entorno en el que realizar las actividades propuestas. Tendrás que conectar a las instancias en GCP, lanzar Terraform, lanzar contenedores Docker, etc. Dependiendo del sistema operativo de tu máquina local y de tus gustos personales, te recomiendo alguna las siguientes alternativas:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Windows: es recomendable usar un terminal basado en Linux, por ejemplo <strong>Git Bash</strong> (<a href="https://git-scm.com" class="bare">https://git-scm.com</a>).</p>
+</li>
+<li>
+<p>Linux y Mac: el <strong>terminal del S.O</strong> incluye todas las herramientas básicas necesarias (<em>git</em>, <em>ssh</em>, <em>etc</em>).</p>
+</li>
+<li>
+<p><strong>Cloud Shell de Google Cloud</strong>: la consola web de Google Cloud proporciona la herramienta <strong>Cloud Shell</strong> que permite trabajar cómodamente contra GCP desde cualquier navegador web y cualquier S.O. Recuerda que Cloud Shell tiene una cuota de uso, con un límite de número de horas semanales:</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/cloud-shell-cuota.png" alt="cloud shell cuota">
+</div>
+<div class="title">Fig. 1. Cuota de Cloud Shell</div>
+</div>
+<div class="paragraph">
+<p>A continuación se explican las herramientas que debes configurar si estás usando tu máquina local, aunque probablemente algunas ya las tendrás instaladas. Si optas por trabajar en Cloud Shell, seguramente también estarán ya instaladas.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+En general evita usar el usuario <code>root</code> salvo que sea estrictamente necesario, para no generar problemas de permisos sobre los archivos y carpetas cuando estés usando un usuario distinto de <code>root</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Utiliza <code>sudo</code> delante de los comandos estrictamente cuando requieras permisos de administrador, pero evita hacerlo de forma predeterminada (evita <code>sudo su</code>).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Para comenzar a trabajar, será necesario tener instalados en la máquina local las siguientes herramientas: Terraform, Google Cloud CLI. Se presupone que ya se tiene instalado un entorno de desarrollo como Visual Studio Code, y una pareja de claves SSH personal en la carpeta <code>HOME</code> del usuario (<code>~</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">~/.ssh/
+├── id_rsa <i class="conum" data-value="1"></i><b>(1)</b>
+└── id_rsa.pub <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>clave privada</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>clave pública</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Recuerda que <code>~/</code> hace referencia la carpeta HOME del usuario en la máquina local:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>En Windows: <code>C:\Users\USUARIO</code></p>
+</li>
+<li>
+<p>En Mac: <code>/Users/USUARIO</code></p>
+</li>
+<li>
+<p>En Linux: <code>/home/USUARIO</code></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="exampleblock">
+<div class="title">Creación de pareja de claves SSH</div>
+<div class="content">
+<div class="paragraph">
+<p>Si aun no tienes pareja de claves SSH, ejecuta el siguiente comando en tu terminal para crear una nueva pareja de claves SSH, usando el email como etiqueta:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">ssh-keygen -t rsa -b 4096 -C "your_email@inlumine.ual.es"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cuando te pregunte <code>Enter a file in which to save the key</code> presiona Enter para aceptar el nombre de archivo predeterminado (<code>id_rsa</code>)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):
+[Press enter]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A continuación te pedirá una contraseña o <code>passphrase</code>, de nuevo presiona Enter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Enter passphrase (empty for no passphrase): [Press enter]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Presiona Enter de nuevo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Type passphrase again: [Press enter]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Consulta si la pareja de claves se ha creado correctamente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">ls -al ~/.ssh</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Además, se debe disponer de crédito en GCP, proporcionado por el profesor, y darse de alta en Github Student Education Pack. A continuación se describen en detalle estos requisitos previos.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cupones_educativos_google_cloud"><a class="anchor" href="#_cupones_educativos_google_cloud"></a>2. Cupones educativos Google Cloud</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Si ya dispones de crédito en GCP, podrás usarlo ahora. En cualquier caso, para esta asignatura disponemos de un nuevo cupón educativo de 50$ por estudiante, que no necesita tarjeta de crédito para su activación. Actívalo en la dirección que encontrarás en el <a href="https://aulavirtual.ual.es/">Aula Virtual</a> de la asignatura, en la sección <strong>Area de Contenido</strong> &gt; <strong>Cupones de GCP</strong>, usando tu email <em>@inlumine.ual.es</em>.</p>
+</div>
+<div class="paragraph">
+<p>Accede a la <a href="https://console.cloud.google.com/">Consola de Google Cloud</a> y <strong>crea un nuevo proyecto</strong> GCP con el nombre <strong>cnsa2022-<em>abc123</em></strong> (sustituyendo <em>abc123</em> por tu nombre de usuario), y dale permisos al profesor. Para ello, revisa las instrucciones que vimos en la asignatura del primer cuatrimestre. El crédito del cada cupón dura 12 meses, así que este nuevo proyecto asígnalo a la cuenta de facturación de la asignatura del primer cuatrimestre, ya que es mejor consumir ese crédito porque caduca antes. Si se consume el crédito del primer cupón, simplemente tendrás que cambiar tu proyecto <strong>cnsa2022-<em>abc123</em></strong> a la nueva cuenta de facturación del nuevo cupón.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_terraform"><a class="anchor" href="#_terraform"></a>3. Terraform</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Terraform es una aplicación que se distribuye en un único archivo ejecutable. Las instrucciones de instalación de Terraform está disponibles <a href="https://learn.hashicorp.com/terraform/getting-started/install.html">aquí</a>.</p>
+</div>
+<div class="paragraph">
+<p>En Windows se recomienda instalarlo con <a href="https://chocolatey.org/docs/installation">Chocolatey</a>. Así que si previamente has instalado Chocolatey, simplemente abre una ventana de comandos (cmd) con <strong>permiso de administrador</strong> y ejecuta:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">choco install terraform -y</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cierra el terminal o la ventana de comandos, abre una nueva con permisos normales y comprueba que se ha instalado correctamente:author:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">terraform -v</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La salida debe mostrar la version instalada:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ terraform -v
+Terraform v1.1.6
+on windows_amd64</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gcloud_cli_para_gcp"><a class="anchor" href="#_gcloud_cli_para_gcp"></a>4. GCloud CLI para  GCP</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Google Cloud Command Line Interface está disponible para su instalación <a href="https://cloud.google.com/sdk/install">aquí</a>.</p>
+</div>
+<div class="paragraph">
+<p>En Windows se recomienda instalarlo con Chocolatey: abre una ventana de comandos (cmd) con <strong>permiso de administrador</strong> y ejecuta:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">choco install gcloudsdk -y</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_github_student_education_pack"><a class="anchor" href="#_github_student_education_pack"></a>5. Github Student Education Pack</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para poder usar servicios adicionales, como DNS gratuito, debes darte de alta en <a href="https://education.github.com/pack">Github Student Education Pack</a>.</p>
+</div>
+<div class="paragraph">
+<p>Si ya dispones de una cuenta de GitHub, y no quieres crear una cuenta nueva, simplemente debes añadir tu email <em>@inlumine.ual.es</em> a la lista de emails de tu cuenta actual. Para ello, sigue las <a href="https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/adding-an-email-address-to-your-github-account">instrucciones</a>. Tras añadir tu email, haz clic en el enlace <a href="https://education.github.com/pack">Get the pack</a>.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PetClinic :: CNSA</title>
+    <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22.2/java-web-app/java-petclinic.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="despliegue-continuo" data-version="0.22.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Despliegue continuo con Jenkins</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introducción</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../prerrequisitos/index.html">Prerrequisitos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../infraestructura/index.html">Creación de la infraestructura en Google Cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../jenkinsdocker/index.html">Primeros pasos con Jenkins</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jenkinsdocker/install-jenkins.html">Instalación y configuración de Jenkins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jenkinsdocker/first-projects.html">Primeros ejemplos</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Aplicación Web Java</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="java-petclinic.html">PetClinic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="java-petclinic-docker.html">PetClinic con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../node-app/index.html">Aplicación en Node.js</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../node-app/node-hello.html"><em>Hola mundo</em> en Node.js</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../node-app/node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Despliegue continuo con Jenkins</span>
+    <span class="version">0.22.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Aplicación Web Java</a></li>
+    <li><a href="java-petclinic.html">PetClinic</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/java-web-app/pages/java-petclinic.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">PetClinic</h1>
+<div class="sect1">
+<h2 id="_construcción_y_ejecución_en_local"><a class="anchor" href="#_construcción_y_ejecución_en_local"></a>Construcción y ejecución en local</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Una vez que hemos configurado correctamente nuestro entorno de CI/CD con Jenkins, vamos a estudiar varios ejemplos tanto en Java como en NodeJs. Para comprender los ejemplos, primero los vamos a construir y ejecutar en local, para después  automatizar el proceso de construcción y despliegue con Jenkins.</p>
+</div>
+<div class="paragraph">
+<p>En este primer ejemplo en Java, nos vamos a basar en el proyecto PetClinic con Spring Boot, disponible en <a href="https://github.com/spring-projects/spring-petclinic">GitHub</a>. Petclinic es una aplicación <a href="https://spring.io/guides/gs/spring-boot">Spring Boot</a> construida usando <a href="https://spring.io/guides/gs/maven/">Maven</a> como herramienta de soporte a la gestión y construcción (<em>build</em>).</p>
+</div>
+<div class="paragraph">
+<p><a href="https://es.wikipedia.org/wiki/Spring_Framework">Spring Boot</a> es un framework de código abierto para el desarrollo de aplicaciones Java basadas en <a href="https://spring.io/">Spring</a>. Spring Boot genera una proyecto Maven/Gradle con todo lo necesario y que se autoconfigura en el arranque. Por ejemplo, si decimos que queremos una aplicación web, Spring Boot automáticamente embebe un Tomcat y lo configura con el servlet de Spring. Toda la configuración la añade al archivo de la herramienta de <em>build</em> que indiquemos, en caso de Maven, al archivo <strong><code>pom.xml</code></strong>.</p>
+</div>
+<div class="paragraph">
+<p>Recordemos que <strong>Maven</strong> es una herramienta software para la gestión y construcción de proyectos Java. <a href="https://maven.apache.org/">Apache Maven</a> estandariza la configuración de un proyecto en todo su ciclo de vida, como son todas las fases de compilación, ejecución de pruebas, empaquetado, etc. Maven permite la gestión de dependencias entre módulos y distintas versiones de librerías, simplemente indicando los módulos que componen el proyecto, y las dependencias utiliza el software que estamos desarrollando, en un fichero XML de configuración llamado POM (Project Object Model).</p>
+</div>
+<div class="paragraph">
+<p>Para el proyecto PetClinic, en tu máquina de desarrollo local puedes construir el <code>.jar</code> (empaquetado) y ejecutarlo:</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Requiere JDK 11 en la máquina local. Si estás en Windows y tienes varias instalaciones, <a href="https://www.happycoders.eu/java/how-to-switch-multiple-java-versions-windows/">cambia la version de Java</a> predeterminada a la 11.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone https://github.com/spring-projects/spring-petclinic.git
+cd spring-petclinic
+./mvnw package <i class="conum" data-value="1"></i><b>(1)</b>
+java -jar target/*.jar <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Llama a <code>mvnw</code>, el <em>warper</em> de Maven que instala Maven (si es necesario), y ejecuta el <em>goal</em> <code><strong>package</strong></code> que se encarga de compilar, ejecutar los test y empaquetar la aplicación en un único archivo ejecutable <code>.jar</code>. La primera vez que lances la construcción tardará más de 5 minutos, ya que tiene que descargar todas las dependencias necesarias desde los repositorios de Maven (Maven Central), y después lanzar los tests. Toda la configuración necesaria está contenida en el archivo <code>pom.xml</code> de Maven.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Ejecuta la aplicación a partir del <code>.jar</code>. Puedes acceder a PetClinic en: <a href="http://localhost:8080/" class="bare">http://localhost:8080/</a></td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/petclinic-homepage.png" alt="petclinic homepage">
+</div>
+<div class="title">Fig. 1. Página principal de PetClinic</div>
+</div>
+<div class="paragraph">
+<p>En su configuración predeterminada, Petclinic utiliza una base de datos en memoria (H2) que se inicia con datos predeterminados, y los nuevos datos que se guarden se pierden al reiniciar la aplicación.</p>
+</div>
+<div class="paragraph">
+<p>En caso de necesitar persistencia de los datos, PetClinic también está preconfigurada para usar MySql. Para cambiar el tipo de base de datos, la aplicación debe ejecutarse con un perfil de MySql: <code>spring.profiles.active=mysql</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -Dspring.profiles.active=mysql -jar target/*.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Recuerda que para ejecutarla en este modo, debes tener un MySql funcionando en local, o bien lanzar MySql como contenedor con <strong>docker</strong> o con <strong>docker-compose</strong>. Existe un archivo <code>docker-compose.yml</code> <a href="https://github.com/spring-projects/spring-petclinic/blob/main/docker-compose.yml">disponible en el repositorio</a> del proyecto PetClinic, por tanto puedes iniciar MySql así:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker-compose up -d</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El archivo <code>docker-compose.yml</code> que permite iniciar MySql puedes consultarlo en la carpeta raíz del proyecto, y es el siguiente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">mysql:
+  image: mysql:5.7
+  ports:
+    - "3306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=
+    - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    - MYSQL_USER=petclinic
+    - MYSQL_PASSWORD=petclinic
+    - MYSQL_DATABASE=petclinic
+  volumes:
+    - "./conf.d:/etc/mysql/conf.d:ro"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creación_del_pipeline_para_petclinic"><a class="anchor" href="#_creación_del_pipeline_para_petclinic"></a>Creación del Pipeline para PetClinic</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Una vez que hemos probado la ejecución y funcionamiento de la aplicación PetClinic en local, vamos a configurar el proyecto en el servidor Jenkins de CI/CD para que este se encargue de la construcción y el despliegue automatizados.</p>
+</div>
+<div class="paragraph">
+<p>Conecta a tu Jenkins, y crea un nuevo item de tipo Pipeline. Dale el nombre 'spring-petclinic-pipeline':</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/new-item-pipeline-petclinic.png" alt="new item pipeline petclinic">
+</div>
+<div class="title">Fig. 2. New Item, PetClinic pipeline</div>
+</div>
+<div class="paragraph">
+<p>En el bloque Pipeline, pega la configuración siguiente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
+  agent any <i class="conum" data-value="1"></i><b>(1)</b>
+
+  tools {
+    // Previamente has debido instalar Maven con el nombre "Default Maven"
+    maven "Default Maven" <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+
+  stages { <i class="conum" data-value="3"></i><b>(3)</b>
+    stage('Git fetch') { <i class="conum" data-value="4"></i><b>(4)</b>
+      steps {
+        // Get some code from a GitHub repository
+        git branch:'main', url:'https://github.com/spring-projects/spring-petclinic.git'
+      }
+    }
+    stage('Compile, Test, Package') { <i class="conum" data-value="5"></i><b>(5)</b>
+      steps {
+        // Run goal 'package' includes compile, test and package.
+        sh "mvn clean package -Dcheckstyle.skip"
+      }
+      post { <i class="conum" data-value="6"></i><b>(6)</b>
+        // If Maven was able to run the tests, even if some of the test
+        // failed, record the test results and archive the jar file.
+        success {
+          junit '**/target/surefire-reports/TEST-*.xml'
+          archiveArtifacts 'target/*.jar'
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>agente o nodo de Jenkins en que ejecuta la construcción del proyecto. En el ejemplo, <code>any</code> indica que se ejecutará cualquier nodo, en nuestro caso será en <em>master</em> ya que es el único nodo que hay definido en nuestro Jenkins.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>como herramienta para la construcción se usará maven. Pon aquí el nombre que diste a tu instalación de Maven configurada previamente en Tools Configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Bloque de <code>stages</code>: fases o etapas que conforman el pipeline</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Fase de descarga del repositorio git</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Fase de compilación, ejecución de test y empaquetado de la aplicación. Se realizarán con los <em>goals</em> <code>clean package</code>: primero se elimina todo lo generado en la construcción anterior, y a continuación se lanza la construcción con <code>package</code> tal y como está definida en el archivo <code>pom.xml</code>. La opcion <code>-Dcheckstyle.skip</code> anula el análisis de CheckStyle, que lo añadiremos en una fase posterior.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Paso posterior que guarda los resultados de los test de JUnit para generar la gráfica de evolución de los test.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tras ejecutar el pipeline, con "Build now", el resultado debe ser el siguiente:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/petclinic-pipeline-build-1.png" alt="petclinic pipeline build 1">
+</div>
+<div class="title">Fig. 3. Construcción del pipeline PetClinic</div>
+</div>
+<div class="paragraph">
+<p>Si realizamos una segunda ejecución, ya aparecerá la gráfica de evolución de los tests de JUnit.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_informe_de_cobertura_de_código"><a class="anchor" href="#_informe_de_cobertura_de_código"></a>Informe de Cobertura de código</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Jenkins nos permite publicar métricas asociadas al proyecto. Una de ellas, es la cobertura de código ejecutado por las pruebas.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>La <strong>Cobertura</strong> de código nos indica el porcentaje de código de producción que está siendo ejecutado por los test. Es deseable tener un valor de cobertura lo más próximo posible al 100%</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>El proyecto PetClinic contiene 40 test unitarios en JUnit, y está configurado (ver <code>pom.xml</code>) para que se calcule la cobertura cuando se lanzan los tests mediante el plugin JaCoCo (Java Code Coverage). Puedes visualizar el resultado de la cobertura en tu construcción local, en la carpeta <code>target/site/jacoco</code>:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jacoco-local-results.png" alt="jacoco local results">
+</div>
+<div class="title">Fig. 4. Archivos generados por Jacoco</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jacoco-local-html.png" alt="jacoco local html">
+</div>
+<div class="title">Fig. 5. Informe html de la cobertura Jacoco</div>
+</div>
+<div class="paragraph">
+<p>Y si haces clic en el nombre de una clase, verás el código coloreado:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/plugins-jacoco-class-details.png" alt="plugins jacoco class details">
+</div>
+<div class="title">Fig. 6. Detalle la cobertura de las lineas de código</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Las lineas <span class="lime-background">verdes</span> están cubiertas, es decir, han sido ejecutadas por al menos 1 test.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Las lineas <span class="yellow-background">amarillas</span> están parcialmente cubiertas (<em>missed branches</em>): un resultado de la condición (verdadero/falso) ha sido ejecutado por algún test pero el otro no ha sido ejecutado por ningún test.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Las líneas <span class="red-background">rojas</span> no están cubiertas, no han sido ejecutadas por ningún test.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Para visualizar el resultado de la cobertura en Jenkins:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instala el plugin de Jacoco y el plugin Code Coverage API</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/plugins-jacoco-install.png" alt="plugins jacoco install">
+</div>
+<div class="title">Fig. 7. Instalación del plugin Jacoco</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/plugins-code-coverage-api-install.png" alt="plugins code coverage api install">
+</div>
+<div class="title">Fig. 8. Instalación del plugin Code Coverage API</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Añade las dos siguientes lineas al bloque <code>post</code> para que se guarde y muestre el informe de cobertura.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  ...
+  success {
+    junit '**/target/surefire-reports/TEST-*.xml'
+    archiveArtifacts 'target/*.jar'
+    jacoco(execPattern: 'target/jacoco.exec') <i class="conum" data-value="1"></i><b>(1)</b>
+    publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')] <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+  ...</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Añade el informe Coverage Trend</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Añade el informe Coverage Report</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tras la construcción de nuevo del proyecto, verás la gráfica de los resultados de los test y debajo la gráfica de evolución de cobertura:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/plugins-jacoco-dashboard-result.png" alt="plugins jacoco dashboard result">
+</div>
+<div class="title">Fig. 9. Informe de cobertura en el dashboard</div>
+</div>
+<div class="paragraph">
+<p>Haciendo clic sobre la gráfica accedes a los detalles:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/plugins-jacoco-details-result.png" alt="plugins jacoco details result">
+</div>
+<div class="title">Fig. 10. Detalle de de cobertura</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_análisis_estático_de_código_checkstyle"><a class="anchor" href="#_análisis_estático_de_código_checkstyle"></a>Análisis estático de código: <em>Checkstyle</em></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para mantener y aumentar la calidad de nuestro código debemos ayudarnos, entre otras herramientas, de técnicas de <a href="https://es.wikipedia.org/wiki/An%C3%A1lisis_est%C3%A1tico_de_software"><strong>análisis estático de código</strong></a>. Básicamente, se encargan de buscar defectos en el código sin necesidad de que este se ejecute. En Java una de las más habituales es <a href="https://checkstyle.sourceforge.io/">Checkstyle</a>, aunque hay otras como FindBugs, PMD, y SonarQube que integra a los anteriores.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>CheckStyle</strong> valida el estilo del código respecto al estilo oficial de Java.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>El proyecto PetClinic tiene configurado el plugin de CheckStyle en el <code>pom.xml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">    ...
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.1.0&lt;/version&gt;
+        ...
+      &lt;/plugin&gt;
+    ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para ejectutar CheckStyle en local, ejecuta el comando de maven (<code>mvn</code>) con los siguietnes <em>goals</em>: <code>mvn checkstyle:checkstyle site -DgenerateReports=false</code></p>
+</div>
+<div class="paragraph">
+<p>Tras la ejecución, en la carpeta <code>target/site/</code> verás el archivo <code>checkstyle.html</code>:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/checkstyle-report-html.png" alt="checkstyle report html">
+</div>
+<div class="title">Fig. 11. Informe de CheckStyle</div>
+</div>
+<div class="paragraph">
+<p>Sería labor del equipo de desarrollo revisar los errores detectados y tratar de corregirlos, siempre que realmente supongan una mejora para la calidad del código.</p>
+</div>
+<div class="paragraph">
+<p>Para ejecutar y visualizar el informe en Jenkins:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instalar el plugin <a href="https://github.com/jenkinsci/warnings-ng-plugin/blob/master/doc/Documentation.md#declarative-pipeline-configuration">Warnings Next Generation</a>.</p>
+</li>
+<li>
+<p>Añadir al pipeline un nuevo <code>stage</code> con la siguiente descripción:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  stage ('Analysis') {
+    steps {
+      // Warnings next generation plugin required
+      sh "mvn checkstyle:checkstyle site -DgenerateReports=false"
+      recordIssues enabledForFailure: true, tool: checkStyle()
+    }
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tras la construcción, el pipeline tiene una nueva fase y además en el menú tenemos acceso al informe de CheckStyle.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/checkstyle-report-dashboard.png" alt="checkstyle report dashboard">
+</div>
+<div class="title">Fig. 12. Pipeline con la nueva fase de Análisis</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/checkstyle-report-details.png" alt="checkstyle report details">
+</div>
+<div class="title">Fig. 13. Detalles del informe de CheckStyle</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Saber más&#8230;&#8203;</div>
+<div class="paragraph">
+<p>Si estás interesado en profundizar en este tema, te recomiendo integrar <a href="https://www.sonarqube.org/">SonarQube</a> con Jenkins, ya que SonarQube realiza un análisis mucho más detallado de la calidad y seguridad del código, realizando tanto análisis estático de código (CheckStyle y otros), como de análisis de seguridad (vulnerabilidades), y definiendo lo que denomina <a href="https://docs.sonarqube.org/latest/user-guide/quality-gates/"><em>Quality Gates</em></a> que permiten definir condiciones que se deben cumplir basadas en los valores de las métricas del proyecto (por ejemplo, que la cobertura de código sea mayor del 80%). Puedes encontrar mucha documentación online sobre cómo hacerlo:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.sonarqube.org/latest/setup/get-started-2-minutes/">Instalar SonarQube</a> como aplicación o como contenedor Docker (recomendado)</p>
+</li>
+<li>
+<p>Instalar el plugin <a href="https://plugins.jenkins.io/sonar/">SonarQube Scanner for Jenkins</a></p>
+</li>
+<li>
+<p><a href="https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-jenkins/#header-1">Configurar</a> SonarQube Scanner for Jenkins</p>
+</li>
+<li>
+<p><a href="https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-jenkins/#header-6">Añadir al pipeline</a> la fase de análisis de Sonar (<em>Declarative pipeline example:</em>). Más info de Sonar en pipeline: <a href="https://www.jenkins.io/doc/pipeline/steps/sonar/#sonarqube-scanner-for-jenkins">SonarQube Scanner for Jenkins</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Además, Si tu proyecto está en un repositorio público en GitHub, puedes ahorrarte tener que instalar tu propio SonarQube utilizando <a href="https://sonarcloud.io/">SonarCloud</a>, el servicio de SonarQube en la nube (SaaS) gratuito para proyectos públicos, con el que evitas tener que instalar y mantener tu propio SonarQube.</p>
+</div>
+<div class="paragraph">
+<p>Para lanzar el análisis de Sonar con maven:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Genera el login <a href="https://docs.sonarqube.org/latest/user-guide/user-token/">TOKEN</a></p>
+</li>
+<li>
+<p>Ejecuta los goals de maven: <code>clean verify sonar:sonar -Dsonar.login=$SONAR_LOGIN_TOKEN</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Incluso puedes configurar SonarCloud y Jenkins para que  <a href="https://blog.jdriven.com/2019/08/sonarcloud-github-pull-request-analysis-from-jenkins/">analizar los <em>pull request</em></a> de tu repositorio y conocer el resultado del análisis de Sonar antes de hacer el <em>merge</em> del pull request.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_despliegue_en_la_vm"><a class="anchor" href="#_despliegue_en_la_vm"></a>Despliegue en la VM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para desplegar la aplicación PetClinic en la instancia de despliegue vamos a copiar sobre ella el archivo JAR y a continuación ejecutaremos en ella la orden de java para ponerla en marcha:</p>
+</div>
+<div class="paragraph">
+<p>Copia este nueva fase en tu pipeline, sustituyendo DEPLOY_MACHINE por la IP o el nombre DNS de tu instancia:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">  stage('Deploy'){
+    steps {
+      sh '''
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "mkdir -p ~/spring-petclinic" <i class="conum" data-value="1"></i><b>(1)</b>
+        scp -i ~/.ssh/id_rsa_deploy $WORKSPACE/target/*.jar ubuntu@DEPLOY_MACHINE:~/spring-petclinic <i class="conum" data-value="2"></i><b>(2)</b>
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "if pgrep java; then pkill java; fi" <i class="conum" data-value="3"></i><b>(3)</b>
+        ssh -i ~/.ssh/id_rsa_deploy ubuntu@DEPLOY_MACHINE "nohup java -jar ~/spring-petclinic/*.jar &gt; ~/spring-petclinic/yourservice.log 2&gt;&amp;1 &amp;" <i class="conum" data-value="4"></i><b>(4)</b>
+      '''
+    }
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Crea la carpeta <code>spring-petclinic</code> dentro de la carpeta HOME del usuario <code>ubuntu</code> en la máquina de despliegue</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Copia con <code>scp</code> el archivo <code>.jar</code>, que se ha generado tras la construcción con maven, en la máquina de despligue</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Detiene el proceso <code>java</code> si existe de un despliegue anterior.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Ejecuta la aplicación java empaquetada en el <code>.jar</code>, en background y con <code>nohup</code>, que hace que el proceso siga funcionando incluso si el usuario que lo inició cierra la sesión. De esta manera finaliza el comando ssh y el proceso sigue funcionando, es decir, la aplicación PetClinic estará desplegada y funcionando.</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Referencias:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://medium.com/@weblab_tech/how-to-publish-artifacts-in-jenkins-f021b17fde71">How to build on Jenkins and publish artifacts via ssh with Pipelines</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

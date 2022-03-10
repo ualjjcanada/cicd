@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Hola mundo en Node.js con Docker :: CNSA</title>
+    <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22.2/node-app/node-hello-docker.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="despliegue-continuo" data-version="0.22.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Despliegue continuo con Jenkins</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introducción</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../prerrequisitos/index.html">Prerrequisitos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../infraestructura/index.html">Creación de la infraestructura en Google Cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../jenkinsdocker/index.html">Primeros pasos con Jenkins</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jenkinsdocker/install-jenkins.html">Instalación y configuración de Jenkins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../jenkinsdocker/first-projects.html">Primeros ejemplos</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../java-web-app/index.html">Aplicación Web Java</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic.html">PetClinic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic-docker.html">PetClinic con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Aplicación en Node.js</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="node-hello.html"><em>Hola mundo</em> en Node.js</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Despliegue continuo con Jenkins</span>
+    <span class="version">0.22.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Aplicación en Node.js</a></li>
+    <li><a href="node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/node-app/pages/node-hello-docker.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page"><em>Hola mundo</em> en Node.js con Docker</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para realizar el despliegue de la app <em>Hola mundo</em> en Node.js como un contenedor, primero tenemos que <a href="https://nodejs.org/fr/docs/guides/nodejs-docker-webapp/">dockerizar</a> la aplicación. Una vez construido el contenedor, habrá que publicar la imagen de contenedor en un registro como Google Container Registry, y por último ejecutar el contenedor en la instancia de despliegue.</p>
+</div>
+<div class="paragraph">
+<p>A continuación se describe cómo crear un contenedor Docker de la aplicación Node.js. Los pasos se realizan en local, y al final configuraremos el pipeline de Jenkins para que se realicen automáticamente.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creación_del_dockerfile"><a class="anchor" href="#_creación_del_dockerfile"></a>Creación del <code>Dockerfile</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para crear el contendedor de Docker que empaquete la aplicación Node.js, vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto:</p>
+</div>
+<div class="listingblock">
+<div class="title">Dockerfile</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker">FROM node:10-alpine
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
+
+EXPOSE 3000
+CMD [ "npm", "start" ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El Dockerfile es muy sencillo, contiene los <a href="https://nodejs.org/fr/docs/guides/nodejs-docker-webapp/#creating-a-dockerfile">pasos básicos</a> para ejecutar una aplicación en un contenedor.</p>
+</div>
+<div class="paragraph">
+<p>Crea además un archivo <code>.dockerignore</code> en la misma carpeta que tu Dockerfile con el siguiente contenido:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>node_modules/
+.git/
+.gitignore
+npm-debug.log</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Puedes construir la imagen del contenedor:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker build -t &lt;your username&gt;/nodeapp .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tras ello, ejecuta: <code>docker images</code>. La imagen debe aparecer en la lista de imágenes de Docker en tu equipo:</p>
+</div>
+<div class="paragraph">
+<p>Prueba la ejecución del contenedor en local:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -p 3000:3000 -d --name hello-node &lt;your username&gt;/nodeapp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Comprueba que se ha iniciado la aplicación en <a href="http://localhost:3000" class="bare">http://localhost:3000</a>.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Comprueba que el contenedor está ejecutándose con <code>docker ps</code></p>
+</li>
+<li>
+<p>Detén el contenedor con <code>docker stop &lt;ID&gt;</code></p>
+</li>
+<li>
+<p>Comprueba que ya no está ejecutándose, pero el contenedor sigue existiendo, lo puedes ver con <code>docker ps -a</code></p>
+</li>
+<li>
+<p>Podrías volver a arrancarlo con <code>docker start &lt;ID&gt;</code>, pero en su lugar, elimina el contenedor con <code>docker rm &lt;ID&gt;</code></p>
+</li>
+<li>
+<p>La imagen sigue existiendo, puedes verlo con <code>docker images</code></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_publicación_de_la_imagen_en_el_registro"><a class="anchor" href="#_publicación_de_la_imagen_en_el_registro"></a>Publicación de la imagen en el registro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Una vez creada la imagen con <code>docker build</code> y probada su ejecución con <code>docker run</code>, el siguiente paso será publicar la imagen en un registro de contenedores, mediante <code>docker push</code>. De nuevo vamos a usar Google Cloud <a href="https://cloud.google.com/container-registry?hl=es">Container Registry</a>.</p>
+</div>
+<div class="paragraph">
+<p>Para poder hacer <code>push</code> debemos tener permisos de escritura, y por tanto debemos autenticarnos en el servicio Container Registry. Este proceso ya se hizo en la para el ejemplo de Java en la sección <em>Autenticación en Container Registry</em>. Ahora, simplemente comprueba que mantienes el login del Container Registry.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Comprueba el login al registro:</p>
+<div class="literalblock">
+<div class="content">
+<pre>docker login https://gcr.io</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/docker-login-done.png" alt="docker login done">
+</div>
+<div class="title">Fig. 1. Comprobar docker login</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Si <code>docker login</code> te da error, revisa los pasos de la sección anterior de <em>Autenticación en Container Registry</em>. No es necesario que vuelvas a generar el archivo de credenciales, simplemente copia ese archivo .json en el proyecto actual y úsalo para hacer login.</p>
+</div>
+<div class="paragraph">
+<p>En tal caso, no olvides añadir el archivo de credenciales al <code>.gitignore</code> para evitar publicar en GitHub tus credenciales.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Etiqueta el contenedor con el nombre completo incluyendo la referencia a Container registry (gcr.io). Primero definimos una variable de entorno con el nombre de nuestro proyecto GCP, y luego etiquetamos la imagen ya construida con un nuevo nombre completo del registro de contenedores:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">GOOGLE_CLOUD_PROJECT=cnsa-2022-user123
+
+docker tag  &lt;your username&gt;/nodeapp gcr.io/$GOOGLE_CLOUD_PROJECT/nodeapp:1.0</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Comprueba que se ha etiquetado correctamente</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/docker-tag-nodeapp.png" alt="docker tag nodeapp">
+</div>
+<div class="title">Fig. 2. Imagen etiquetada</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>A continuación, publica la imagen en el registro con <code>docker push</code></p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker push gcr.io/$GOOGLE_CLOUD_PROJECT/nodeapp:1.0</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>Comprueba que se ha publicado correctamente.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/container-registry-pushed-nodeapp.png" alt="container registry pushed nodeapp">
+</div>
+<div class="title">Fig. 3. Lista de imágenes en Container Registry</div>
+</div>
+<div class="paragraph">
+<p>La imagen del contenedor <strong>nodeapp</strong> ya está disponible en el registro privado de nuestro proyecto GCP. Utilizando nuestras credenciales podremos hacer <code>docker pull</code> de dicha imagen para descargarla en cualquier máquina con docker, y ejecutarlo con <code>docker run</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -p 3000:3000 -t --name nodeapp gcr.io/$GOOGLE_CLOUD_PROJECT/nodeapp:1.0</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_despliegue_en_vm"><a class="anchor" href="#_despliegue_en_vm"></a>Despliegue en VM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Conecta a la instancia de despliegue para ejecutar el contenedor. Antes vamos a comprobar el login al registro. En la máquina de despliegue ya habíamos copiado el archivo de credenciales <code>.json</code> con premisos sobre Container Registry. A continuación se recuerdan los comandos necesarios para ello.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Conectamos a la máquina de despliegue
+ssh ubuntu@DNS_MAQUINA_DEPLOY
+# Autenticamos docker contra Container Registry
+cat keyfile.json | docker login -u _json_key --password-stdin https://gcr.io
+# ejecutamos el contenedor desde gcr.io
+docker run -p 8080:3000 -t --name nodeapp gcr.io/$GOOGLE_CLOUD_PROJECT/nodeapp:1.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hemos publicado el contenedor en el puerto 8080 ya que es el que está abierto en las reglas del firewall de nuestro proyecto GCP.</p>
+</div>
+<div class="paragraph">
+<p>Es posible que la ejecución del contenedor de un error, porque el puerto 8080 ya esté en uso:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Error starting userland proxy: listen tcp 0.0.0.0:8080: bind: address already in use.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para solucionarlo, bien detén el proceso o contenedor java que está corriendo con la aplicación PetClinic del ejemplo anterior. O bien utiliza el puerto 80 que también está abierto.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integración_y_despliegue_continuos_con_jenkins"><a class="anchor" href="#_integración_y_despliegue_continuos_con_jenkins"></a>Integración y despliegue continuos con Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación, vamos a automatizar en Jenkins todo el proceso:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>la construcción de la imagen del contenedor,</p>
+</li>
+<li>
+<p>la publicación de la imagen en el registro, y</p>
+</li>
+<li>
+<p>el despliegue del contenedor.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Los plugins de  Jenkins necesarios ya los tenemos configurados el ejemplo en Java.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Definimos un nuevo proyecto en Jenkins de tipo pipeline, con el nombre <code><code>nodeapp-Docker-abc123</code></code> sustituyendo abc123 por nuestro nombre de usuario. Son necesarios 3 fases (stages) en el pipeline: <em>build image</em>, <em>push image</em>, y <em>deploy container</em>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Comenzamos por la <strong>construcción de la imagen</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
+  agent any
+  environment {
+    CONTAINER_REGISTRY = 'gcr.io'
+    GOOGLE_CLOUD_PROJECT = 'cnsa-2022'
+    CREDENTIALS_ID = 'cnsa-2022-gcr'
+  }
+
+  tools {
+    // In Global tools configuration, install Node configured as "nodejs"
+    nodejs "nodejs"
+  }
+
+  stages {
+
+    stage("Git Checkout") {
+      steps {
+        // checkout scm
+        git 'https://github.com/ualcnsa/nodeapp.git'
+      }
+    }
+
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+    stage('Test') {
+      steps {
+         sh 'npm run test-jenkins'
+      }
+      post {
+        success {
+          junit '**/test*.xml'
+        }
+      }
+    }
+
+    stage("Build image") {
+      steps {
+        script {
+          dockerImage = docker.build(
+            "${env.CONTAINER_REGISTRY}/${env.GOOGLE_CLOUD_PROJECT}/nodeapp:${env.BUILD_ID}",
+            "-f Dockerfile ."
+          )
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para probar que la imagen del contenedor se ha creado bien, añade la siguiente fase que hace un despliegue "local" en la propia máquina de Jenkins, es decir, ejecuta un contenedor basado en la imagen que acabamos de crear:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage("Run image locally") {
+      steps {
+        sh "docker stop nodeapp || true &amp;&amp; docker rm  nodeapp || true" <i class="conum" data-value="1"></i><b>(1)</b>
+        sh "docker run -d -p 8080:3000 -t --name nodeapp ${env.CONTAINER_REGISTRY}/${env.GOOGLE_CLOUD_PROJECT}/nodeapp:${env.BUILD_ID}" <i class="conum" data-value="2"></i><b>(2)</b>
+      }
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Por si ya se ha ejecutado el pipeline anteriormente, es necesario comprobar si el contenedor <code>nodeapp</code> ya se está ejecutando, y en tal caso pararlo con <code>docker stop</code> y eliminarlo con <code>docker rm</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Con <code>docker run</code> ejecuta el contenedor <code>nodeapp</code> a partir de la imagen recién construida. Para que el pipeline pueda finalizar y el contenedor siga ejecutándose, se añade <code>-d</code> que indica modo <em>detached</em> que ejecuta el contenedor en background.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tras ello, la aplicación debe estar accesible en el puerto 8080 en tu máquina de Jenkins. Para asegurarnos que la aplicación se está ejecutando bien, debemos problarlo "manualmente". Para automatizar esta prueba, lo adecuado sería realizar unos tests end-to-end, con <a href="https://www.selenium.dev">Selenium</a>. Esto se explicará en otra actividad, dedicada al testing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('End-to-end Test image') {
+        // Ideally, we would run some end-to-end tests against our running container.
+        steps{
+            sh 'echo "End-to-end Tests passed"'
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El siguiente paso es <strong>publicar la imagen</strong> en el registro.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Primero, las credenciales en Jenkins para poder hacer <code>push</code> en Container Registry ya están creadas del ejemplo anterior (Si tienes algún problema, consulta la sección correspondiente del ejemplo de Java)</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Define la fase para publicar la imagen del contenedor:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage("Push image") {
+        steps {
+            script {
+                docker.withRegistry('https://'+ CONTAINER_REGISTRY, 'gcr:'+ GOOGLE_CLOUD_PROJECT) {
+                        dockerImage.push("latest")
+                        dockerImage.push("${env.BUILD_ID}")
+                }
+            }
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Comprueba que se ha publicado correctamente en el registro.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-published-nodeapp-container-registry.png" alt="jenkins published nodeapp container registry">
+</div>
+<div class="title">Fig. 4. Imagen publicada en Container Registry, etiquetada con el número de build</div>
+</div>
+<div class="paragraph">
+<p>Por último, quedaría el paso de <strong>desplegar al entorno de producción</strong>: la máquina virtual de despliegue.</p>
+</div>
+<div class="paragraph">
+<p>Los pasos para el despliegue de la nueva imagen del contenedor consistirán en ejecutar los siguientes comandos sobre la máquina de despliegue:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>docker stop</code> del contenedor por si estuviera ejecutándose</p>
+</li>
+<li>
+<p><code>docker rm</code> para eliminar el contenedor existente, que puede estar basado en una imagen de una versión anterior</p>
+</li>
+<li>
+<p><code>docker run</code> que primero hará un <code>docker pull</code> de la imagen actualizada del registro. Lo lanzaremos en el puerto 80 ya que el 8080 está ocupado por el despliegue que hicimos sin contenedor.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Estas acciones debemos añadirlas a un <code>stage</code> del pipeline de Jenkins que se encargará de desplegar el nuevo contenedor automáticamente. En el siguiente código, sustituye <code>DNS_DEPLOY_INSTANCE</code> por el nombre DNS de tu instancia de despliegue. También puedes definirla como una variable de entorno al inicio del pipeline.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('Deploy to Production') {
+      steps{
+        sh '''
+          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "if docker ps -q --filter name=nodeapp | grep . ; then docker stop nodeapp ; fi" <i class="conum" data-value="1"></i><b>(1)</b>
+          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "if docker ps -a -q --filter name=nodeapp | grep . ; then docker rm -fv nodeapp ; fi" <i class="conum" data-value="1"></i><b>(1)</b>
+          ssh -i ~/.ssh/id_rsa_deploy ubuntu@DNS_DEPLOY_INSTANCE "docker run -d -p 8080:3000 -t --name nodeapp ${CONTAINER_REGISTRY}/${GOOGLE_CLOUD_PROJECT}/nodeapp:latest" <i class="conum" data-value="2"></i><b>(2)</b>
+        '''
+      }
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ejecuta en la instancia de despliegue el comando que detiene y elimina el contenedor <code>nodeapp</code> en caso de que ya se estuviera ejecutando</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Ejecuta en la instancia de despliegue el comando para ejecutar el contenedor basado en la última versión de la imagen, lanzándolo en background y con <code>-d</code> para que el pipeline finalice y el contenedor permanezca en ejecución.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La aplicación nodeapp debe estar accesible <em>en producción</em>, en el puerto 8080 en la instancia de despliegue. Para asegurarnos, debemos problarlo "manualmente". Para automatizar esta prueba <em>en producción</em>, lo adecuado de nuevo sería realizar unos tests end-to-end, con <a href="https://www.selenium.dev">Selenium</a>. Esto se explicará en otra actividad, dedicada al testing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('End-to-end Test on Production') {
+        // Ideally, we would run some end-to-end tests against our running container.
+        steps{
+            sh 'echo "End-to-end Tests passed on Production"'
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Por último, es una buena práctica eliminar las imágenes que se van generando en cada build, para liberar espacio en la máquina de Jenkins. Primero paramos y eliminamos el contenedor local, luego eliminamos la imagen.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    stage('Remove Unused docker image') {
+      steps{
+        // input message:"Proceed with removing image locally?" <i class="conum" data-value="1"></i><b>(1)</b>
+        sh 'if docker ps -q --filter name=nodeapp | grep . ; then docker stop nodeapp &amp;&amp; docker rm -fv nodeapp; fi' <i class="conum" data-value="2"></i><b>(2)</b>
+        sh 'docker rmi ${CONTAINER_REGISTRY}/${GOOGLE_CLOUD_PROJECT}/nodeapp:$BUILD_NUMBER' <i class="conum" data-value="3"></i><b>(3)</b>
+      }
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Pide confirmación al usuario, que tendrán que pulsar un botón de <em>Proceed</em> para continuar la ejecución del pipeline</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Para y elimina el contenedor <em>local</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Elimina la imagen de contenedor en <em>local</em> con <code>docker rmi</code> para liberar espacio.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>El pipeline completo, con todas sus fases, debe quedar así:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-nodeapp-full-pipeline.png" alt="jenkins nodeapp full pipeline">
+</div>
+<div class="title">Fig. 5. Pipeline completo</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Referencias</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://nodejs.org/es/docs/guides/nodejs-docker-webapp/">Dockerizing a Node.js web app</a> @ Node.js Docs</p>
+</li>
+<li>
+<p><a href="https://medium.com/@sssanjaya/a-simple-docker-setup-for-simple-hello-world-nodejs-application-bcf79bb608a0">A simple docker setup for hello world nodejs application</a> @ Medium</p>
+</li>
+<li>
+<p><a href="https://semaphoreci.com/community/tutorials/dockerizing-a-node-js-web-application">Dockerizing a Node.js Web Application</a> @ SemaphoreCI</p>
+</li>
+<li>
+<p><a href="https://www.docker.com/blog/keep-nodejs-rockin-in-docker/">Top 4 Tactics To Keep Node.js Rockin’ in Docker</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

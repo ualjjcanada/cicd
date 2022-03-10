@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Instalación y configuración de Jenkins :: CNSA</title>
+    <link rel="canonical" href="https://ualjjcanada.github.io/cicd/despliegue-continuo/0.22.2/jenkinsdocker/install-jenkins.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="despliegue-continuo" data-version="0.22.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Despliegue continuo con Jenkins</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Introducción</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../prerrequisitos/index.html">Prerrequisitos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../infraestructura/index.html">Creación de la infraestructura en Google Cloud</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Primeros pasos con Jenkins</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="install-jenkins.html">Instalación y configuración de Jenkins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="first-projects.html">Primeros ejemplos</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../java-web-app/index.html">Aplicación Web Java</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic.html">PetClinic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../java-web-app/java-petclinic-docker.html">PetClinic con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../node-app/index.html">Aplicación en Node.js</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../node-app/node-hello.html"><em>Hola mundo</em> en Node.js</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../node-app/node-hello-docker.html"><em>Hola mundo</em> en Node.js con Docker</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Despliegue continuo con Jenkins</span>
+    <span class="version">0.22.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Despliegue continuo con Jenkins</a></li>
+    <li><a href="index.html">Primeros pasos con Jenkins</a></li>
+    <li><a href="install-jenkins.html">Instalación y configuración de Jenkins</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualjjcanada/despliegue-continuo/edit/v.0.22/docs/modules/jenkinsdocker/pages/install-jenkins.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Instalación y configuración de Jenkins</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación se describe cómo desplegar Jenkins como un contenedor de Docker.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_construcción_del_contenedor_jenkins"><a class="anchor" href="#_construcción_del_contenedor_jenkins"></a>Construcción del contenedor Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La imagen pública del contenedor de Jenkins está disponible en <a href="https://hub.docker.com/r/jenkins/jenkins">DockerHub</a>, con el nombre <code>jenkins/jenkins:lts</code>. Esta imagen genérica necesita instalarle algunos plugins y herramientas. En concreto, hay que instalarle el propio Docker para permitir que Jenkins ejecute tareas de docker, como por ejemplo <code>docker build</code> para construir imágenes de contenedores. Esto es lo que se conoce como <a href="https://devopscube.com/run-docker-in-docker/">Docker-in-Docker (dind)</a>, y hay que <a href="https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/">gestionarlo correctamente cuando se trata de entornos de CI</a>.</p>
+</div>
+<div class="paragraph">
+<p>Por tanto, vamos a crear una imagen personalizada del contenedor de Jenkins basándonos en la imagen pública e instalándo Docker dentro del contenedor.
+Lo más adecuado es que construyas la imagen de Jenkins con Docker en la propia máquina donde lo vamos a ejecutar, es decir en la instancia de jenkins.</p>
+</div>
+<div class="paragraph">
+<p>Conecta por ssh a la instancia de jenkins. Recuerda que el usuario de la instancia es <code>ubuntu</code>. Por tanto, la conexión a la misma  consistiría en ejecutar desde el terminal el comando</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">ssh ubuntu@MAQUINA_JENKINS</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>sustituyendo MAQUINA_JENKINS por la IP o el nombre DNS de la misma.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Si utilizas la shell de la consola web de Google Cloud para conectar por ssh a la máquina, verás que estarás conectado como tu usuario de la UAL, del tipo <code>abc123</code>. En este caso RECUERDA sustituir <code>ubuntu</code> por tu usuario <code>abc123</code> en todos los comandos y ejemplos de este documento.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Realiza las actividades conectando a las instancias bien con el usuario <code>ubuntu</code> de la máquina, o bien si usas la shell de la consola web de Google Cloud, con tu usuario de la UAL (del tipo <code>abc123</code>). <strong>Se consistente</strong>, es decir, hazlo siempre con el mismo usuario. Se <strong>DESACONSEJA</strong> ejecutar los comandos como <code>root</code> mediante <code>sudo su</code>. Solamente en caso de que sea absolutamente necesario, ejecuta los comandos con <code>sudo</code> delante para tener permisos de <code>root</code> puntualmente. Si haces las actividades como <code>root</code>, tendrás problemas de permisos de acceso los archivos y carpetas, como por ejemplo a las claves SSH.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Prueba que docker se ejecuta correctamente. Si la ejecución de <code>docker ps -a</code> te da error, prueba a ejecutarlo con <code>sudo</code>. Para evitar tener que escribir siempre <code>sudo</code> delante de cualquier comando docker`, ejecuta:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">sudo usermod -aG docker $USER</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tras ello, reinicia la sesión. Prueba ahora sin <code>sudo</code>, a partir de ahora llama siempre a docker sin <code>sudo</code>. Más info <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">aquí</a></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Crea una carpeta <code>jenkins-docker</code> y crea el archivo <code>Dockerfile</code>. Usa el siguiente Dockerfile (descrito en esta entrada de <em>medium.com</em>:  <a href="https://medium.com/@gustavo.guss/jenkins-building-docker-image-and-sending-to-registry-64b84ea45ee9">Jenkins Building Docker Image and Sending to Registry</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Dockerfile</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker">FROM jenkins/jenkins:lts
+
+USER root
+
+RUN apt-get update &amp;&amp; \
+apt-get -y install apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    software-properties-common &amp;&amp; \
+curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg &gt; /tmp/dkey; apt-key add /tmp/dkey &amp;&amp; \
+add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+    $(lsb_release -cs) \
+    stable" &amp;&amp; \
+  apt-get update &amp;&amp; \
+  apt-get -y install docker-ce
+
+RUN apt-get install -y docker-ce
+
+RUN usermod -a -G docker jenkins
+
+USER jenkins</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Construimos la imagen a partir del Dockerfile:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker build --tag <strong>ualjjcanada</strong>/jenkins-docker:1.0 . <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Sustituye <strong>ualjjcanada/</strong> por tu usuario de Dockerhub si estás registrado, si no simplemente no lo pongas.</td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/docker-build-tag.png" alt="docker build tag">
+</div>
+<div class="title">Fig. 1. <code>docker build</code> de Jenkins con Docker</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/docker-build-tag-successfully.png" alt="docker build tag successfully">
+</div>
+<div class="title">Fig. 2. <code>docker build</code> successful</div>
+</div>
+<div class="paragraph">
+<p>Comprueba que la imagen ha sido creada, y está disponible en tu máquina:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">docker image ls</code></pre>
+</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/docker-image-ls.png" alt="docker image ls">
+</div>
+<div class="title">Fig. 3. <code>docker image ls</code></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_publicación_en_google_container_registry"><a class="anchor" href="#_publicación_en_google_container_registry"></a>Publicación en Google Container Registry</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Opcionalmente podemos publicar nuestra imagen personalizada en DockerHub, o alternativamente el Google Container Registry. Más adelante se describirá cómo hacerlo.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ejecución_del_contenedor_de_jenkins"><a class="anchor" href="#_ejecución_del_contenedor_de_jenkins"></a>Ejecución del contenedor de Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ejecutamos el contenedor a partir de la imagen creada previamente.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Crear una carpeta para <code>jenkins_home</code> que configuraremos como volumen para que los datos de Jenkins se guarden fuera del contenedor.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir ~/jenkins_home
+chmod 777 ~/jenkins_home</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Ejecutamos el contenedor con <code>docker run</code>:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d --name jenkins-docker -p 80:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v ~/jenkins_home:/var/jenkins_home --restart always ualjjcanada/jenkins-docker:1.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Los parámetros de <code>docker run</code> son:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>--name jenkins-docker</code>: nombre que le asignamos al contenedor</p>
+</li>
+<li>
+<p><code>-p 80:8080</code>: jenkins se ejecutará en el puerto 80 en el host, que está mapeado al puerto 8080 del contenedor</p>
+</li>
+<li>
+<p><code>-v /var/run/docker.sock:/var/run/docker.sock</code>: volumen para compartir el docker socket (usado en la máquina host) con el contenedor.</p>
+</li>
+<li>
+<p><code>-v ~/jenkins_home:/var/jenkins_home</code>: mapea la carpeta local <code>~/jenkins_home</code> con la carpeta <code>/var/jenkins_home</code> del contenedor. En el contenedor, la carpeta HOME del usuario <em>jenkins</em> es <code>/var/jenkins_home</code>, donde Jenkins guarda todos los archivos que utiliza. Si se tira el contenedor o se actualiza, no se pierden los datos ya que se guardan "fuera" del contenedor.</p>
+</li>
+<li>
+<p><code>--restart always</code>: inicia el contenedor cuando se enciende la instancia.</p>
+</li>
+<li>
+<p><code>ualjjcanada/jenkins-docker:1.0</code>: imagen del contenedor a ejecutar, la que hemos construido en el paso anterior.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Comprueba que el contenedor está ejecutándose con <code>docker ps</code></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/docker-ps-jenkins.png" alt="docker ps jenkins">
+</div>
+<div class="title">Fig. 4. <code>docker ps</code></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuración_básica_de_jenkins"><a class="anchor" href="#_configuración_básica_de_jenkins"></a>Configuración básica de Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación se muestran los pasos a realizar en el inicio y configuración básica de Jenkins. Además, se describe la instalación de algunos plugins adicionales.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Conectamos a la IP/URL de la instancia con el navegador web. Aparecerá la ventana para introducir el password inicial. Para ver el password ejecuta:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">cat /home/ubuntu/jenkins_home/secrets/initialAdminPassword</code></pre>
+</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-unlock.png" alt="jenkins unlock">
+</div>
+<div class="title">Fig. 5. Contraseña inicial de Jenkins</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Selecciona Install suggested plugins.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-install-suggested-plugins.png" alt="jenkins install suggested plugins">
+</div>
+<div class="title">Fig. 6. Install suggested plugins</div>
+</div>
+<div class="paragraph">
+<p>Tras unos minutos, introduce los datos del  usuario administrador de Jenkins. Introduce un nombre de usuario y contraseña.</p>
+</div>
+<div class="paragraph">
+<p>Acepta el nombre de dominio de la máquina. Si aun no has registrado el nombre de dominio, lo puedes hacer más tarde en la configuración general de Jenkins.</p>
+</div>
+<div class="paragraph">
+<p>Jenkins está listo.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-welcome.png" alt="jenkins welcome">
+</div>
+<div class="title">Fig. 7. Bienvenida a Jenkins</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_instalación_de_plugins_adicionales"><a class="anchor" href="#_instalación_de_plugins_adicionales"></a>Instalación de plugins adicionales</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vamos a instalar varios plugins: NodeJs, GitHub integration, Docker Pipeline, Warnings Next Generation, Jacoco, Code Coverage API, <a href="https://plugins.jenkins.io/google-container-registry-auth">Google Container Registry Auth</a>.</p>
+</div>
+<div class="paragraph">
+<p>Haz clic en <em>Manage Jenkins</em> &gt; <em>Manage Plugins</em>. En la pestaña <em>Available</em> busca <em>Github integration</em>, seleccionaló y pulsa en <em>Download now and install after restart</em>.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-plugins-github-integration.png" alt="jenkins plugins github integration">
+</div>
+<div class="title">Fig. 8. Instalación del plugin Github integration</div>
+</div>
+<div class="paragraph">
+<p>Repite los pasos para los plugins <em>Green Balls</em>, <em>NodeJS</em> y <em>Docker Pipeline</em>.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-plugins-nodejs.png" alt="jenkins plugins nodejs">
+</div>
+<div class="title">Fig. 9. Instalación del plugin NodeJS</div>
+</div>
+<div class="paragraph">
+<p>Marca <em>Restart Jenkins</em> para completar la instalación. Tras unos segundos, vuelve a iniciar sesión y tendrás los plugins instalados.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-plugins-restart.png" alt="jenkins plugins restart">
+</div>
+<div class="title">Fig. 10. Reiniciar para completar la instalación</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuración_las_tools_en_jenkins"><a class="anchor" href="#_configuración_las_tools_en_jenkins"></a>Configuración las tools en Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tras la instalación del plugin <a href="https://plugins.jenkins.io/nodejs/"><em>NodeJS</em></a>, es necesario realizar la siguiente configuración:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ve a <em>Manage Jenkins</em>, <em>Global Tool configuration</em>.</p>
+</li>
+<li>
+<p>En <strong>NodeJS</strong>, añade un instalador (se recomienda la última versión disponible). Dale por nombre "nodejs" y marca instalar automáticamente.</p>
+</li>
+<li>
+<p>Guarda los cambios.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-tool-nodejs.png" alt="jenkins tool nodejs">
+</div>
+<div class="title">Fig. 11. Configuración de herramienta NodeJS</div>
+</div>
+<div class="paragraph">
+<p>De la misma forma, instala la última versión de Maven.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-tool-maven.png" alt="jenkins tool maven">
+</div>
+<div class="title">Fig. 12. Configuración de herramienta Maven</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>
