@@ -60,3 +60,9 @@ Y así  ya se queda creado  el archivo search-ui.js  necesario para que funcione
 ## Extra
 - Add icons to admonition labels: https://blog.yuzutech.fr/antora-admonitions-icons/
 - Tabs and groups (not default UI): https://lightbend.github.io/antora-supplemental-ui-lightbend-theme/build/site/groups.html
+
+## Throubleshouting
+
+- Error, on Windows: `npm ERR! Unexpected token '.'`
+
+*[Solution](https://github.com/npm/cli/issues/4234#issuecomment-1058261100):*  I had this issue with Node 16.14.0 and NPM 8.3.1. But the real issue was with NVM. I had NVM 1.1.7 but updated to the latest which is currently 1.1.9. Then run `nvm uninstall 16.14.0` followed by `nvm install 16.14.0` and of course `nvm use 16.14.0`

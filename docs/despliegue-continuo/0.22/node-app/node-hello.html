@@ -154,10 +154,10 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>A continuación se muestra un ejemplo de <strong>integración y despliegue continuos en Jenkins de un proyecto NodeJs</strong>. Los pasos a realizar son similares al ejemplo anterior con Java, el decir, el pipeline tendrá las mismas fases; eso si, adaptaremos las ordenes o comandos a ejecutar a la tecnología NodeJs.</p>
+<p>A continuación se muestra un ejemplo de <strong>integración y despliegue continuos en Jenkins de un proyecto NodeJs</strong>. Los pasos a realizar son similares al ejemplo anterior con Java, el decir, el pipeline tendrá las mismas fases; eso si, adaptaremos las ordenes o comandos a ejecutar a la tecnología Node.js.</p>
 </div>
 <div class="paragraph">
-<p>Al igual con el ejemplo anterior en Java, en primer lugar trabajaremos con la aplicación NodeJS sin <em>dockerizar</em>, y después <em>dockerizaremos</em> la aplicación. La mayoría de los pasos siempre los ejecutaremos primero en local, y tras comprobar que funcionan correctamente, los automatizaremos en Jenkins.</p>
+<p>Al igual con el ejemplo anterior en Java, en primer lugar trabajaremos con la aplicación Node.js sin <em>dockerizar</em>, y después <em>dockerizaremos</em> la aplicación. La mayoría de los pasos siempre los ejecutaremos primero en local, y tras comprobar que funcionan correctamente, los automatizaremos en Jenkins.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -172,7 +172,7 @@
 <h2 id="_construcción_y_ejecución_en_local"><a class="anchor" href="#_construcción_y_ejecución_en_local"></a>Construcción y ejecución en local</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Nos vamos a basar en  el proyecto <em>HelloWorld</em> en NodeJs, disponible en <a href="https://github.com/ualcnsa/nodeapp" class="bare">https://github.com/ualcnsa/nodeapp</a>. Si deseas poder hacer cambios sobre el mismo, crea un <em>fork</em> y trabaja con tu <em>fork</em> a partir de ahora.</p>
+<p>Nos vamos a basar en  el proyecto <em>HelloWorld</em> en NodeJs, disponible en <a href="https://github.com/ualcnsa/nodeapp" class="bare">https://github.com/ualcnsa/nodeapp</a>. Necesitarás poder hacer cambios sobre el mismo, así que crea un <em>fork</em> y trabaja con tu <em>fork</em> a partir de ahora.</p>
 </div>
 <div class="paragraph">
 <p>Veamos los archivos que componen la aplicación:</p>
@@ -187,7 +187,7 @@
 <p><strong>express</strong>: Node framework</p>
 </li>
 <li>
-<p><strong>mocha</strong>: framework de testing para NodeJs (existen numerosos framework de testing en NodeJs, como Jasmin, Jest, Tape, etc.)</p>
+<p><strong>jest</strong>: framework de testing para NodeJs (existen numerosos framework de testing en NodeJs, como Jasmin, Mocha, Tape, etc.)</p>
 </li>
 <li>
 <p><strong>supertest</strong>: proporciona abstracción a alto nivel para testing HTTP</p>
@@ -201,22 +201,22 @@
 <div class="title">package.json</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-   "name": "node-app",
-   "description": "hello jenkins test app",
-   "version": "0.0.1",
-   "private": true,
-   "directories": {
-      "test": "test"
-    },
+  "name": "nodeapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
     "scripts": {
-      "test": "mocha"
+    "start": "node src/main",
+    "test": "jest"
     },
+  "author": "",
+  "license": "ISC",
    "dependencies": {
-      "express": "^4.17.1"
+    "express": "^4.17.3"
    },
    "devDependencies": {
-      "mocha": "^7.1.1",
-      "supertest": "^4.0.2"
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
    }
 }</code></pre>
 </div>
@@ -227,54 +227,147 @@
 <div class="olist arabic">
 <ol class="arabic" start="2">
 <li>
-<p>El archivo raíz del proyecto <code>index.js</code> es un sencillo <em>hola mundo</em>.</p>
+<p>El archivo principal del proyecto <code>src/main.js</code> se encarga de arrancar la aplicación en el puerto 3000.</p>
 </li>
 </ol>
 </div>
 <div class="listingblock">
-<div class="title">index.js</div>
+<div class="title">src/main.js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">//importing node framework
-var express = require('express');
-
-var app = express();//Respond with "hello world" for requests that hit our root "/"
-
-app.get('/', function (req, res) {
- res.send('hello world');
-});//listen to port 3000 by default
-app.listen(process.env.PORT || 3000);
-
-module.exports = app;</code></pre>
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">const app = require("./app");
+const port = 3000
+app.listen(port, () =&gt; {
+  console.log(`Example app listening on port ${port}`)
+})</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Para ejecutar la aplicación, ejecuta: <code>node index.js</code></p>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>El archivo <code>src/app.js</code> es un sencillo <em>hola mundo</em> con dos rutas:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/</code> devuelve <code>"Hello World!"</code></p>
+</li>
+<li>
+<p><code>/:nameToSalute</code> devuelve <code>"Hello " + nameToSalute + "!"</code> mediante el servicio <code>HelloWordService</code></p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>Puedes ver la aplicación en el navegador accediendo a <a href="http://localhost:3000">http://localhost:3000</a></p>
-</div>
-<div class="paragraph">
-<p><strong>Primer test</strong></p>
-</div>
-<div class="paragraph">
-<p>Nuestro primer test va a navegar a la raiz de la aplicación (<code>/</code>) y verificar que la página responde con el texto esperado <code>hello world</code>.</p>
-</div>
-<div class="paragraph">
-<p>Se guardará en la carpeta <code>/test/</code> con el nombre <code>test.js</code>.</p>
+</li>
+</ol>
 </div>
 <div class="listingblock">
-<div class="title">test/test.js</div>
+<div class="title">src/app.js</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">var request = require('supertest');
-var app = require('../index.js');describe('GET /', function() {
- it('respond with hello world', function(done) { //navigate to root and check the the response is "hello world"
- request(app).get('/').expect('hello world', done);
- });
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">const express = require('express')
+const HelloWordService = require( "./services/hello-world" );
+
+const app = express()
+
+app.get('/', (req, res) =&gt; {
+  res.send('Hello World!')
+})
+
+app.get('/:nameToSalute', (req, res) =&gt; {
+  res.send(new HelloWordService().greet(req.params.nameToSalute));
+})
+
+module.exports = app</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>El archivo <code>src/services/hello-world.js</code> es un servicio de <em>hola mundo</em>.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">src/services/hello-world.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">class HelloWordService {
+  /**
+    * @description Create an instance of HelloWordService
+    */
+  constructor () {
+
+  }
+
+  /**
+    * @description Says Hello to a given name
+    * @param nameToHello {string} Name to greet
+    * greet name
+    * @returns a string that starts with Hello
+    */
+  greet ( nameToHello ) {
+
+      return "Hello " + nameToHello+"!";
+
+  }
+}
+
+module.exports = HelloWordService;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para ejecutar la aplicación, ejecuta: <code>npm start</code></p>
+</div>
+<div class="paragraph">
+<p>Puedes ver la aplicación en el navegador accediendo a <a href="http://localhost:3000">http://localhost:3000</a> o a <a href="http://localhost:3000/nombre">http://localhost:3000/nombre</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Test unitarios y end2end</strong></p>
+</div>
+<div class="paragraph">
+<p>En primer lugar tenemos un <strong>test unitario</strong> para probar el servicio <code>HelloWorldService</code> que comprueba que la salida sea la esperada.</p>
+</div>
+<div class="paragraph">
+<p>Se guardará en la carpeta <code>src/services/</code> con el nombre <code>hello-world.test.js</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/services/hello-world.test.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">const HelloWordService = require("./hello-world");
+
+describe("HelloWordService Test", () =&gt; {
+  const helloWordService = new HelloWordService();
+
+  it("says 'Hello John!' to greet John", () =&gt; {
+    expect(helloWordService.greet("John")).toBe("Hello John!");
+  });
+
 });</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Para ejecutar el test: <code>npm test</code></p>
+<p>En segundo lugar tenemos varios <strong>test end2end</strong>. El primer test va a navegar a la raiz de la aplicación (<code>/</code>) y verificar que la página responde con el texto esperado <code>Hello World!</code>. El segundo test navega a <code>/John</code> y comprueba que la página responde con <code>Hello John!</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/app.test.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">const request = require("supertest");
+
+const app = require("./app");
+
+describe("GET /", () =&gt; {
+    //navigate to root and check the the response is "Hello World!"
+    it('responds with "Hello World!"', (done) =&gt; {
+        request(app).get('/').expect('Hello World!', done);
+    });
+});
+
+describe("GET /John", () =&gt; {
+    //navigate to /John and check the the response is "Hello John!"
+    it('responds with "Hello John!"', (done) =&gt; {
+        request(app).get('/John').expect('Hello John!', done);
+    });
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para ejecutar los tests: <code>npm test</code></p>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
@@ -344,28 +437,38 @@ var app = require('../index.js');describe('GET /', function() {
 <div class="listingblock">
 <div class="title">package.json: jenkins-test y dependencia mocha-junit-reporter</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   ...
-   "scripts": {
-      "test": "mocha --exit",
-      "test-jenkins": "mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./coverage/test.results.xml --exit" <i class="conum" data-value="1"></i><b>(1)</b>
-   },
-   ...
-   "devDependencies": {
-      "mocha": "^7.1.1",
-      "supertest": "^4.0.2",
-      "mocha-junit-reporter":"1.23.3"  <i class="conum" data-value="2"></i><b>(2)</b>
-   }</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  ...
+  "scripts": {
+    "start": "node src/main",
+    "test": "jest",
+    "test-jenkins": "jest --reporters=default --reporters=jest-junit", <i class="conum" data-value="1"></i><b>(1)</b>
+  },
+  "jest-junit": { <i class="conum" data-value="2"></i><b>(2)</b>
+    "outputDirectory": "./coverage/",
+    "outputName": "test.results.xml",
+    "usePathForSuiteName": "true"
+  },
+  ...
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "jest-junit": "^13.0.0", <i class="conum" data-value="3"></i><b>(3)</b>
+    "supertest": "^6.2.2"
+  }</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Añadimos el script <code>test-jenkins</code> que define cómo ejecutar los tests y generar los resultados de los test en formato xml, en el archivo <code>./coverage/test.results.xml</code></td>
+<td>Añadimos el script <code>test-jenkins</code> que define los formatos de salida de los test: el normal y usando el plugin <code>jest-junit</code> para formato xml.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Dependencia a <code>mocha-junit-reporter</code> que permite generar los resultados de los test en xml.</td>
+<td>Configuración para <code>jest-junit</code> que genera los resultados de los test en el archivo <code>./coverage/test.results.xml</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Dependencia a <code>jest-junit</code> que permite generar los resultados de los test en xml.</td>
 </tr>
 </table>
 </div>
@@ -472,7 +575,7 @@ var app = require('../index.js');describe('GET /', function() {
 <div class="ulist">
 <ul>
 <li>
-<p>Añadir a <code>package.json</code> un script para cobertura y la dependencia a <a href="https://istanbul.js.org/">IstanbulJS</a>, que permite obtener la cobertura con Mocha.</p>
+<p>Añadir a <code>package.json</code> un script para cobertura que permite obtener la cobertura con Jest.</p>
 </li>
 <li>
 <p>Modificar la fase <em>Test</em> de Jenkins para que llame al script de cobertura y publique, en el bloque <code>post</code>, el informe de cobertura generado.</p>
@@ -483,17 +586,14 @@ var app = require('../index.js');describe('GET /', function() {
 <p>1.Modifica <code>package.json</code>, añadiendo el nuevo script y la dependencia:</p>
 </div>
 <div class="listingblock">
-<div class="title">package.json: cobertura y dependencia a IstanbulJS</div>
+<div class="title">package.json: cobertura</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   "scripts": {
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   ...
+   "scripts": {
       ...
-      "coverage-jenkins": "nyc --reporter=html --reporter=text  mocha  --reporter mocha-junit-reporter --reporter-options mochaFile=./coverage/test.results.xml --timeout=3000 --exit"
+      "coverage-jenkins": "jest --reporters=default --reporters=jest-junit --coverage --coverageReporters=text --coverageReporters=html --coverageDirectory=./coverage/"
    },
-   ...
-      "devDependencies": {
-      ...
-      "nyc": "^15.0.1"
-   }</code></pre>
+   ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -519,20 +619,6 @@ var app = require('../index.js');describe('GET /', function() {
 <img src="_images/node-mocha-coverage-index.png" alt="node mocha coverage index">
 </div>
 <div class="title">Fig. 8. Informe de cobertura en html</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Añade al <code>.gitignore</code> la carpeta <code>/.nyc_output</code>, ya que su contenido se generará al lanzar la cobertura.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="2">
@@ -572,6 +658,20 @@ var app = require('../index.js');describe('GET /', function() {
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Publica el informe de cobertura</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Instala el HTML Publisher plugin en Jenkins</p>
+</div>
+</td>
 </tr>
 </table>
 </div>
@@ -633,7 +733,7 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <p>Instala con npm:</p>
 <div class="literalblock">
 <div class="content">
-<pre>npm install eslint --save-dev</pre>
+<pre>npm install eslint eslint-config-prettier eslint-plugin-prettier --save-dev</pre>
 </div>
 </div>
 </li>
@@ -661,7 +761,7 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">{
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "extends": "eslint:recommended" <i class="conum" data-value="1"></i><b>(1)</b>
 }</code></pre>
 </div>
@@ -673,6 +773,36 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <td>Habilita las <a href="https://eslint.org/docs/rules/">reglas predeterminadas</a></td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>En lugar del anterior fichero, puedes utilizar un fichero <code>.eslintrc.js</code> como el siguiente, que contiene recomendaciones para express:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">module.exports = {
+    env: {
+        es6: true,
+        node: true
+    },
+    extends: ['prettier'],
+    plugins: ['prettier'],
+    globals: {
+        Atomics: 'readonly',
+        SharedArrayBuffer: 'readonly'
+    },
+    parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module'
+    },
+    rules: {
+        'prettier/prettier': 'error',
+        'class-methods-use-this': 'off',
+        'no-param-reassign': 'off',
+        camelcase: 'off',
+        'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
+    }
+};</code></pre>
+</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="3">
@@ -686,12 +816,15 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">   "scripts": {
       ...
-      "lint": "eslint *.js test/*.js -f checkstyle -o coverage/eslint-result.xml"
+      "lint": "eslint src/**/*.js -f checkstyle -o coverage/eslint-result.xml"
    },
    ...
    "devDependencies": {
       ...
-      "eslint": "^7.0.0"
+      "eslint": "^8.10.0",
+      "eslint-config-prettier": "^8.5.0",
+      "eslint-plugin-prettier": "^4.0.0",
+      "prettier": "^2.5.1",
    }
    ...</code></pre>
 </div>
