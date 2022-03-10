@@ -172,7 +172,21 @@
 <h2 id="_construcción_y_ejecución_en_local"><a class="anchor" href="#_construcción_y_ejecución_en_local"></a>Construcción y ejecución en local</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Nos vamos a basar en  el proyecto <em>HelloWorld</em> en NodeJs, disponible en <a href="https://github.com/ualcnsa/nodeapp" class="bare">https://github.com/ualcnsa/nodeapp</a>. Necesitarás poder hacer cambios sobre el mismo, así que crea un <em>fork</em> y trabaja con tu <em>fork</em> a partir de ahora.</p>
+<p>Nos vamos a basar en  el proyecto <em>HelloWorld</em> en NodeJs, disponible en <a href="https://github.com/ualcnsa/nodeapp" class="bare">https://github.com/ualcnsa/nodeapp</a>. Necesitarás poder hacer cambios sobre el mismo, así que crea un <em>fork</em> y trabaja con tu <em>fork</em> a partir de ahora.
+Tras clonar tu <em>fork</em> a local, haz checkout del tag <code>v0.1</code> en una nueva rama cuyo nombre sea tu usuario de la UAL, para que tus archivos estén en el estado inicial de este tutorial:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>git checkout tags/v0.1 -b &lt;branch&gt; <i class="conum" data-value="1"></i><b>(1)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Usa tu nombre de usuario de la UAL como nombre de la rama.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Veamos los archivos que componen la aplicación:</p>
@@ -187,7 +201,7 @@
 <p><strong>express</strong>: Node framework</p>
 </li>
 <li>
-<p><strong>jest</strong>: framework de testing para NodeJs (existen numerosos framework de testing en NodeJs, como Jasmin, Mocha, Tape, etc.)</p>
+<p><strong>jest</strong>: framework de testing para NodeJs (existen numerosos framework de testing en NodeJs, como Jasmine, Mocha, Tape, etc.)</p>
 </li>
 <li>
 <p><strong>supertest</strong>: proporciona abstracción a alto nivel para testing HTTP</p>
@@ -220,6 +234,26 @@
    }
 }</code></pre>
 </div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Comprueba que los archivos <code>main.js</code>, <code>app.js</code> y  <code>app.test.js</code>, así como la carpeta <code>services</code>, estén dentro de una carpeta <code>src</code>. Si no es así, crea la carpeta <code>src</code> y muevelos dentro. Revisa el conetenido de <code>package.json</code> para que sea idéntico al mostrado aquí.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/node-files-initial-point.png" alt="node files initial point">
+</div>
+<div class="title">Fig. 1. Archivos y carpetas en el estado inicial</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Para instalar las dependencias ejecuta <code>npm install</code>.</p>
@@ -371,9 +405,12 @@ describe("GET /John", () =&gt; {
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
-<img src="_images/node-mocha-passed.png" alt="node mocha passed">
+<img src="_images/node-jest-passed.png" alt="node jest passed">
 </div>
-<div class="title">Fig. 1. npm test</div>
+<div class="title">Fig. 2. npm test</div>
+</div>
+<div class="paragraph">
+<p>Si todo funciona correctamenente, haz <strong>commit</strong> y <strong>push</strong> de tu rama.</p>
 </div>
 </div>
 </div>
@@ -396,7 +433,7 @@ describe("GET /John", () =&gt; {
   stages {
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/ualcnsa/nodeapp'
+        git branch: 'MI_RAMA', url: 'https://github.com/MI_USUARIO/nodeapp' <i class="conum" data-value="1"></i><b>(1)</b>
       }
     }
 
@@ -415,6 +452,14 @@ describe("GET /John", () =&gt; {
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Cambia el nombre de la rama y la URL del repositorio por las tuyas.</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>El resultado sera:</p>
 </div>
@@ -422,7 +467,7 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/jenkins-node-pipeline1.png" alt="jenkins node pipeline1">
 </div>
-<div class="title">Fig. 2. Nodeapp pipeline</div>
+<div class="title">Fig. 3. Nodeapp pipeline</div>
 </div>
 <div class="paragraph">
 <p>La evolución de las métricas del proyecto es uno de los indicadores que habitualmente muestra Jenkins como <em>feedback</em> para los desarrolladores. Vamos a <strong>publicar los resultados de los test</strong> en un gráfico.</p>
@@ -489,6 +534,9 @@ describe("GET /John", () =&gt; {
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Guarda los cambios en el repositorio, para que estén actualizados cuando los lea  Jenkins.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic" start="2">
 <li>
@@ -517,13 +565,15 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/jenkins-nodeapp-pipeline-test-result-trend.png" alt="jenkins nodeapp pipeline test result trend">
 </div>
-<div class="title">Fig. 3. Publicado el gráfico de tendencia de los test</div>
+<div class="title">Fig. 4. Publicado el gráfico de tendencia de los test</div>
 </div>
-<div class="sidebarblock">
-<div class="content">
-<div class="title"><strong>Webhook</strong>: ejecución automática del build en Jenkins tras un push en GitHub</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_webhook_para_construcción_automática"><a class="anchor" href="#_webhook_para_construcción_automática"></a><strong>Webhook</strong> para construcción automática</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Configura en GitHub un nuevo <em>Webhook</em> para que tras cada cambio de código en el repositorio, Jenkins sea notificado y lance la construcción del pipeline:</p>
+<p>Configura en GitHub un nuevo <em>Webhook</em> para que tras cada cambio de código en el repositorio, Jenkins sea notificado y lance automáticamente la construcción del pipeline:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -544,7 +594,7 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/jenkins-webhook-github.png" alt="jenkins webhook github">
 </div>
-<div class="title">Fig. 4. Nuevo Webhook</div>
+<div class="title">Fig. 5. Nuevo Webhook</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="3">
@@ -557,12 +607,10 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/jenkins-webhook-build-triger.png" alt="jenkins webhook build triger">
 </div>
-<div class="title">Fig. 5. Activar el Webhook en build trigers</div>
+<div class="title">Fig. 6. Activar el Webhook en build trigers</div>
 </div>
 <div class="paragraph">
 <p>A partir de ahora, cuando el repositorio en GitHub reciba un push notificará a Jenkins para que lance la construcción automáticamente.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -603,7 +651,7 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/node-mocha-coverage-jenkins-ok.png" alt="node mocha coverage jenkins ok">
 </div>
-<div class="title">Fig. 6. Ejecución de cobertura</div>
+<div class="title">Fig. 7. Ejecución de cobertura</div>
 </div>
 <div class="paragraph">
 <p>Como resultado, en la carpeta <code>coverage</code> del proyecto se ha generado el informe de cobertura.</p>
@@ -612,13 +660,13 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/node-mocha-coverage-results.png" alt="node mocha coverage results" width="160">
 </div>
-<div class="title">Fig. 7. Informe de cobertura</div>
+<div class="title">Fig. 8. Informe de cobertura</div>
 </div>
 <div class="imageblock text-center thumb">
 <div class="content">
 <img src="_images/node-mocha-coverage-index.png" alt="node mocha coverage index">
 </div>
-<div class="title">Fig. 8. Informe de cobertura en html</div>
+<div class="title">Fig. 9. Informe de cobertura en html</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="2">
@@ -682,7 +730,7 @@ describe("GET /John", () =&gt; {
 <div class="content">
 <img src="_images/jenkins-node-coverage-report-link.png" alt="jenkins node coverage report link">
 </div>
-<div class="title">Fig. 9. Enlace al informe de cobertura en html</div>
+<div class="title">Fig. 10. Enlace al informe de cobertura en html</div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="3">
@@ -701,7 +749,7 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <div class="content">
 <img src="_images/maven-script-console-site.png" alt="maven script console site">
 </div>
-<div class="title">Fig. 10. Script Console: permisos para visualizar el informe de cobertura</div>
+<div class="title">Fig. 11. Script Console: permisos para visualizar el informe de cobertura</div>
 </div>
 <div class="paragraph">
 <p>Tras ello ya podrás visualizar correctamente el informe de cobertura. Pero ten en cuenta que cada vez que reinicies Jenkins esta configuración  se pierde y vuelve a la configuración predeterminada.</p>
@@ -754,7 +802,7 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <div class="content">
 <img src="_images/eslint-init.png" alt="eslint init">
 </div>
-<div class="title">Fig. 11. ESLint init</div>
+<div class="title">Fig. 12. ESLint init</div>
 </div>
 <div class="paragraph">
 <p>Se habrá creado un archivo <code>.eslintrc.json</code>, que incluirá esta línea:</p>
@@ -880,7 +928,7 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <div class="content">
 <img src="_images/eslint-jenkins-link.png" alt="eslint jenkins link">
 </div>
-<div class="title">Fig. 12. Enlace al informe <em>ESLint</em></div>
+<div class="title">Fig. 13. Enlace al informe <em>ESLint</em></div>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="7">
@@ -896,7 +944,7 @@ System.getProperty("hudson.model.DirectoryBrowserSupport.CSP")</code></pre>
 <div class="content">
 <img src="_images/eslint-jenkins-pass-grapth.png" alt="eslint jenkins pass grapth">
 </div>
-<div class="title">Fig. 13. Fase <em>ESLint</em> <em>passed</em></div>
+<div class="title">Fig. 14. Fase <em>ESLint</em> <em>passed</em></div>
 </div>
 </div>
 </div>
