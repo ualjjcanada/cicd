@@ -195,7 +195,7 @@ COPY ./ .
 RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml clean package
 
 # Start with a base image containing Java runtime
-FROM openjdk:11-jdk-alpine <i class="conum" data-value="2"></i><b>(2)</b>
+FROM openjdk:11-slim <i class="conum" data-value="2"></i><b>(2)</b>
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 # The application's jar file
