@@ -9,6 +9,9 @@ content:
   - url: git@github.com:ualjjcanada/despliegue-continuo.git
     branches: v.0.22
     start_path: docs
+  - url: git@github.com:ualcnsa/selenium-testing.git
+    branches: v.0.22
+    start_path: docs
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable ## Default
