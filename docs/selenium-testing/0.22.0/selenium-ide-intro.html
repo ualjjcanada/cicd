@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Comenzando con Selenium :: CNSA</title>
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="selenium-testing" data-version="0.22.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Introducción</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="selenium-ide-intro.html">Comenzando con Selenium</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-ide-ejercicios.html">Caso práctico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-webdriver.html">Selenium WebDriver</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-jenkins.html">Tests de Selenium en Jenkins</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Pruebas de Aceptación (e2e) con Selenium</span>
+    <span class="version">0.22.0-beta.1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../despliegue-continuo/0.22.2/index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../despliegue-continuo/0.22.2/index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Pruebas de Aceptación (e2e) con Selenium</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.22.0-beta.1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../despliegue-continuo/0.22.2/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></li>
+    <li><a href="selenium-ide-intro.html">Comenzando con Selenium</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualcnsa/selenium-testing/edit/v.0.22/docs/modules/ROOT/pages/selenium-ide-intro.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Comenzando con Selenium</h1>
+<div class="sect1">
+<h2 id="_introducción_a_selenium"><a class="anchor" href="#_introducción_a_selenium"></a>Introducción a Selenium</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.selenium.dev/">Selenium</a> es un conjunto de herramientas para llevar a cabo pruebas automatizadas de aplicaciones web.</p>
+</div>
+<div class="paragraph">
+<p>Selenium consta de varias herramientas.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.selenium.dev/selenium-ide/"><strong>Selenium IDE</strong></a> es una extensión para <a href="https://addons.mozilla.org/es/firefox/addon/selenium-ide/">Firefox</a> y para <a href="https://chrome.google.com/webstore/detail/selenium-ide/mooikfkahbdckldjjndioackbalphokd">Chrome</a> que registra nuestra actividad en el navegador durante un período determinado; esta actividad se traduce en una serie de <a href="https://www.selenium.dev/selenium-ide/docs/en/api/commands">comandos</a> que podremos repetir cuantas veces queramos. Cuando sea conveniente, incluiremos <strong>aserciones</strong> para realizar comprobaciones de que lo que se muestra en la web es realmente lo esperado. Con Selenium IDE podemos <em>grabar</em> casos de prueba o <em>test cases</em>, y agruparlos en juegos de prueba o <em>test suites</em>. <strong>Selenium IDE</strong> permite exportar los <em>test cases</em> en forma de scripts en muy diversos lenguajes, como Python, Ruby, Java (JUnit), C#, NodeJS (JavaScript), y algunos más, para ser usados en los entornos de prueba habituales usando el siguiente componente de Selenium, llamado <strong>Selenium WebDriver</strong>.</p>
+</li>
+<li>
+<p><a href="https://www.selenium.dev/documentation/en/getting_started_with_webdriver/"><strong>Selenium WebDriver</strong></a>, implementa una API cliente lista para ser usada con tu entorno de testing favorito, que se ejecutará sobre un servidor que gestiona los principales navegadores que tengas instalados para realizar en ellos las pruebas. Es decir, podrás ejecutar las pruebas automáticamente desde tu IDE favorito, por ejemplo Eclipse, en todos los navegadores relevantes, de forma que no se te escape ningún detalle de tu aplicación. Para ello, necesitarás descargar del <em>driver</em> del navegador sobre el que quieres ejecutar las pruebas (además de, por supuesto, tener instalado dicho navegador en tu sistema).</p>
+</li>
+<li>
+<p>Un tercer componentes es <a href="https://www.selenium.dev/documentation/en/grid/"><strong>Selenium Grid</strong></a>, que permite ejecutar varias instancias del WebDriver de forma paralela, en distintas máquinas con distintas plataformas o sistemas operativos, gestionándolas centralizadamente, lo que acelerará drásticamente los tiempos de prueba.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_selenium_ide"><a class="anchor" href="#_selenium_ide"></a>Selenium IDE</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Instala en tu equipo Selenium IDE en <a href="https://addons.mozilla.org/es/firefox/addon/selenium-ide/">Firefox</a> o <a href="https://chrome.google.com/webstore/detail/selenium-ide/mooikfkahbdckldjjndioackbalphokd">Chrome</a>. Tras ello, aparecerá el icono en tu navegador.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-icon.png" alt="selenium ide icon">
+</div>
+<div class="title">Fig. 1. Icono de Selenium IDE en el navegador</div>
+</div>
+<div class="paragraph">
+<p>Al hacer clic sobre el icono, se abrirá Selenium IDE. Empieza por crear un nuevo proyecto:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-open-1.png" alt="selenium ide open 1">
+</div>
+<div class="title">Fig. 2. Selenium IDE inicio</div>
+</div>
+<div class="paragraph">
+<p>Escribe un nombre al nuevo proyecto de pruebas:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-open-new-project.png" alt="selenium ide open new project">
+</div>
+<div class="title">Fig. 3. Selenium IDE inicio</div>
+</div>
+<div class="paragraph">
+<p>Introduce la URL base a probar:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-open-url-base.png" alt="selenium ide open url base">
+</div>
+<div class="title">Fig. 4. Selenium IDE URL base</div>
+</div>
+<div class="paragraph">
+<p>Directamente empieza a grabar las acciones que vayas realizando sobre el navegador:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-start-recording.png" alt="selenium ide start recording">
+</div>
+<div class="title">Fig. 5. Selenium IDE grabando</div>
+</div>
+<div class="paragraph">
+<p>Durante tu interacción con la web que estés probando <strong>SIEMPRE es necesario</strong> ir añadiendo <strong><em>asserts</em></strong> o <strong>verificaciones</strong> para comprobar que lo que muestra la aplicación corresponde con lo esperado. Para ello utiliza el <a href="https://www.selenium.dev/documentation/en/legacy_docs/selenium_ide/#adding-verifications-and-asserts-with-the-context-menu">menú contextual</a> para añadir verificaciones y/o asserts.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-assert-text.png" alt="selenium ide assert text">
+</div>
+<div class="title">Fig. 6. Selenium IDE assert text</div>
+</div>
+<div class="paragraph">
+<p>En la ventana de Selenium IDE, puedes ver que se van grabando en los comandos de Selenium los pasos realizados sobre el navegador (clics, entradas de texto, asserts, etc).</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-saved-steps.png" alt="selenium ide saved steps">
+</div>
+<div class="title">Fig. 7. Selenium IDE pasos guardados</div>
+</div>
+<div class="paragraph">
+<p>Finaliza la grabación del test en el botón de detener, y dale un nombre al test case creado:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-stop-test-name.png" alt="selenium ide stop test name">
+</div>
+<div class="title">Fig. 8. Selenium IDE guardar test case</div>
+</div>
+<div class="paragraph">
+<p>A continuación, dale al <em>play</em> para volver a ejecutar el test:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-play-test.png" alt="selenium ide play test">
+</div>
+<div class="title">Fig. 9. Selenium IDE detener grabación</div>
+</div>
+<div class="paragraph">
+<p>Siguiendo estos sencillos pasos, puedes grabar tantos casos de prueba como sean necesarios para ejercitar tu aplicación web y verificar que todos escenarios de los casos de uso funcionan correctamente.</p>
+</div>
+<div class="paragraph">
+<p>Recuerda que es necesario crear casos de prueba para:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Los <strong>escenarios correctos</strong>, en los que la aplicación realiza el caso de uso correctamente, tal y como se espera.</p>
+</li>
+<li>
+<p>Los <strong>escenarios de error o incorrectos</strong>, donde el funcionamiento del caso de uso no es el caso correcto, bien porque los datos introducidos no son adecuados, o faltan, o por cualquier otro motivo. La aplicación en ese caso debería mostrar un mensaje de error de algún tipo y comportarse de manera estable, es decir, que se queda en un estado aceptable y <em>"no peta"</em> en esos escenarios incorrectos.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Puedes organizar los tests en test suites.</p>
+</div>
+<div class="paragraph">
+<p>Por último, guarda los test en un archivo <code>.side</code>, que está basado en formato JSON.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

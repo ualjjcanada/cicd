@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Caso práctico :: CNSA</title>
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="selenium-testing" data-version="0.22.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Introducción</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-ide-intro.html">Comenzando con Selenium</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="selenium-ide-ejercicios.html">Caso práctico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-webdriver.html">Selenium WebDriver</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-jenkins.html">Tests de Selenium en Jenkins</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Pruebas de Aceptación (e2e) con Selenium</span>
+    <span class="version">0.22.0-beta.1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../despliegue-continuo/0.22.2/index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../despliegue-continuo/0.22.2/index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Pruebas de Aceptación (e2e) con Selenium</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.22.0-beta.1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../despliegue-continuo/0.22.2/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></li>
+    <li><a href="selenium-ide-ejercicios.html">Caso práctico</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualcnsa/selenium-testing/edit/v.0.22/docs/modules/ROOT/pages/selenium-ide-ejercicios.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Caso práctico</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="title">Objetivos</div>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Comenzar a crear tests de aceptación de aplicaciones web con Selenium IDE.</p>
+</li>
+<li>
+<p>Probar una aplicación funcional que implemente la autenticación y registro de usuarios.</p>
+</li>
+<li>
+<p>Diseñar los casos de prueba para los escenarios de éxito y los escenarios de error.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Realización y entrega</div>
+<div class="paragraph">
+<p>La realización de estas actividades se realizará <strong>en equipo</strong>. La entrega será mediante el envío de un informe y el acceso al profesor a los repositorios y servicios configurados, para la revisión y evaluación de los mismos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_autenticación_y_registro_de_usuarios"><a class="anchor" href="#_autenticación_y_registro_de_usuarios"></a>Autenticación y registro de usuarios</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para comenzar a realizar las pruebas necesitamos una aplicación web funcional. En este caso práctico vamos a probar una aplicación que implemente la autenticación y registro de usuarios, así que vamos a comenzar por implementar esta funcionalidad. Tenemos dos alternativas: elegir una plantilla de proyecto que ya implemente la funcionalidad deseada, o bien hacerlo nosotros mismos.</p>
+</div>
+<div class="sect2">
+<h3 id="_elige_una_plantilla"><a class="anchor" href="#_elige_una_plantilla"></a>Elige una plantilla</h3>
+<div class="paragraph">
+<p>Aquí tienes una (o varias) plantilla(s) de aplicación web, en distintas tecnologías, que implementan un login y registro de usuarios.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Proyecto Autenticación de usuarios - Opciones</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://sailsjs.com/get-started">SailsJs Web App. Extensible project with auth, login, &amp; password recovery</a>.
+<em>Node JS + Sails JS framework</em></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Elege una de las plantillas. Si lo deseas puedes usar alguna otra plantilla en otra tecnología, así que toma una decisión  y comentalo con el profesor antes para validar que implemente la funcionalidad básica requerida.</p>
+</li>
+<li>
+<p>En local, crear el proyecto basado en la plantilla. Probar que funciona.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><a href="https://hackernoon.com/your-node-js-authentication-tutorial-is-wrong-f1a3bf831a46">Algunos fallos típicos en los tutoriales de web de autenticación (login)</a></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_usa_tu_propio_proyecto"><a class="anchor" href="#_usa_tu_propio_proyecto"></a>Usa tu propio proyecto</h3>
+<div class="paragraph">
+<p>Como alternativa, si ya has desarrollado o estás desarrollando un proyecto similar en alguna tecnología que conozcas, y que implemente:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>un login de usuario,</p>
+</li>
+<li>
+<p>un registro de usuario, y</p>
+</li>
+<li>
+<p>una modificación del perfil del usuario logueado</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>puedes usarlo en lugar de alguna de alguna de las plantillas propuestas. Pero asegúrate de que tu proyecto es funcional, es decir, implementa las 3 características indicadas y estas funcionan, ya que el objetivo es probarlas. Y además tu proyecto debe implementar los casos de error mediante los mensajes de validación oportunos. Si tu proyecto no es funcional, o no implementa esas 3 características o los casos de error, entonces mejor usa una plantilla de las propuestas.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creación_de_los_tests_selenium"><a class="anchor" href="#_creación_de_los_tests_selenium"></a>Creación de los tests Selenium</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crear en Selenium los test cases necesarios para probar, tanto escenarios correctos como escenarios de error, de las siguientes funcionalidades:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Registro de usuario (Caso correcto)</p>
+</li>
+<li>
+<p>Registro de usuario (Casos incorrectos)</p>
+</li>
+<li>
+<p>Login de usuario (Caso correcto)</p>
+</li>
+<li>
+<p>Login de usuario (Casos incorrectos)</p>
+</li>
+<li>
+<p>Editar el perfil de usuario logueado (caso correcto)</p>
+</li>
+<li>
+<p>Editar el perfil de usuario logueado (casos incorrectos)</p>
+</li>
+<li>
+<p>Cambio de contraseña de usuario logueado (Caso correcto)</p>
+</li>
+<li>
+<p>Cambio de contraseña de usuario logueado (Casos incorrectos)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Guardar los test cases en una test suite (formato <code>.side</code>).</p>
+</div>
+<div class="paragraph">
+<p>Puesto que para realizar una prueba exhaustiva, cubriendo todos los posibles escenarios, el número de casos de prueba es elevado, la forma de trabajar es dividir las funcionalidades entre los miembros del equipo y así repartir el trabajo: Una persona que haga los tests de <strong>Registro de usuario + Editar perfil</strong>, y otra los de <strong>login de usuario + cambio de contraseña</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="_implementación_del_test_registro_de_usuario_caso_correcto"><a class="anchor" href="#_implementación_del_test_registro_de_usuario_caso_correcto"></a>Implementación del test Registro de usuario (Caso correcto)</h3>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Para que el test de registro de usuario lo podamos ejecutar repetidamente sin que nos de el error de "usuario ya existe", tenemos que usar un email aleatorio en cada ejecución del test. Eso se consigue definiendo una variable en Selenium, llamado al comando <code>execute script</code>, escribiendo la función de JavaScript que genere ese email aleatorio, y guardándolo en una variable que luego usaremos en en paso que escribe el valor en el campo <em>email</em> del registro.</p>
+</div>
+<div class="paragraph">
+<p>El paso sería del test case de Selenium IDE es:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Command: <strong>execute script</strong></p>
+</li>
+<li>
+<p>Target: <code>return "ual-" + Math.floor(Math.random()*1500000)+"@ual.es"`</code></p>
+</li>
+<li>
+<p>Value: <code>emailramdon</code></p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/register-email-ramdon.png" alt="register email ramdon">
+</div>
+<div class="title">Fig. 1. Generación de un email aleatorio</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implementación_del_test_de_email_incorrecto"><a class="anchor" href="#_implementación_del_test_de_email_incorrecto"></a>Implementación del test de email incorrecto</h3>
+<div class="paragraph">
+<p>En aquellos formularios en los que se debe introducir una dirección de email y el campo está definido como tal en HTML5 mediante <code>&lt;input type="email" &#8230;&#8203;&gt;</code>, el valor introducido se valida en el navegador de manera que cuando el valor introducido no es un email válido muestra un pop-up con el texto <em>"Introduzca una dirección de correo."</em> Este tipo de pop-ups no se pueden capturar con el menú contextual de Selenium IDE (botón derecho sobre el texto a validar), por lo que debemos usar un método alternativo.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-email-incorrecto.png" alt="selenium ide email incorrecto" width="70%">
+</div>
+<div class="title">Fig. 2. Pop-up de validación en HTML5: email incorrecto</div>
+</div>
+<div class="paragraph">
+<p>Para ello, tras hacer click sobre el botón de <em>enviar</em>, debemos usar el comando <code>execute script</code> de Selenium IDE para que guarde el valor del atributo <code>validationMessage</code> del campo tipo email en una variable, y a continuación comprobamos el valor almacenado en esa variable. El resultado sería tal que así:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-email-incorrecto-commands.png" alt="selenium ide email incorrecto commands">
+</div>
+<div class="title">Fig. 3. Comandos en Selenium IDE para validar el mensaje de email incorrecto.</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Guarda el contenido del atributo <code>validationMessage</code> del campo con id <code>email-address</code> en la variable <code>message</code>:
+<div class="ulist">
+<ul>
+<li>
+<p>Command: <strong>execute script</strong></p>
+</li>
+<li>
+<p>Target: <code>return document.getElementById("email-address").validationMessage</code></p>
+</li>
+<li>
+<p>Value: <code>message</code>.</p>
+</li>
+</ul>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Muestra la variable <code>message</code> en el log de Selenium IDE.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Validación de que el valor de <code>message</code> es el esperado.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>El comando <code>execute script</code> permite acceder a los elementos y propiedades del <a href="https://www.w3schools.com/jsref/dom_obj_document.asp">DOM</a> del documento HTML, y llamar a los métodos del mismo, en concreto en el ejemplo llama a <a href="https://www.w3schools.com/jsref/met_document_getelementbyid.asp">getElementById("fieldId")</a>.</p>
+</div>
+<div class="paragraph">
+<p>En caso de que el elemento no se pueda identificar por su <code>id</code>, como alternativa se usar el método  <a href="https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp">getElementsByName("fieldName")</a>, pero ten en cuenta que <code>getElementsByName</code> devuelve una colección de objetos <a href="https://www.w3schools.com/jsref/dom_obj_htmlcollection.asp">HTMLCollection</a> en lugar de un único objeto, por lo que si queremos acceder al primer elemento de la colección simplemente tenemos que añadir la posición entre corchetes: <code>getElementsByName("fieldName")[0]</code>.</p>
+</div>
+<div class="paragraph">
+<p>Otras alternativas son <a href="https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp">getElementsByClassName()</a>, y <a href="https://www.w3schools.com/jsref/met_document_getelementsbytagname.asp">getElementsByTagName()</a>.</p>
+</div>
+<div class="paragraph">
+<p>Esta solución también se puede aplicar a otros campos de HTML5 que también crean este tipo de <em>pop-ups</em> para la validación, por ejemplo los campos que se establecen como requeridos, o con una longitud mínima y máxima, definidos por ejemplo así:  <code>&lt;input type="password" required minlength="6" maxlength="10"/&gt;</code></p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-contraseña-requerida.png" alt="selenium ide contraseña requerida" width="70%">
+</div>
+<div class="title">Fig. 4. Pop-up de validación en HTML5: contraseña requerida</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-contraseña-requerida-assert.png" alt="selenium ide contraseña requerida assert">
+</div>
+<div class="title">Fig. 5. Comandos en Selenium IDE para validar contraseña vacía.</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-contraseña-incorrecta.png" alt="selenium ide contraseña incorrecta" width="70%">
+</div>
+<div class="title">Fig. 6. Pop-up de validación en HTML5: contraseña demasiado corta</div>
+</div>
+<div class="paragraph">
+<p>Otro ejemplo son los campos de fecha definidos como <code>&lt;input type="date" &#8230;&#8203;&gt;</code></p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="https://mdn.mozillademos.org/files/14913/date-picker-chrome-error-message.png" alt="date picker chrome error message">
+</div>
+<div class="title">Fig. 7. Pop-up de validación en HTML5: fecha incorrecta</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Los mensajes de validación son distintos en cada navegador (<a href="https://hg.mozilla.org/l10n-central/es-ES/file/default/dom/chrome/dom/dom.properties">Firefox</a>, <a href="https://chromium.googlesource.com/chromium/src/+/a0e2753f75c926313e183b912584a7f15790825d/content/app/strings/translations/content_strings_es.xtb">Chrome</a>), tenlo en cuenta a la hora de definir el <code>assert</code>. También hay que considerar el idioma en el que esté configurado el navegador (En Firefox,  en su <a href="https://hg.mozilla.org/l10n-central">repostorio</a> selecciona el idioma deseado y busca el archivo <code>dom/chrome/dom/dom.properties</code>, y en <a href="https://chromium.googlesource.com/chromium/src/+/a0e2753f75c926313e183b912584a7f15790825d/content/app/strings/translations/">Chrome</a> lo encontrarás en el archivo del idioma, en español <a href="https://chromium.googlesource.com/chromium/src/\+/a0e2753f75c926313e183b912584a7f15790825d/content/app/strings/translations/content_strings_es.xtb">content_strings_es.xtb</a>).</p>
+</div>
+<table class="tableblock frame-all grid-none stripes-even stretch">
+<caption class="title">Table 1. Validación de email incorrecto en Firefox y Chrome</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="image"><img src="https://www.mozilla.org/media/protocol/img/logos/firefox/browser/logo.eb1324e44442.svg" alt="logo.eb1324e44442" width="10%"></span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="image"><img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="chrome logo" width="11%"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="image thumb"><img src="_images/selenium-ide-email-incorrecto-firefox.png" alt="selenium ide email incorrecto firefox"></span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="image thumb"><img src="_images/selenium-ide-email-incorrecto-chrome.png" alt="selenium ide email incorrecto chrome"></span></p></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_control_de_flujo_en_selenium_ide"><a class="anchor" href="#_control_de_flujo_en_selenium_ide"></a>Control de flujo en Selenium IDE</h3>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Como acabamos de ver en el punto anterior, puede ser necesario que en función del navegador que estemos usando o del idioma en que esté configurado dicho navegador, nuestro <code>assert</code> deba validar un mensaje u otro.</p>
+</div>
+<div class="paragraph">
+<p>Selenium IDE permite añadir sentencias de <a href="https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow">control de flujo</a> como <a href="https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow#conditional-branching"><strong>condicionales</strong></a> y <a href="https://www.selenium.dev/selenium-ide/docs/en/introduction/control-flow#looping"><strong>bucles</strong></a>.</p>
+</div>
+<div class="paragraph">
+<p>El siguiente <a href="https://github.com/ualjjcanada/selenium-ide-samples">ejemplo</a> usa de la propiedad <code>navigator.userAgent</code> que incluye información del navegador que se está utilizando en la ejecución del test.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">execute script | return navigator.userAgent  |  valor_navigatoruserAgent
+if             | ${navigatoruserAgent}.includes("Firefox")
+assert         | message | Ajústese al formato solicitado: 8 character password.
+end            |
+if             | ${navigatoruserAgent}.includes("Chrome")
+assert         | message | Utiliza un formato que coincida con el solicitado
+end            |</code></pre>
+</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-conditional-navigators.png" alt="selenium ide conditional navigators" width="100%">
+</div>
+<div class="title">Fig. 8. Uso de condicional para distinguir entre navegadores</div>
+</div>
+<div class="paragraph">
+<p>De igual forma, la propiedad <code>navigator.language</code> puede ayudarnos a identificar el idioma del navegador: <code>es_ES</code> para español, <code>en_GB</code> para inglés.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_desplegar_la_aplicación_en_la_nube"><a class="anchor" href="#_desplegar_la_aplicación_en_la_nube"></a>Desplegar la aplicación en la nube</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La aplicación que hemos probado localmente, debemos ponerla "en producción", es decir, desplegarla en la nuve para que esté disponible por nuestros usuarios (ficticios).</p>
+</div>
+<div class="paragraph">
+<p>Dependiendo de la plantilla elegida, el despliegue será distinto. Puedes desplegar en un servicio de contenedores, o bien en una máquina virtual.</p>
+</div>
+<div class="sect2">
+<h3 id="_adaptar_los_test_a_la_url_de_despliegue"><a class="anchor" href="#_adaptar_los_test_a_la_url_de_despliegue"></a>Adaptar los test a la URL de despliegue</h3>
+<div class="paragraph">
+<p>Los test que hemos creado en el <em>entorno de desarrollo</em>, es decir, en nuestro equipo local, deben adaptarse para que funcionen en <em>entorno de (pre)producción</em> es decir, deben atacar a la aplicación desplegada.</p>
+</div>
+<div class="paragraph">
+<p>Para ello simplemente tendrás que cambiar la URL base.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

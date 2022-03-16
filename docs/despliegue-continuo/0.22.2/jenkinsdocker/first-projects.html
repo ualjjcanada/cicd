@@ -127,6 +127,14 @@
         </li>
       </ul>
     </li>
+    <li class="component">
+      <a class="title" href="../../../selenium-testing/0.22.0/index.html">Pruebas de Aceptación (e2e) con Selenium</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../selenium-testing/0.22.0/index.html">0.22.0-beta.1</a>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
     </div>
@@ -207,7 +215,7 @@ docker -v</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pipeline {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
     agent any
     tools {
         maven 'Default Maven' <i class="conum" data-value="1"></i><b>(1)</b>
@@ -287,7 +295,7 @@ OS name: "linux", version: "5.11.0-1029-gcp", arch: "amd64", family: "unix"</cod
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pipeline {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
     agent {
         docker {
             image 'maven:3.6-openjdk-8' <i class="conum" data-value="1"></i><b>(1)</b>
@@ -377,7 +385,7 @@ srw-rw-rw- 1 root docker 0 Mar  2 19:24 /var/run/docker.sock</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pipeline {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
     agent none
     stages {
         stage('Back-end') {

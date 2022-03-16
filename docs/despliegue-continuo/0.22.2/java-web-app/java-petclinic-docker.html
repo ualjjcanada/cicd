@@ -127,6 +127,14 @@
         </li>
       </ul>
     </li>
+    <li class="component">
+      <a class="title" href="../../../selenium-testing/0.22.0/index.html">Pruebas de Aceptación (e2e) con Selenium</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../selenium-testing/0.22.0/index.html">0.22.0-beta.1</a>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
     </div>
@@ -159,6 +167,34 @@
 <div class="paragraph">
 <p>A continuación se describe cómo crear un contenedor Docker de la aplicación PetClinic. Los pasos se realizan en local, y al final configuraremos el pipeline de Jenkins para que se realicen automáticamente.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Para trabajar con contenedores Docker en tu equipo local, debes tener Docker instalado. Recuerda iniciar Docker Desktop en Windows, o iniciar el servicio Docker en Linux o Mac. Comprueba que está funcionado ejecutando el comando <code>docker ps</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Hasta ahora nos estamos basando en el proyecto <em>PetClinic</em> original (genericamente llamado <em>upstream</em>) disponible en <a href="https://github.com/spring-projects/spring-petclinic">GitHub</a>. En esta sección necesitarás poder hacer cambios sobre el mismo, básicamente vamos a añadir al proyecto un archivo <code>Dockerfile</code> y un archivo <code>Jenkinsfile</code>, así que crea un <em>fork</em> y trabaja con tu <em>fork</em> a partir de ahora. Verás que en los bloques de código de este documento indica como URL del respositorio <code><a href="https://github.com/ualcnsa/spring-petclinic.git" class="bare">https://github.com/ualcnsa/spring-petclinic.git</a></code>, que deberás cambiar por la URL de tu repositorio forkeado.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -178,7 +214,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto PetClinic:</p>
+<p>La documentación de PetClinic indica cómo construir el contenedor usando <a href="https://github.com/spring-projects/spring-petclinic#building-a-container">Spring Boot build plugin</a>. A nosotros nos interesa ver cómo hacerlo de forma genérica para cualquier aplicación Java basada en Maven. Vamos a definir el siguiente archivo <code>Dockerfile</code> que debe estar en la carpeta raíz del proyecto PetClinic:</p>
 </div>
 <div class="listingblock">
 <div class="title">Dockerfile multi-stage</div>
@@ -232,20 +268,6 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 </div>
 <div class="title">Fig. 1. Docker build</div>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Para trabajar con contenedores Docker en tu equipo local, debes tener Docker instalado. Recuerda iniciar Docker Desktop en Windows, o iniciar el servicio Docker en Linux o Mac. Comprueba que está funcionado ejecutando el comando <code>docker ps</code></p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -258,10 +280,25 @@ ENTRYPOINT ["java","-jar","/app.jar"]</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker"># Then build the code - On Windows
+<pre class="highlightjs highlight"><code class="language-docker hljs" data-lang="docker"># Then build the code - on Linux <i class="conum" data-value="1"></i><b>(1)</b>
+# RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml clean package
+
+# Then build the code - On Windows <i class="conum" data-value="2"></i><b>(2)</b>
 RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml clean spring-javaformat:apply --no-transfer-progress
 RUN mvn -B -f ./pom.xml -s /usr/share/maven/ref/settings-docker.xml package --no-transfer-progress</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ejecución de maven <code>package</code> para la construcción del proyecto cuando ejecutas Docker en Linux. La linea aparece comentada.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Ejecución de maven <code>package</code> para la construcción del proyecto cuando ejecutas Docker en Windows. Las dos lineas se ejecutan (no están comentadas).</td>
+</tr>
+</table>
 </div>
 </td>
 </tr>
@@ -807,6 +844,12 @@ petclinic</code></pre>
 </tr>
 </table>
 </div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-proceed-to-deploy-production.png" alt="jenkins proceed to deploy production">
+</div>
+<div class="title">Fig. 9. Proceed deploy to production?</div>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -879,7 +922,7 @@ docker rmi $(docker images -q)</code></pre>
 <div class="content">
 <img src="_images/jenkins-petclinic-full-pipeline-proceed.png" alt="jenkins petclinic full pipeline proceed">
 </div>
-<div class="title">Fig. 9. Input message (paso comentado en el ejemplo)</div>
+<div class="title">Fig. 10. Input message (paso comentado en el ejemplo)</div>
 </div>
 <div class="paragraph">
 <p>El pipeline completo, con todas sus fases, debe quedar así:</p>
@@ -888,7 +931,7 @@ docker rmi $(docker images -q)</code></pre>
 <div class="content">
 <img src="_images/jenkins-petclinic-full-pipeline.png" alt="jenkins petclinic full pipeline">
 </div>
-<div class="title">Fig. 10. Pipeline completo</div>
+<div class="title">Fig. 11. Pipeline completo</div>
 </div>
 <div class="admonitionblock important">
 <table>

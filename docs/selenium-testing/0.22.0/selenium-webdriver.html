@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Selenium WebDriver :: CNSA</title>
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="selenium-testing" data-version="0.22.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Introducción</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-ide-intro.html">Comenzando con Selenium</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-ide-ejercicios.html">Caso práctico</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="selenium-webdriver.html">Selenium WebDriver</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-jenkins.html">Tests de Selenium en Jenkins</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Pruebas de Aceptación (e2e) con Selenium</span>
+    <span class="version">0.22.0-beta.1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../despliegue-continuo/0.22.2/index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../despliegue-continuo/0.22.2/index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Pruebas de Aceptación (e2e) con Selenium</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.22.0-beta.1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../despliegue-continuo/0.22.2/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></li>
+    <li><a href="selenium-webdriver.html">Selenium WebDriver</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualcnsa/selenium-testing/edit/v.0.22/docs/modules/ROOT/pages/selenium-webdriver.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Selenium WebDriver</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="title">Objetivos</div>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Exportar los test de Selenium IDE a Selenium Webdriver y ejecutarlos en un IDE como Eclipse, con distintos navegadores web (<em>cross-browser testing</em>).</p>
+</li>
+<li>
+<p>Ejecutar los test de Selenium utilizando el navegador en modo <em>headless</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Realización y entrega</div>
+<div class="paragraph">
+<p>La realización de estas actividades se realizará en equipo. La entrega será mediante el envío de un informe y el acceso al profesor a los servicios configurados, para la revisión y evaluación de los mismos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_qué_es_webdriver"><a class="anchor" href="#_qué_es_webdriver"></a>¿Qué es WebDriver?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Selenium WebDriver permite ejecutar los tests de Selenium como tests de JUnit, ofreciendo así la forma de ser ejecutados en Eclipse y Jenkins.</p>
+</div>
+<div class="sect2">
+<h3 id="_exportar_de_selenium_ide_a_junit"><a class="anchor" href="#_exportar_de_selenium_ide_a_junit"></a>Exportar de Selenium IDE a JUnit</h3>
+<div class="paragraph">
+<p>Exporta a formato JUnit los tests grabados con Selenium IDE. Si has organizado tus tests en test suites, podrás exportar cada test suite a una clase .java en donde cada test case será un método de test de la clase. Si no, tendrás que hacerlo cada test case uno por uno, ya que por ahora Selenium IDE no permite exportarlos todos a la vez.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-export-test.png" alt="selenium ide export test">
+</div>
+<div class="title">Fig. 1. Exportar test case</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-export-test-junit.png" alt="selenium ide export test junit">
+</div>
+<div class="title">Fig. 2. Exportar formato JUnit</div>
+</div>
+<div class="paragraph">
+<p>Al exportar, marca las dos opciones que permiten que se guarde como comentarios el comando de Selenium IDE que da origen a cada instrucción de WebDriver. Guarda los archivos <code>.java</code> en una carpeta. A continuación los importaremos en Eclipse.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creación_del_proyecto_en_eclipse"><a class="anchor" href="#_creación_del_proyecto_en_eclipse"></a>Creación del proyecto en Eclipse</h3>
+<div class="paragraph">
+<p>En el momento de escribir este documento, Selenium IDE exporta los tests en formato JUnit 4. Veamos a continuación los pasos necesarios para su ejecución.</p>
+</div>
+<div class="paragraph">
+<p>En Eclipse, crea un nuevo proyecto Java. Crea la carpeta fuente <code>test</code>. Crea un nuevo paquete en la carpeta test de nombre <code>org.ual.cnsa.nombreEquipo</code> (sustituyendo <code>nombreEquipo</code> por el nombre de tu equipo). Ahí guarda los archivos <code>.java</code> exportados de Selenium IDE.</p>
+</div>
+<div class="paragraph">
+<p>Verás que aparecen muchos errores de compilación porque aun no hemos añadido las librerías necesarias de JUnit 4 y Selenium Webdriver. Para hacerlo, vamos a apoyarnos en Maven. A continuación, convierte el proyecto en un proyecto Maven: Sobre el nombre del proyecto, botón derecho, Configure &gt; Convert to Maven project</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/eclipse-convert-to-maven-project.png" alt="eclipse convert to maven project">
+</div>
+<div class="title">Fig. 3. Convertir proyecto a Maven</div>
+</div>
+<div class="paragraph">
+<p>Deja las opciones predeterminadas. Al mavenizar el proyecto se crea el archivo <code>pom.xml</code> que va a contener toda la configuración necesaria para la construcción automatizada del proyecto, así como las dependencias (librarías) necesarias. Para añadir las dependencias a JUnit 4 y a Selenium Webdriver, edita el archivo <code>pom.xml</code> seleccionando la pestaña para ver el código fuente xml.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/eclipse-edit-pom.png" alt="eclipse edit pom">
+</div>
+<div class="title">Fig. 4. Editar el <code>pom.xml</code></div>
+</div>
+<div class="paragraph">
+<p>A continuación, añade las siguientes 4 dependencias en un nuevo bloque con la etiqueta <code>&lt;dependencies&gt;</code>, tras el bloque <code>&lt;build&gt;&#8230;&#8203;&lt;/build&gt;</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  ...
+  &lt;/build&gt;
+  &lt;dependencies&gt;
+  	&lt;dependency&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+  		&lt;groupId&gt;junit&lt;/groupId&gt;
+  		&lt;artifactId&gt;junit&lt;/artifactId&gt;
+  		&lt;version&gt;4.13.1&lt;/version&gt;
+  	&lt;/dependency&gt;
+  	&lt;dependency&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+  		&lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+  		&lt;artifactId&gt;selenium-java&lt;/artifactId&gt;
+  		&lt;version&gt;3.141.59&lt;/version&gt;
+  	&lt;/dependency&gt;
+  	&lt;dependency&gt; <i class="conum" data-value="3"></i><b>(3)</b>
+  		&lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+  		&lt;artifactId&gt;selenium-firefox-driver&lt;/artifactId&gt;
+  		&lt;version&gt;3.141.59&lt;/version&gt;
+  	&lt;/dependency&gt;
+  	&lt;dependency&gt; <i class="conum" data-value="4"></i><b>(4)</b>
+  		&lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+  		&lt;artifactId&gt;selenium-chrome-driver&lt;/artifactId&gt;
+  		&lt;version&gt;3.141.59&lt;/version&gt;
+  	&lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>JUnit 4.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Selenium-Java, librería básica de Selenium Webdriver.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Selenium Firefox Driver, librería con el driver de Firefox para poder ejecutar los tests en este navegador.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Selenium Chrome Driver,  librería con el driver de Chrome para poder ejecutar los tests en este navegador.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Una vez guardados los cambios, los errores de compilación en tu clase <code>.java</code> con los test exportados de Selenium deberían desaparecer.</p>
+</div>
+<div class="paragraph">
+<p>En caso de dudas, utiliza como referencia el repositorio <a href="https://github.com/ualhmis/seleniumWebDriverJUnit" class="bare">https://github.com/ualhmis/seleniumWebDriverJUnit</a> que tiene ya configurado el <code>pom.xml</code> con las dependencias necesarias.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Los test de JUnit exportados por Selenium IDE están en formato JUnit 4. Para reutilizar al máximo y no tener que hacer demasiadas modificaciones de los test exportados desde Selenium IDE, la dependencia en el <code>pom.xml</code> está configurada a <strong>JUnit 4</strong>.</p>
+</div>
+<div class="paragraph">
+<p>En el repositorio puedes encontrar la rama <strong>JUnit 5</strong> donde se han adaptado los tests y las dependencias a JUnit 5.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cross_browser_testing_en_eclipse"><a class="anchor" href="#_cross_browser_testing_en_eclipse"></a>Cross-browser testing en Eclipse</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://developer.mozilla.org/es/docs/Learn/Herramientas_y_pruebas/Cross_browser_testing">Cross-browser testing</a> o prueba de navegadores cruzados es el proceso de probar aplicaciones y sitios web en los navegadores web más habituales que los usuarios utilizan en la actualidad. En esta sección, vamos a ejecutar los tests de Selenium en dos navegadores: Firefox y Chrome.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Crea una carpeta <code>drivers</code> en el proyecto en Eclipse. Y añade la carpeta al <code>.gitginore</code> para que el contenido no se guarde en el repositorio.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">.gitignore</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">**/bin
+**/target
+**/drivers</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Es importante que los drivers específicos de los navegadores no se guarden en el repositorio, ya que son archivos ejecutables (dependencias) específicos de la plataforma, que no deben versionarse. Cuando los necesites, tendrás que descargarlos.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>En esa carpeta descarga los drivers de los navegadores Firefox y Chrome. Para ello:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Descarga y descomprime Firefox driver (Gecko Driver) de <a href="https://github.com/mozilla/geckodriver/releases" class="bare">https://github.com/mozilla/geckodriver/releases</a> eligiendo la versión adecuada para tu sistema.</p>
+</li>
+<li>
+<p>Descarga y descomprime Chrome driver de <a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" class="bare">https://sites.google.com/a/chromium.org/chromedriver/downloads</a>  eligiendo la versión adecuada para tu sistema y la versión de Chrome que tengas instalado.</p>
+</li>
+<li>
+<p>Con estos dos drivers es suficiente como prueba de concepto, pero puedes ver como descargar los drivers de otros navegadores aquí: <a href="https://www.selenium.dev/documentation/en/webdriver/driver_requirements/#quick-reference">Driver requirements</a>.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>De la sección anterior, deberás tener el un paquete en la carpeta test de nombre <code>org.ual.cnsa.nombreEquipo</code> (sustituyendo <code>nombreEquipo</code> por el nombre de tu equipo), y ahí estarán  archivos <code>.java</code> exportados de Selenium IDE. Si has forkeado el proyecto de referencia, elimina los paquetes que contienen tests de ejemplo.</p>
+</li>
+<li>
+<p>A continuación se indican unas mínimas modificaciones que hay que realizar a cada archivo fuente <code>.java</code> exportado de Selenium IDE:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Añade el paquete a cada archivo <code>.java</code></p>
+</li>
+<li>
+<p>En el método <code>setUp()</code>, añade justo al principio las sentencias para configurar la ruta a cada driver:</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Before
+  public void setUp() throws Exception {
+    System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe"); <i class="conum" data-value="1"></i><b>(1)</b>
+    System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe"); <i class="conum" data-value="2"></i><b>(2)</b>
+    ...
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Son rutas relativas en el proyecto, dentro de <code>drivers</code> hemos descargado los drivers. Usa la ruta adecuada en tu caso.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Idem</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="5">
+<li>
+<p>Ejecuta los tests como JUnit Test. Verás que automáticamente se abre Firefox y ejecuta los test.</p>
+</li>
+<li>
+<p>A continuación vamos a probar en otro navegador, haciendo así lo que se denomina <a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Introduction"><em>cross-browser testing</a></em>. En los archivos <code>.java</code> cambia el driver a Chrome:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Before
+  public void setUp() throws Exception {
+    ...
+    // driver = new FirefoxDriver();
+    driver = new ChromeDriver();
+    ...
+  }</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="7">
+<li>
+<p>Vuelve a ejecutar y verás que se abre Chrome y ejecuta el mismo test.</p>
+</li>
+<li>
+<p>Por último, a continuación se muestra el código con una propuesta de diseño mejorado para el método setup(), en el que se define una variable <code>int browser</code> para elegir el navegador, y un booleano <code>headless</code> que permite establecer el modo headless (que se describe más adelante en este documento):</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Before
+  public void setUp() {
+    // Browser selector
+    int browser= 0; // 0: firefox, 1: chrome,...
+    Boolean headless = false;
+
+    switch (browser) {
+    case 0:  // firefox
+    	// Firefox
+    	// Descargar geckodriver de https://github.com/mozilla/geckodriver/releases
+    	// Descomprimir el archivo geckodriver.exe en la carpeta drivers
+
+    	System.setProperty("webdriver.gecko.driver",  "drivers/geckodriver.exe");
+    	FirefoxOptions firefoxOptions = new FirefoxOptions();
+    	if (headless) firefoxOptions.setHeadless(headless);
+    	driver = new FirefoxDriver(firefoxOptions);
+
+    	break;
+    case 1: // chrome
+    	// Chrome
+    	// Descargar Chromedriver de https://chromedriver.chromium.org/downloads
+    	// Descomprimir el archivo chromedriver.exe en la carpeta drivers
+
+    	System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+    	ChromeOptions chromeOptions = new ChromeOptions();
+    	if (headless) chromeOptions.setHeadless(headless);
+    	chromeOptions.addArguments("window-size=1920,1080");
+    	driver = new ChromeDriver(chromeOptions);
+
+    	break;
+
+    default:
+    	fail("Please select a browser");
+    	break;
+    }
+    js = (JavascriptExecutor) driver;
+    vars = new HashMap&lt;String, Object&gt;();
+  }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_corrigiendo_errores_habituales"><a class="anchor" href="#_corrigiendo_errores_habituales"></a>Corrigiendo errores habituales</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Si un test <strong>falla</strong> al ejecutarlo con Webdriver, revisa el código y los pasos incluidos en el mismo. Puede haber pasos que sobren, ya que muchas veces Selenium IDE recoge acciones sobre el navegador que no son realmente necesarias, o tal vez haya pasos que que al exportarlos a JUnit tengas que adaptarlos a Java. A continuación se indican soluciones a los motivos de error más habituales:</p>
+</div>
+<div class="sect2">
+<h3 id="_selectores"><a class="anchor" href="#_selectores"></a>Selectores</h3>
+<div class="paragraph">
+<p>Uno de los principales motivos de fallo se debe al selector Selenium IDE que ha tomado automáticamente. El <a href="https://www.browserstack.com/guide/locators-in-selenium">selector</a> identifica el elemento dentro de la página web sobre el que se ha interactuado, y para ello utiliza bien la referencia por ID, NAME, CSS o XPATH. Ve a Selenium IDE y cambia el selector, en la propiedad <code>target</code>; es recomendable utilizar la opción que identifica el elemento <code>id</code> pero si no es posible porque el elemento de la página web sobre el que se desea interactuar no tiene <code>id</code>, utiliza el identificador por <code>xpath</code> y el texto que queremos seleccionar. Por ejemplo, en un comando <code>click</code>:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-change-selector-xpath.png" alt="selenium ide change selector xpath">
+</div>
+<div class="title">Fig. 5. Cambiar el selector de un elemento de la página</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Más información sobre los tipos de selectores (<em>locators</em>) en Selenium IDE: <a href="https://www.guru99.com/locators-in-selenium-ide.html">Locators in Selenium IDE: CSS Selector, DOM, XPath, Link Text, ID</a>, y como <a href="https://www.selenium.dev/documentation/en/webdriver/locating_elements/">seleccionar elementos en Webdriver</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_esperas"><a class="anchor" href="#_esperas"></a>Esperas</h3>
+<div class="paragraph">
+<p>En numerosas ocasiones cuando se le indica al navegador que navegue a una página y a continuación se intenta encontrar un elemento en esa página, se obtiene un error indicando que no existe tal elemento. Esto es debido al tiempo necesario para que se cargue el contenido de la página, que ha sido superior al tiempo esperado por Selenium para ejecutar la acción. Es por ello que se hace necesario añadir un tiempo de espera en medio de determinadas acciones para permitir que se cargue el contenido del formulario, la página, etc. Por ejemplo, antes del primer <code>sendKeys</code> que escribe un texto en un campo de formulario, y también antes y después de <code>click()</code> en un botón de formulario.</p>
+</div>
+<div class="paragraph">
+<p>Selenium tiene varias estrategias de <a href="https://www.selenium.dev/documentation/es/webdriver/waits/">espera</a>, principalmente esperas explícitas y esperas implícitas. Podemos añadir esperas explícitas de dos formas para que el código detenga la ejecución del programa, o congelar el hilo, hasta que la condición que le pases se resuelva:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>añadiendo un tiempo fijo (no recomendado)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Añade una espera de tiempo fijo de 1 segundo (1000 mls)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">	    try {
+	        Thread.sleep(1000);
+	      } catch (InterruptedException e) {
+	        e.printStackTrace();
+	      }</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternativa a meter segundos de espera con Time.sleep()</strong>.
+En Selenium IDE existe el comando <a href="https://www.selenium.dev/selenium-ide/docs/en/api/commands#wait-for-element-visible"><code>waitForElementVisible</code></a> que permite esperar hasta que un elemento esté visible. Aunque al grabar el test con Selenium IDE no es necesario añadir este comando, porque ya lo tiene implícito, cuando exportamos a WebDriver sí necesitamos meter las esperas. Por tanto <strong>es recomendable</strong> este comando en todos los pasos del test que veas que tarda en cargar la página.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-ide-waitForElementVisible.png" alt="selenium ide waitForElementVisible">
+</div>
+<div class="title">Fig. 6. Comando <code>waitForElementVisible</code></div>
+</div>
+<div class="paragraph">
+<p>En JUnit se convierte en:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/selenium-webdriver-waitForElementVisible.png" alt="selenium webdriver waitForElementVisible">
+</div>
+<div class="title">Fig. 7. Código JUnit para <code>waitForElementVisible</code></div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// 9 | waitForElementVisible | xpath="//h2[contains(.,\'Ingeniería y Arquitectura\')]" | 30000
+{
+  WebDriverWait wait = new WebDriverWait(driver, 30);
+  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(.,\'Ingeniería y Arquitectura\')]")));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>En caso de que siga sin funcionar, sustituye el método <code>visibilityOfElementLocated</code> por otro de la misma clase ExpectedConditions`, por ejemplo <code>elementToBeClickable</code> (RECOMENDADO!):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// 9 | waitForElementVisible | xpath="//h2[contains(.,\'Ingeniería y Arquitectura\')]" | 30000
+{
+  WebDriverWait wait = new WebDriverWait(driver, 30);
+  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h2[contains(.,\'Ingeniería y Arquitectura\')]")));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Otro método de espera es la espera implícita, que aparece en la documentación de Selenium y en los ejemplos, sin embargo no dan el resultado esperado. Por ejemplo el método <a href="https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/WebDriver.Timeouts.html#implicitlyWait-long-java.util.concurrent.TimeUnit-">implicitlyWait</a>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Se supone que establece la cantidad de tiempo que el driver debería esperar cuando busca un elemento si este no está presente inmediatamente. Sin embargo, no funciona como se espera y los errores no se solucionan.</p>
+</div>
+<div class="paragraph">
+<p>Así que la única forma es añadir manualmente esperas explícitas en cada paso que requiera tiempo de carga de los contenidos. Puesto que añadir un <code>sleep()</code> está desaconsejado, la mejor opción entonces es añadir comandos <code>waitForElementVisible</code> y su equivalente en Webdriver <code>wait.until(ExpectedConditions.elementToBeClickable&#8230;&#8203;)</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Consulta en la sección FAQ el comando <code>waitForElementVisible</code>, una alternativa recomendada a añadir segundos de espera fijos con <code>Time.sleep()</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_otras_comprobaciones"><a class="anchor" href="#_otras_comprobaciones"></a>Otras comprobaciones</h3>
+<div class="paragraph">
+<p>Si un test se ejecuta correctamente en Firefox pero falla en Chrome realiza las siguientes comprobaciones:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>comprueba el tamaño de la ventana, agrándala por si es el problema:</p>
+<div class="literalblock">
+<div class="content">
+<pre>driver.manage().window().setSize(new Dimension(1080, 824));</pre>
+</div>
+</div>
+</li>
+<li>
+<p>modifica los selectores, en lugar de <code>cssSelector</code> utiliza <code>xpath</code></p>
+</li>
+<li>
+<p>Añade un tiempo de espera a que se cargue el formulario, antes del primer <code>sendKeys</code>, y también después de <code>click()</code> en un botón de formulario.</p>
+</li>
+<li>
+<p>Revisa el idioma predeterminado en la configuración de cada navegador. Puede que uno navegador lo tengas configurado en español y otro en inglés, y por tanto los textos se visualicen en diferentes idiomas.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configurar_un_driver_headless"><a class="anchor" href="#_configurar_un_driver_headless"></a>Configurar un driver <em>headless</em></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El modo <em>headless</em> sirve para ejecutar los tests sin que se visualice la ventana del navegador. Esto hace que los tests se ejecuten más rápido y más eficientemente, y es especialmente adecuado en un entorno de Integración Continua como Jenkins.</p>
+</div>
+<div class="sect2">
+<h3 id="_firefox_en_modo_headless"><a class="anchor" href="#_firefox_en_modo_headless"></a>Firefox en modo <em>headless</em></h3>
+<div class="paragraph">
+<p>En local, para ejecutar Firefox en modo <em>headless</em> añade las siguientes sentencias:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Before
+  public void setUp() throws Exception {
+    ...
+    FirefoxOptions firefoxOptions = new FirefoxOptions(); <i class="conum" data-value="1"></i><b>(1)</b>
+    firefoxOptions.setHeadless(true); <i class="conum" data-value="2"></i><b>(2)</b>
+    driver = new FirefoxDriver(firefoxOptions);
+    ...
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Define un nuevo objeto de opciones</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Establece la opción <em>headless</em> a <code>true</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Además deberás añadir los imports necesarios (Eclipse te avisa de ello):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>import org.openqa.selenium.firefox.FirefoxOptions;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Prueba a ejecutar los tests y verás que se ejecutan sin visualizar la ventana de Firefox.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Lanza los tests tanto con Eclipse como con Maven. Aseguraté de que se ejecutan correctamente con maven <code>test</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_chromedriver_en_modo_headless"><a class="anchor" href="#_chromedriver_en_modo_headless"></a>ChromeDriver en modo <em>headless</em></h3>
+<div class="paragraph">
+<p>ChromeDriver funciona de manera similar a Geckodriver de Firefox, e implementa la especificación  <a href="https://www.w3.org/TR/webdriver/">W3C WebDriver</a>.</p>
+</div>
+<div class="paragraph">
+<p>En local, para ejecutar Chrome en modo <em>headless</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Before
+  public void setUp() throws Exception {
+    ...
+    ChromeOptions chromeOptions = new ChromeOptions(); <i class="conum" data-value="1"></i><b>(1)</b>
+    chromeOptions.setHeadless(true); <i class="conum" data-value="2"></i><b>(2)</b>
+    driver = new ChromeDriver(chromeOptions);
+    ...
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Define un nuevo objeto de opciones</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Establece la opción <em>headless</em> a <code>true</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Además deberás añadir los imports:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>import org.openqa.selenium.chrome.ChromeOptions;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Durante la ejecución no se abrirá la ventana de Chrome y los tests se ejecutarán correctamente. Lanza los test tanto con Eclipse como con Maven.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_htmlunit_driver_modo_headless_nativo"><a class="anchor" href="#_htmlunit_driver_modo_headless_nativo"></a>HtmlUnit Driver: modo <em>headless</em> nativo</h3>
+<div class="paragraph">
+<p><a href="https://github.com/SeleniumHQ/selenium/wiki/HtmlUnitDriver">HtmlUnit Driver</a> es un driver <em>headless</em> nativo para Selenium Webdriver. Se trata de una implementación en Java de Webdriver.</p>
+</div>
+<div class="paragraph">
+<p>En local, comenta los otros drivers y cambia el driver a <code>HtmlUnitDriver();</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Before
+  public void setUp() throws Exception {
+    ...
+    // simple case - javascript support enabled
+    driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_68, true)
+    ...
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Debes importar la librería:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>import org.openqa.selenium.htmlunit.HtmlUnitDriver;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>HtmlUnit Driver da muchos problemas, sobre todo con JavaScript. Es la versión reducida de un navegador, por lo que no soporta gran parte de la funcionalidad del mismo, y la mayoría de tests que funcionan para FirefoxDriver y ChromeDriver fallan con HtmlUnitDriver. Si te fallan los test HtmlUnitDriver <strong>no te preocupes</strong>. El modo <em>headless</em> de FirefoxDriver y ChromeDriver nos ayudará a nuestro objetivo.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_faq_y_resolución_de_problemas_thoubleshouting"><a class="anchor" href="#_faq_y_resolución_de_problemas_thoubleshouting"></a>FAQ y resolución de problemas (<em>thoubleshouting</em>)</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Problema al actualizar un campo de texto que ya contiene un valor</strong>.
+Cuando un test de Selenium trata de actualizar el valor de un campo de texto que ya contiene un valor, por ejemplo al <em>modificar el email del perfil de usuario</em>, el test grabado con Selenium IDE simplemente captura los eventos que guardan el nuevo valor mediante un comando <code>type</code> y el nuevo valor se guarda en la propiedad <em>Value</em>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/login-app-update-profile-ide-commands.png" alt="login app update profile ide commands">
+</div>
+<div class="title">Fig. 8. Comandos Selenium IDE para actualizar el email</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Nuevo valor de email</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La siguiente imagen muestra la vista de la app web, antes de escribir el nuevo valor, muestra el valor antiguo.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/login-app-update-profile.png" alt="login app update profile">
+</div>
+<div class="title">Fig. 9. Vista de la app web para actualizar el email (se muestra el valor antiguo)</div>
+</div>
+<div class="paragraph">
+<p>El problema se produce al exportar a JUnit el comando <code>type</code>, se traduce en una llamada al método <code>sendkeys("nuevoValor")</code>. Por ejemplo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  driver.findElement(By.Id("email-address")).sendKeys("ualkk000@ual.es");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Y el método <code>sendkeys("nuevoValor")</code> <strong>no reemplaza</strong> el valor existente, sino que concatena el valor existente con el nuevo, algo asi: <code>ual-744547@ual.esualkk000@ual.es</code>
+Para solucionar este problema simplemente hay que llamar al método <code>clear()</code>, que limpia el contenido del campo de texto, y tras ello escribir el nuevo valor con <code>sendKeys(&#8230;&#8203;)</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  driver.findElement(By.Id("email-address")).clear(); <i class="conum" data-value="1"></i><b>(1)</b>
+  driver.findElement(By.Id("email-address")).sendKeys("ualkk000@ual.es");</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Añadir manualmente la llamada a <code>clear()</code> para limpiar el contenido del campo de texto.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La llamada a <code>clear()</code> también será útil si se quiere probar el caso de dejar en blanco el campo <code>email</code>.</p>
+</div>
+<div class="paragraph">
+<p>En el caso de que <code>clear()</code> no funcione, podemos probar la siguiente combinación de teclas, bien en una llamada o bien en dos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">driver.findElement(By.Id("email-address")).sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+
+driver.findElement(By.Id("email-address")).sendKeys(Keys.chord(Keys.CONTROL,"a"));
+driver.findElement(By.Id("email-address")).sendKeys(Keys.chord(Keys.DELETE));</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Navegador headless queda ejecutándose en background</strong>.
+Cuando falla la ejecución de un test de Selenium WebDriver en modo headless, el navegador puede quedar ejecutándose en background, pudiendo consumir recursos del sistema innecesariamente.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/google-chrome-procesos-sin-morir.png" alt="google chrome procesos sin morir">
+</div>
+<div class="title">Fig. 10. Decenas de procesos sin morir del navegador en modo headless</div>
+</div>
+<div class="paragraph">
+<p>Es necesario revisar los procesos tanto en nuestra máquina local como en Jenkins y matarlos para evitar que queden ejecutándose consumiendo recursos.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_más_info"><a class="anchor" href="#_más_info"></a>Más info</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Mas información sobre <a href="https://www.selenium.dev/maven">Maven con Selenium</a>.</p>
+</li>
+<li>
+<p><a href="https://www.browserstack.com/guide/selenium-with-java-for-automated-test">Best Practices while writing Selenium tests with Java</a> (sección al final de la página)</p>
+</li>
+<li>
+<p><a href="https://www.browserstack.com/guide/verify-and-assert-in-selenium">Assert and Verify Methods in Selenium Webdriver</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

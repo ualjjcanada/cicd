@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tests de Selenium en Jenkins :: CNSA</title>
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://ualjjcanada.github.io/cicd">CNSA</a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="selenium-testing" data-version="0.22.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Introducción</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-ide-intro.html">Comenzando con Selenium</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-ide-ejercicios.html">Caso práctico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="selenium-webdriver.html">Selenium WebDriver</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="selenium-jenkins.html">Tests de Selenium en Jenkins</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Pruebas de Aceptación (e2e) con Selenium</span>
+    <span class="version">0.22.0-beta.1</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../despliegue-continuo/0.22.2/index.html">Despliegue continuo con Jenkins</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../despliegue-continuo/0.22.2/index.html">0.22.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="index.html">Pruebas de Aceptación (e2e) con Selenium</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.22.0-beta.1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../despliegue-continuo/0.22.2/index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Pruebas de Aceptación (e2e) con Selenium</a></li>
+    <li><a href="selenium-jenkins.html">Tests de Selenium en Jenkins</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/ualcnsa/selenium-testing/edit/v.0.22/docs/modules/ROOT/pages/selenium-jenkins.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Tests de Selenium en Jenkins</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="title">Objetivos</div>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Ejecutar los test de Selenium JUnit Webdriver en Jenkins utilizando el navegador en modo <em>headless</em>.</p>
+</li>
+<li>
+<p>Diseñar un pipeline con fases en paralelo para la ejecución de los test en cada navegador.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Realización y entrega</div>
+<div class="paragraph">
+<p>La realización de estas actividades se realizará en equipo. La entrega será mediante el envío de un informe y el acceso al profesor a los servicios configurados, para la revisión y evaluación de los mismos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_selenium_webdriver_y_jenkins"><a class="anchor" href="#_selenium_webdriver_y_jenkins"></a>Selenium WebDriver y Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="selenium-webdriver.html">Selenium WebDriver</a> permite ejecutar los tests de Selenium como tests de JUnit, permitiendo así su ejecución en Eclipse y Jenkins.</p>
+</div>
+<div class="paragraph">
+<p>La ejecución de los tests de Selenium en Jenkins debe hacerse en modo <em>headless</em> ya que la máquina Jenkins no tiene instalada una interfaz gráfica, más comúnmente conocida como X o X11 en Linux. A pesar de ello, podremos hacerlo instalando un entorno de visualización simulado (<code>xvfb</code>). Veamos los pasos necesarios. Lo primero es descargar los drivers de los navegadores en la máquina de Jenkins.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuración"><a class="anchor" href="#_configuración"></a>Configuración</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>En la carpeta JENKINS_HOME (si no recuerdas cual es, la predeterminada es <code>/var/lib/jenkins</code>, puedes verla en <a href="http://fake">http://<em>mi-jenkins-url</em>/systemInfo</a>) crea una carpeta <code>selenium-drivers</code> y descarga ahí los drivers de los navegadores Firefox y Chrome para Ubuntu. Para ello, ejecuta los siguientes comandos en la máquina Jenkins.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd
+JENKINS_HOME=/var/lib/jenkins <i class="conum" data-value="1"></i><b>(1)</b>
+echo $JENKINS_HOME
+mkdir $JENKINS_HOME/selenium-drivers <i class="conum" data-value="2"></i><b>(2)</b>
+wget https://github.com/mozilla/geckodriver/releases/download/v0.29.1/geckodriver-v0.29.1-linux64.tar.gz
+sudo tar -C $JENKINS_HOME/selenium-drivers/ -xvf geckodriver-v0.29.1-linux64.tar.gz <i class="conum" data-value="3"></i><b>(3)</b>
+wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip <i class="conum" data-value="4"></i><b>(4)</b>
+sudo apt-get install unzip -y
+sudo unzip chromedriver_linux64.zip -d $JENKINS_HOME/selenium-drivers/ <i class="conum" data-value="5"></i><b>(5)</b>
+ls -la  $JENKINS_HOME/selenium-drivers/ <i class="conum" data-value="6"></i><b>(6)</b>
+sudo chown jenkins:jenkins $JENKINS_HOME/selenium-drivers/ <i class="conum" data-value="7"></i><b>(7)</b>
+sudo chown jenkins:jenkins $JENKINS_HOME/selenium-drivers/*</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Declara la variable de entorno <code>JENKINS_HOME</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Crea la carpeta donde guardar los drivers de los navegadores. Asegúrate que tienes permisos suficientes. Si necesitas usar <code>sudo</code>, deberás de cambiar los permisos y grupos de los archivos al usuario <code>jenkins:jenkins</code> (ver paso 6).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Con <code>wget</code> descarga <code>geckodriver</code> para linux en la carpeta home, y con <code>tar -xvf</code> descomprime en la carpeta deseada.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Con <code>wget</code> descarga <code>chromedriver</code> para linux en la carpeta home, pero antes revisa la <a href="https://www.ubuntuupdates.org/package/google_chrome/stable/main/base/google-chrome-stable">última versión estable</a> de Chrome para Ubuntu y usa la <a href="https://chromedriver.chromium.org/downloads">URL de descarga</a> de <code>chromedriver_linux64.zip</code> adecuada para la versión estable de Chrome</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Con <code>unzip</code> descomprime en la carpeta deseada. Además has tenido que instalar <code>unzip</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Lista los archivos en la carpeta <code>selenium-drivers</code>. Comprueba que los permisos no son adecuados para que Jenkins pueda lanzar los ejecutables de los drivers.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Asigna el grupo <code>jenkins:jenkins</code> a la carpeta y los archivos. Como resultado los archivos deben tener los permisos correctos</td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-installed-selenium-drivers.png" alt="jenkins installed selenium drivers">
+</div>
+<div class="title">Fig. 1. Permisos de los drivers</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>Instala <code>firefox</code> en tu máquina Jenkins. También deberás instalar <code>xvfb</code> que hace de <a href="http://elementalselenium.com/tips/38-headless">entorno de visualización simulado</a> para ejecutar los tests <em>headeless</em> de Selenium. Recuerda que la maquina Jenkins no tiene una interfaz gráfica, así que aunque firefox se va a ejecutar en modo <em>headless</em>, es necesario tener un entorno de visualización simulado, y esto lo proporciona <code>xvfb</code>.</p>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install -y  xvfb firefox</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creación_del_pipeline_en_jenkins"><a class="anchor" href="#_creación_del_pipeline_en_jenkins"></a>Creación del pipeline en Jenkins</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Crea en Jenkins un nuevo proyecto pipeline. Incluye la fase (<em>stage</em>) con nombre <code>Firefox tests</code>, donde llames a maven. Utiliza <code>xvfb-run</code> que se encarga de iniciar y parar <code>xvfb</code> por ti.</p>
+<div class="literalblock">
+<div class="content">
+<pre>xvfb-run mvn test -Dwebdriver.gecko.driver=${JENKINS_HOME}/selenium-drivers/geckodriver</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>El pipeline tendrá esta forma:</p>
+</div>
+<div class="listingblock">
+<div class="title">Jenkinsfile</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">pipeline {
+    agent any
+    environment {
+        DRIVERS_LOC = "$JENKINS_HOME/selenium-drivers/"
+    }
+    tools {
+        // Usa aquí el nombre de tu instalación de Maven en Jenkins Tools
+        maven "Default maven"
+    }
+    stages {
+        stage('Git clone') {
+            steps{
+                // Update the URL to your repo
+                git 'https://github.com/tu-usuario/tu-repo-selenium.git'
+            }
+        }
+        stage('Firefox tests') {
+            steps {
+                // Run Maven on xvfb environment display.
+                // Update the path/to/your/pom.xml as necessary
+                sh "xvfb-run mvn -f path/to/pom.xml clean test -Dwebdriver.gecko.driver=${DRIVERS_LOC}/geckodriver"
+            }
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                }
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Comprueba que en el código de los tests Selenium en JUnit estás usando <code>FirefoxDriver</code>, y modo <em>headless</em></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Recuerda que en el código debes comentar las lineas donde se definen las property con las rutas de los drivers.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>// System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Publica la gráfica de los tests en un bloque <code>post</code> del pipeline.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-webdriver-pipeline-firefox-ok.png" alt="jenkins webdriver pipeline firefox ok">
+</div>
+<div class="title">Fig. 2. Pipeline con la fase Firefox Test</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_partir_de_aquí_es_optativo"><a class="anchor" href="#_a_partir_de_aquí_es_optativo"></a>A partir de aquí es optativo</h3>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>Para probar la ejecución con Chrome, debes instalar Chrome en la máquina Jenkins. Para ello sigue los pasos: <a href="https://ubunlog.com/google-chrome-ubuntu-1804/#Instalar_Google_Chrome_en_Ubuntu_1804_LTS_desde_la_linea_de_comandos">Instalar Google Chrome en Ubuntu 18.04 LTS desde la línea de comandos</a> (No instales al versión beta, tampoco podrás ejecutarlo, simplemente instalarlo). Después, crea una nueva fase donde llames a los tests con el driver de Chrome. Tendrás que modificar el driver en el código, y llamar a maven con el siguiente parámetro para Chrome Driver:</p>
+<div class="literalblock">
+<div class="content">
+<pre>mvn test -Dwebdriver.chrome.driver=${DRIVERS_LOC}/chromedriver</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Habrás implementado dos alternativas de ejecución en Jenkins de los test de Selenium en modo <em>headless</em>.
+Sin embargo, el diseño de clases JUnit y uso de los distintos drivers tiene varias desventajas:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Para ejecutar con un navegador u otro tenemos que tocar el código fuente y modificar el driver "a mano"</p>
+</li>
+<li>
+<p>Esto implica que no se puede lanzar la ejecución en los dos navegadores en el mismo pipeline: o ejecutamos con Firefox o ejecutamos con Chrome.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Lo ideal es poder diseñar el pipeline para lanzar en paralelo la ejecución en estos dos, o cuantos  navegadores sean necesarios, tal y como se muestra en la siguiente imagen:</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="_images/jenkins-blueocean-parallel-browser-testing.png" alt="jenkins blueocean parallel browser testing">
+</div>
+<div class="title">Fig. 3. Pipeline con ejecución de varios navegadores en paralelo</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>EJERCICIOS (Optativos)</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Rediseña las clases JUnit con los test de Selenium para poder lanzar los tests bien con Firefox o bien con en Chrome, sin tener que modificar el código fuente, es decir, sin tener que cambiar el driver "a mano". Para ello revisa el ejemplo <a href="https://github.com/ualhmis/seleniumWebDriverJUnit/tree/junit5/seleniumHMIS21">seleniumHMIS21</a> en su rama master (JUnit 4), y en la rama junit5.</p>
+</li>
+<li>
+<p>Crea dos fases en el pipeline, una para Firefox y otra para Chrome, y configura el pipeline para que se ejecuten en paralelo, usando el bloque <a href="https://www.jenkins.io/blog/2017/09/25/declarative-1/"><code>parallel</code></a> (Más info: <a href="https://www.jenkins.io/doc/book/pipeline/syntax/#parallel">Jenkins Pipeline Syntax</a>)</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_más_info"><a class="anchor" href="#_más_info"></a>Más info</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/shailendravaichalkar/Selenium-Maven-Template" class="bare">https://github.com/shailendravaichalkar/Selenium-Maven-Template</a></p>
+</li>
+<li>
+<p>Mas información sobre <a href="https://www.selenium.dev/maven">Maven con Selenium</a>.</p>
+</li>
+<li>
+<p><a href="https://www.browserstack.com/guide/selenium-with-java-for-automated-test">Buenas prácticas</a>: Selenium con Java</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
